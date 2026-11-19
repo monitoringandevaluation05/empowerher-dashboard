@@ -6,31 +6,21 @@
 <title>EmpowerHer 2.0 — Live Dashboard</title>
 <style>
 :root{
-  --cream:#F3EEE6;--cream2:#E9E3D8;--card:#FBF9F5;--ink:#2F3A35;--mute:#8A8579;--line:#E9E2D6;
-  --sage:#5F8D7A;--sage-d:#4F7C69;--beige:#D9AE85;--blue:#86A3B5;--rose:#CF7F68;
-  --sage-t:#E4ECE7;--beige-t:#F5E8DA;--blue-t:#E3EBF0;--rose-t:#F6E3DC;
+  --cream:#F3EEE6;--card:#FBF9F5;--ink:#2F3A35;--mute:#8A8579;--line:#E9E2D6;
+  --sage-d:#0F6B58;--beige:#B98B3A;--rose:#8B2F3C;--rose-t:#F3DDE0;--sage-t:#DDEBE5;
   --shadow:0 24px 46px -12px rgba(100,88,66,.34),0 8px 16px -6px rgba(100,88,66,.20),0 0 0 1px rgba(200,186,160,.60),inset 0 2px 0 #fff,inset 0 -5px 10px rgba(160,145,118,.12);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;color:var(--ink);font-family:"DM Sans","Segoe UI","Helvetica Neue",Arial,sans-serif;font-size:14px;
-  background:
-   radial-gradient(900px 500px at 105% -5%,rgba(140,165,150,.28),transparent 60%),
-   radial-gradient(700px 500px at 100% 95%,rgba(217,174,133,.25),transparent 60%),
-   radial-gradient(600px 400px at 20% 110%,rgba(134,163,181,.16),transparent 60%),
-   linear-gradient(160deg,#EFEAE1,#F6F2EB 55%,#EEE8DE);
-  background-attachment:fixed}
+  background:radial-gradient(900px 500px at 105% -5%,rgba(15,107,88,.16),transparent 60%),radial-gradient(700px 500px at 100% 95%,rgba(185,139,58,.18),transparent 60%),radial-gradient(600px 400px at 20% 110%,rgba(39,73,122,.10),transparent 60%),linear-gradient(160deg,#EFEAE1,#F6F2EB 55%,#EEE8DE);background-attachment:fixed}
 .ic{width:1em;height:1em;display:block}
-/* sidebar */
-aside{position:fixed;left:14px;top:14px;bottom:14px;width:68px;border-radius:26px;
-  background:linear-gradient(180deg,#7FA08E,#58806C);box-shadow:0 14px 34px rgba(90,115,100,.30),inset 0 1px 0 rgba(255,255,255,.35);
-  display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:8px;z-index:5}
+aside{position:fixed;left:14px;top:14px;bottom:14px;width:68px;border-radius:26px;background:linear-gradient(180deg,#1C7D68,#0B4F41);box-shadow:0 14px 34px rgba(11,79,65,.30),inset 0 1px 0 rgba(255,255,255,.30);display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:8px;z-index:5}
 aside .logo{width:42px;height:42px;border-radius:50%;background:#F7F3EC;color:var(--sage-d);display:grid;place-items:center;font-size:22px;margin-bottom:14px;box-shadow:0 4px 10px rgba(0,0,0,.12)}
-aside a{width:44px;height:44px;border-radius:14px;color:#F4F1EA;display:grid;place-items:center;font-size:21px;text-decoration:none;transition:.2s;position:relative}
+aside a{width:44px;height:44px;border-radius:14px;color:#F4F1EA;display:grid;place-items:center;font-size:21px;text-decoration:none;transition:.2s}
 aside a:hover{background:rgba(255,255,255,.22)}
 aside a.on{background:rgba(255,255,255,.34);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 4px 10px rgba(0,0,0,.08)}
 .wrap{margin-left:98px;padding:22px 30px 50px 12px;max-width:1700px}
-/* header */
 header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:14px}
 .eyebrow{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;color:var(--sage-d);font-weight:700}
 h1{font-family:Georgia,"Times New Roman",serif;font-weight:600;font-size:30px;margin:4px 0 2px;letter-spacing:-.4px}
@@ -40,19 +30,21 @@ h1{font-family:Georgia,"Times New Roman",serif;font-weight:600;font-size:30px;ma
 .pill .dot{width:8px;height:8px;border-radius:50%;background:var(--sage-d)}
 .pill.err .dot{background:var(--rose)}.pill.err{color:var(--rose)}
 .pill.warn .dot{background:var(--beige)}
-button,.btn{font:inherit;border:0;border-radius:999px;padding:9px 16px;cursor:pointer;background:var(--sage-d);color:#fff;display:inline-flex;gap:6px;align-items:center;box-shadow:0 6px 14px rgba(107,136,120,.3)}
+button,.btn{font:inherit;border:0;border-radius:999px;padding:9px 16px;cursor:pointer;background:var(--sage-d);color:#fff;display:inline-flex;gap:6px;align-items:center;box-shadow:0 6px 14px rgba(15,107,88,.3)}
 button.ghost,.btn.ghost{background:var(--card);color:var(--ink);box-shadow:var(--shadow);border:1px solid #fff}
-/* filters */
 .filters{margin:18px 0 6px;display:grid;grid-template-columns:repeat(6,1fr) auto;gap:10px;align-items:end}
 .filters label{font-size:10.5px;letter-spacing:.9px;text-transform:uppercase;color:var(--mute);font-weight:700;display:block}
 .filters select{width:100%;margin-top:4px;padding:9px 12px;border-radius:14px;border:1px solid #fff;background:var(--card);box-shadow:var(--shadow);font:inherit;color:var(--ink)}
-/* sections */
+.xbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;min-height:34px;margin:8px 0 0}
+.xbar .hint{font-size:12px;color:var(--mute)}
+.xchip{background:#fff;border:1px solid var(--sage-d);color:var(--sage-d);border-radius:999px;padding:5px 12px;font-size:12px;cursor:pointer;box-shadow:0 4px 10px rgba(15,107,88,.12)}
+.xbar button{padding:6px 14px;font-size:12px}
 .sec{margin:28px 0 12px;display:flex;align-items:center;gap:10px;font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);font-weight:700;scroll-margin-top:16px}
 .sec::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
 .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
-.s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
-.card{background:linear-gradient(180deg,#FFFEFB,#F5F0E6);border:2px solid #fff;border-radius:22px;padding:18px 20px;box-shadow:var(--shadow);min-width:0;--acc:#4A7A66;--acc-t:#DCE9E1;--acc-d:#A9C5B6}
-.card.beige{--acc:#A8782E;--acc-t:#F6E8D0;--acc-d:#E3C690}.card.blue{--acc:#3F6482;--acc-t:#DDE8F0;--acc-d:#A6C0D3}.card.rose{--acc:#A24A35;--acc-t:#F8E0D8;--acc-d:#E6A998}
+.s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s12{grid-column:span 12}
+.card{background:linear-gradient(180deg,#FFFEFB,#F5F0E6);border:2px solid #fff;border-radius:22px;padding:18px 20px;box-shadow:var(--shadow);min-width:0;--acc:#0F6B58;--acc-t:#DDEBE5;--acc-d:#9CC9BB}
+.card.beige{--acc:#9A6F22;--acc-t:#F5E8CC;--acc-d:#DDBE80}.card.blue{--acc:#27497A;--acc-t:#DCE6F2;--acc-d:#93B1D6}.card.rose{--acc:#8B2F3C;--acc-t:#F3DDE0;--acc-d:#D99AA2}.card.plum{--acc:#65477D;--acc-t:#E9E0F0;--acc-d:#BBA1CE}
 .ch{display:flex;gap:11px;align-items:center;margin-bottom:12px}
 .chip{width:42px;height:42px;border-radius:50%;background:radial-gradient(circle at 32% 24%,#fff 0%,var(--acc-t) 50%,var(--acc-d) 135%);color:var(--acc);display:grid;place-items:center;font-size:21px;flex:none;box-shadow:0 9px 16px -3px rgba(100,88,66,.40),0 2px 4px rgba(100,88,66,.22),inset 0 2px 3px #fff,inset 0 -5px 8px rgba(120,105,80,.18)}
 .chip .ic{filter:drop-shadow(0 2px 1.5px rgba(50,40,28,.40))}
@@ -60,39 +52,41 @@ button.ghost,.btn.ghost{background:var(--card);color:var(--ink);box-shadow:var(-
 .ch h3::after{content:"";position:absolute;left:0;bottom:0;width:26px;height:3px;border-radius:3px;background:var(--acc)}
 .ch p{margin:3px 0 0;font-size:11.5px;color:var(--mute)}
 .box{position:relative;height:280px}
+.box canvas{cursor:pointer}
 .empty{position:absolute;inset:0;display:grid;place-items:center;color:var(--mute);font-size:13px}
-/* KPI */
+.cap{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:8px;font-size:11px;color:var(--mute);align-items:center}
+.cap i{display:inline-block;vertical-align:middle;margin-right:5px}
 .kpi{display:flex;flex-direction:column;gap:6px;padding:16px 18px}
 .kpi .top{display:flex;align-items:center;gap:10px;color:var(--mute);font-size:12px;font-weight:600}
 .kpi .chip{width:48px;height:48px;font-size:24px}
 .kpi .v{font-size:34px;font-weight:700;letter-spacing:-1.2px;line-height:1.05}
 .kpi .l{font-size:11.5px;color:var(--mute)}
 .kgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
-/* insights */
 .ins{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .insc{display:flex;gap:12px;align-items:center;padding:14px 16px}
 .insc .n{font-size:24px;font-weight:700;line-height:1}
 .insc .t{font-size:12px;color:var(--mute);margin-top:3px;line-height:1.3}
-/* enumerators */
-.bar-row{margin:12px 0}
+.bar-row{margin:12px 0;cursor:pointer;transition:opacity .2s}
+.bar-row.dim{opacity:.32}
 .bar-row .t{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px}
 .bar-row .t b{font-weight:700}
 .bar-row .tr{height:10px;background:var(--sage-t);border-radius:99px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.05)}
-.bar-row .tr i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#A8C5B6,#487A66);box-shadow:0 2px 4px rgba(72,122,102,.35)}
-/* table */
+.bar-row .tr i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#6FBFA7,#0B5646);box-shadow:0 2px 4px rgba(11,86,70,.35)}
 table{width:100%;border-collapse:collapse;font-size:12.5px}
 th{text-align:left;font-size:10.5px;letter-spacing:.9px;text-transform:uppercase;color:var(--mute);padding:8px 10px;border-bottom:1px solid var(--line)}
 td{padding:10px;border-bottom:1px solid #F0EBE1}
+tbody tr{cursor:pointer}
 tr:nth-child(even) td{background:rgba(233,226,214,.28)}
+tr.sel td{background:rgba(15,107,88,.14)!important}
 td.num,th.num{text-align:right}
 .mini{display:inline-block;width:70px;height:7px;border-radius:9px;background:var(--rose-t);vertical-align:middle;margin-left:8px;overflow:hidden}
 .mini i{display:block;height:100%;background:var(--rose);border-radius:9px}
 .tscroll{max-height:330px;overflow:auto}
 .msg{display:none;margin:16px 0;padding:14px 18px;background:var(--card);border:1px dashed var(--rose);border-radius:16px;line-height:1.6}
 .msg.show{display:block}
-@media(max-width:1200px){.kgrid{grid-template-columns:repeat(3,1fr)}.s3,.s4,.s5,.s7{grid-column:span 6}.s8{grid-column:span 12}.ins{grid-template-columns:repeat(2,1fr)}.filters{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:1200px){.kgrid{grid-template-columns:repeat(3,1fr)}.s3,.s4,.s5,.s7{grid-column:span 6}.ins{grid-template-columns:repeat(2,1fr)}.filters{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:760px){aside{display:none}.wrap{margin-left:0;padding:16px}.grid>*{grid-column:span 12!important}.kgrid{grid-template-columns:repeat(2,1fr)}.filters{grid-template-columns:repeat(2,1fr)}}
-@media print{aside,.filters,.hr button,.hr .btn{display:none}.wrap{margin:0}body{background:#fff}.card{box-shadow:none;border:1px solid var(--line);break-inside:avoid}}
+@media print{aside,.filters,.xbar,.hr button,.hr .btn{display:none}.wrap{margin:0}body{background:#fff}.card{box-shadow:none;border:1px solid var(--line);break-inside:avoid}}
 </style>
 </head>
 <body>
@@ -102,7 +96,7 @@ td.num,th.num{text-align:right}
   <a href="#sec-geo" title="Where we work" data-ic="pin"></a>
   <a href="#sec-profile" title="Beneficiary profile" data-ic="users"></a>
   <a href="#sec-econ" title="Economic situation" data-ic="rupee"></a>
-  <a href="#sec-field" title="Field operations" data-ic="clip"></a>
+  <a href="#sec-field" title="SHG &amp; field operations" data-ic="clip"></a>
   <a href="#sec-table" title="Block summary" data-ic="table"></a>
 </aside>
 
@@ -124,6 +118,7 @@ td.num,th.num{text-align:right}
 
 <div class="msg" id="msg"></div>
 <section class="filters" id="filters"></section>
+<div class="xbar" id="xbar"></div>
 
 <div class="sec" id="sec-overview">Overview</div>
 <div class="kgrid" id="kpis"></div>
@@ -145,17 +140,15 @@ td.num,th.num{text-align:right}
 
 <div class="sec" id="sec-econ">Economic situation</div>
 <div class="grid">
-  <div class="card beige s4"><div class="ch"><span class="chip" data-ic="rupee"></span><div><h3>Family income per month</h3><p>Women by income band</p></div></div><div class="box"><canvas id="c-inc"></canvas></div></div>
-  <div class="card s4"><div class="ch"><span class="chip" data-ic="brief"></span><div><h3>Main household livelihood</h3><p>Cleaned & grouped</p></div></div><div class="box"><canvas id="c-liv"></canvas></div></div>
-  <div class="card blue s4"><div class="ch"><span class="chip" data-ic="brief"></span><div><h3>Her own occupation</h3><p>Cleaned & grouped</p></div></div><div class="box"><canvas id="c-occ"></canvas></div></div>
-  <div class="card rose s6"><div class="ch"><span class="chip" data-ic="store"></span><div><h3>Existing enterprise, by state</h3><p>Who already runs a business — and where the gap is</p></div></div><div class="box"><canvas id="c-ent"></canvas></div></div>
-  <div class="card s6"><div class="ch"><span class="chip" data-ic="trend"></span><div><h3>SHG membership — year joined</h3><p>When women joined their SHG</p></div></div><div class="box"><canvas id="c-year"></canvas></div></div>
+  <div class="card blue s6"><div class="ch"><span class="chip" data-ic="brief"></span><div><h3>Household livelihood × family income</h3><p>How much family income varies within each livelihood · per month</p></div></div><div class="box" style="height:320px"><canvas id="c-livinc"></canvas></div><div class="cap" id="cap1"></div></div>
+  <div class="card plum s6"><div class="ch"><span class="chip" data-ic="user"></span><div><h3>Her occupation × her own income</h3><p>How much her personal income varies within each occupation · per month</p></div></div><div class="box" style="height:320px"><canvas id="c-occinc"></canvas></div><div class="cap" id="cap2"></div></div>
+  <div class="card rose s12"><div class="ch"><span class="chip" data-ic="store"></span><div><h3>Existing enterprise — by state &amp; enterprise sector</h3><p id="sub-ent">Women who already run a business, split by sector, next to those who do not</p></div></div><div class="box" style="height:300px"><canvas id="c-ent"></canvas></div></div>
 </div>
 
-<div class="sec" id="sec-field">Field operations</div>
+<div class="sec" id="sec-field">SHG &amp; field operations</div>
 <div class="grid">
-  <div class="card blue s7"><div class="ch"><span class="chip" data-ic="trend"></span><div><h3>Registrations per day</h3><p>By submission date</p></div></div><div class="box"><canvas id="c-day"></canvas></div></div>
-  <div class="card s5"><div class="ch"><span class="chip" data-ic="clip"></span><div><h3>Registrations by enumerator</h3><p>Field team progress</p></div></div><div id="enum"></div></div>
+  <div class="card s6"><div class="ch"><span class="chip" data-ic="trend"></span><div><h3>SHG membership — year joined</h3><p>When women joined their SHG</p></div></div><div class="box"><canvas id="c-year"></canvas></div></div>
+  <div class="card blue s6"><div class="ch"><span class="chip" data-ic="clip"></span><div><h3>Registrations by enumerator</h3><p>Field team progress</p></div></div><div id="enum"></div></div>
 </div>
 
 <div class="sec" id="sec-table">Block summary</div>
@@ -181,17 +174,18 @@ td.num,th.num{text-align:right}
 // ============ CONFIG ============
 var SHEET_ID   = "1ETUSd0DlatPcraorNA0541yV3C-LmvtpCMea5gGP-KY";
 var SHEET_NAME = "CLEANED DATA";
-var PUBLISHED_CSV_URL = ""; // optional: Publish-to-web CSV link of the CLEANED DATA tab
+var PUBLISHED_CSV_URL = "";
 var AUTO_REFRESH_MIN = 5;
 // =================================
-
 var FONT='"DM Sans","Segoe UI","Helvetica Neue",Arial,sans-serif';
-var C={sage:"#5F8D7A",beige:"#C9A063",blue:"#5E7F99",rose:"#BF6F58",sage2:"#A9C4B6",beige2:"#E2CBA0",blue2:"#9FB8CB",rose2:"#DDA797",grey:"#BDB8AB",ink:"#2F3A35"};
-var GR={sage:["#A8C5B6","#487A66"],gold:["#EBCB97","#B0802E"],blue:["#A2BED2","#43688A"],rose:["#E7A895","#A8483A"]};
+// premium jewel palette
+var C={emerald:"#0F6B58",gold:"#B98B3A",sapphire:"#27497A",burgundy:"#8B2F3C",plum:"#65477D",teal:"#2C8594",copper:"#B4623F",slate:"#7A8591",champ:"#D9C79E",mist:"#B9C4BE",ink:"#2F3A35"};
+var GR={emerald:["#6FBFA7","#0B5646"],gold:["#EBCB8B","#A87A28"],sapphire:["#86A9D8","#1F3F6E"],burgundy:["#DB8E97","#7C2433"],plum:["#BCA0CF","#58396F"]};
+var PAL=[C.sapphire,C.gold,C.emerald,C.burgundy,C.plum,C.teal,C.slate];
+function fade(h,a){var n=parseInt(h.slice(1),16);return "rgba("+(n>>16&255)+","+(n>>8&255)+","+(n&255)+","+a+")"}
 function grad(key,horiz){return function(ctx){var a=ctx.chart.chartArea;if(!a)return GR[key][1];var g=horiz?ctx.chart.ctx.createLinearGradient(a.left,0,a.right,0):ctx.chart.ctx.createLinearGradient(0,a.bottom,0,a.top);g.addColorStop(0,GR[key][0]);g.addColorStop(1,GR[key][1]);return g}}
-var PAL=[C.sage,C.beige,C.blue,C.rose,C.sage2,C.beige2,C.blue2,C.rose2,C.grey];
 
-var P={ // icon paths (24x24, stroke)
+var P={
  home:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
  pin:'<path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
  map:'<path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/>',
@@ -214,32 +208,34 @@ var FILLED="home pin map users user cap brief store cal heart clip table group s
 function svg(n){var f=FILLED.indexOf(n)>-1?'fill="currentColor" fill-opacity=".20"':'fill="none"';return '<svg class="ic" viewBox="0 0 24 24" '+f+' stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+(P[n]||'')+'</svg>'}
 function icons(root){(root||document).querySelectorAll("[data-ic]").forEach(function(e){if(!e.firstChild)e.innerHTML=svg(e.getAttribute("data-ic"))})}
 
-// field -> [header regex, fallback column index]
+// field -> [header regex, fallback column index (-1 = none)]
 var FIELDS={
- enumerator:[/enumerator/i,2],submitted:[/submitted/i,4],state:[/^state/i,5],district:[/^district/i,6],block:[/^block/i,7],
+ enumerator:[/enumerator/i,2],state:[/^state/i,5],district:[/^district/i,6],block:[/^block/i,7],
  village:[/village/i,9],shgName:[/shg.*name/i,10],age:[/^age/i,13],category:[/social\s*categor/i,16],
  disability:[/disab/i,17],education:[/education/i,18],shgYear:[/(join|joined).*year|shg.*year/i,20],
  livelihood:[/livelihood/i,21],famIncome:[/family.*income/i,22],occupation:[/occupation/i,23],
- perIncome:[/personal.*income/i,24],enterprise:[/existing.*enterprise/i,25]
+ perIncome:[/personal.*income/i,24],enterprise:[/existing.*enterprise/i,25],
+ entSector:[/sector|enterprise\s*(type|activity|nature)|business\s*(type|activity)/i,-1]
 };
 var FILTERS=[["state","State"],["district","District"],["block","Block"],["category","Social category"],["enumerator","Enumerator"],["ent","Enterprise"]];
+var DN={state:"State",block:"Block",category:"Category",edu:"Education",ageBand:"Age",disability:"Disability",liv:"Livelihood",occ:"Occupation",yr:"SHG year",enumerator:"Enumerator",entCat:"Enterprise"};
 
-var RAW=[],SEL={},charts={};
+var RAW=[],SEL={},XF={},charts={},ENTKEYS=[],ENTCOL={};
 function $(id){return document.getElementById(id)}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function fmt(n){return Number(n).toLocaleString("en-IN")}
+function inr(v){if(v>=100000)return "₹"+(v/100000).toFixed(1).replace(/\.0$/,"")+"L";if(v>=1000)return "₹"+(v/1000).toFixed(1).replace(/\.0$/,"")+"K";return "₹"+Math.round(v)}
 function num(v){var n=parseFloat(String(v).replace(/[^\d.\-]/g,""));return isNaN(n)?0:n}
-function median(a){if(!a.length)return 0;a=a.slice().sort(function(x,y){return x-y});var m=a.length>>1;return a.length%2?a[m]:Math.round((a[m-1]+a[m])/2)}
+function quant(a,p){var i=(a.length-1)*p,lo=Math.floor(i),hi=Math.ceil(i);return a[lo]+(a[hi]-a[lo])*(i-lo)}
+function median(a){if(!a.length)return 0;a=a.slice().sort(function(x,y){return x-y});return Math.round(quant(a,.5))}
 function avg(a){return a.length?Math.round(a.reduce(function(x,y){return x+y},0)/a.length):0}
-
 function setStatus(t,cls){var s=$("status");s.className="pill "+(cls||"");$("stxt").textContent=t}
 function showMsg(h){var m=$("msg");m.innerHTML=h;m.className="msg show"}
 function hideMsg(){$("msg").className="msg"}
 
-// ---------- normalizers (clean messy text on the fly) ----------
+// ---------- cleaning ----------
 function normWork(v){
-  var s=String(v||"").toLowerCase().split(/[,;]/)[0].trim();
-  if(!s)return "";
+  var s=String(v||"").toLowerCase().split(/[,;]/)[0].trim();if(!s)return "";
   if(/agri|farm|crop/.test(s))return "Agriculture";
   if(/livestock|dairy|milch|animal/.test(s))return "Livestock & Dairy";
   if(/fish|fihery/.test(s))return "Fishery";
@@ -249,21 +245,10 @@ function normWork(v){
   if(/home/.test(s))return "Homemaker";
   return "Other";
 }
-function normEnt(v){
-  var s=String(v||"").trim().toLowerCase();if(!s)return "";
-  if(/not\s*know|unknown|don/.test(s))return "Not known";
-  if(/^y/.test(s))return "Yes";
-  if(/^n/.test(s))return "No";
-  return "Not known";
-}
+function normEnt(v){var s=String(v||"").trim().toLowerCase();if(!s)return "";if(/not\s*know|unknown|don/.test(s))return "Not known";if(/^y/.test(s))return "Yes";if(/^n/.test(s))return "No";return "Not known"}
+function normSec(v){var s=String(v||"").trim().toLowerCase().split(/[,;\/]/)[0].trim();if(!s||/^(na|n\/a|nil|none|-)$/.test(s))return "";return s.replace(/\b\w/g,function(c){return c.toUpperCase()})}
 var EDU=[["No Formal Schooling",/no formal|illiter|none/],["Primary",/^primary/],["Upper Primary",/upper primary|middle/],["Secondary",/^secondary|^matric/],["Higher Secondary",/higher secondary|senior|^11|^12/],["Graduate or Above",/graduate|degree|post|diploma/]];
 function normEdu(v){var s=String(v||"").trim().toLowerCase();if(!s)return "";for(var i=0;i<EDU.length;i++)if(EDU[i][1].test(s))return EDU[i][0];return String(v).trim()}
-function parseDate(s){
-  s=String(s||"").trim();var m;
-  if((m=s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})/)))return new Date(+m[3],+m[2]-1,+m[1]);
-  if((m=s.match(/^(\d{4})-(\d{2})-(\d{2})/)))return new Date(+m[1],+m[2]-1,+m[3]);
-  var d=new Date(s);return isNaN(d)?null:d;
-}
 function shgKey(r){return r.shgName?r.shgName.toLowerCase().replace(/[^a-z0-9]/g,"")+"|"+r.block.toLowerCase():""}
 
 // ---------- CSV ----------
@@ -287,12 +272,21 @@ function buildRecords(table){
   window._missing=missing;
   var recs=[];
   for(var r=1;r<table.length;r++){var o={},row=table[r];
-    Object.keys(map).forEach(function(f){var v=row[map[f]];o[f]=v==null?"":String(v).trim()});
+    Object.keys(map).forEach(function(f){var v=map[f]<0?"":row[map[f]];o[f]=v==null?"":String(v).trim()});
     if(!(o.state||o.district||o.block||o.enumerator))continue;
     o.liv=normWork(o.livelihood);o.occ=normWork(o.occupation);o.ent=normEnt(o.enterprise);o.edu=normEdu(o.education);
-    o.ageN=num(o.age);o.fam=num(o.famIncome);o.per=num(o.perIncome);o.date=parseDate(o.submitted);
+    o.ageN=num(o.age);o.ageBand=o.ageN>0?(o.ageN<=25?"18–25":o.ageN<=35?"26–35":o.ageN<=45?"36–45":o.ageN<=55?"46–55":"56+"):"";
+    o.fam=num(o.famIncome);o.per=num(o.perIncome);
     var ym=String(o.shgYear).match(/\b(19|20)\d{2}\b/);o.yr=ym?ym[0]:"";
     recs.push(o)}
+  // enterprise sector grouping (top 5 sectors, rest grouped)
+  var sc={};recs.forEach(function(r){if(r.ent==="Yes"){r.sec=normSec(r.entSector)||"Sector not stated";sc[r.sec]=(sc[r.sec]||0)+1}});
+  var top=Object.keys(sc).filter(function(k){return k!=="Sector not stated"}).sort(function(a,b){return sc[b]-sc[a]}),keep=top.slice(0,5),hasOther=top.length>5;
+  recs.forEach(function(r){if(r.ent==="Yes"){var g=keep.indexOf(r.sec)>-1?r.sec:(r.sec==="Sector not stated"?r.sec:"Other sectors");r.entCat="Yes · "+g}else r.entCat=r.ent});
+  var yes=keep.slice();if(hasOther)yes.push("Other sectors");if(sc["Sector not stated"])yes.push("Sector not stated");
+  var cols=[C.emerald,C.gold,C.sapphire,C.plum,C.teal];ENTKEYS=[];ENTCOL={};
+  yes.forEach(function(g,i){var k="Yes · "+g;ENTKEYS.push(k);ENTCOL[k]=g==="Other sectors"?C.slate:g==="Sector not stated"?C.mist:cols[i%cols.length]});
+  ENTKEYS.push("No","Not known");ENTCOL["No"]=C.burgundy;ENTCOL["Not known"]=C.champ;
   return recs;
 }
 
@@ -315,10 +309,10 @@ function viaJsonp(){return new Promise(function(res,rej){
 function load(){
   setStatus("Loading…");
   viaFetch().catch(function(){return viaJsonp()}).then(function(t){
-    try{localStorage.setItem("eh_cache2",JSON.stringify({t:Date.now(),table:t}))}catch(e){}
+    try{localStorage.setItem("eh_cache3",JSON.stringify({t:Date.now(),table:t}))}catch(e){}
     finish(t,"Live · Google Sheet");
   }).catch(function(err){
-    var c=null;try{c=JSON.parse(localStorage.getItem("eh_cache2"))}catch(e){}
+    var c=null;try{c=JSON.parse(localStorage.getItem("eh_cache3"))}catch(e){}
     if(c&&c.table)finish(c.table,"Offline · saved "+new Date(c.t).toLocaleString(),"warn");
     else{setStatus("Cannot reach Google Sheet","err");
       showMsg("<b>Could not read the Google Sheet</b> ("+esc(err.message)+").<br>1) Sheet → <b>Share → Anyone with the link → Viewer</b>. 2) Make sure the network allows <code>docs.google.com</code>. 3) Or download <b>CLEANED DATA</b> as CSV and click <b>Load CSV</b>.")}
@@ -326,13 +320,15 @@ function load(){
 }
 function finish(table,label,cls){
   try{RAW=buildRecords(table)}catch(e){setStatus(e.message,"err");showMsg(esc(e.message));return}
-  hideMsg();if(window._missing&&window._missing.length)console.warn("Headers not matched; used column position for:",window._missing);
+  hideMsg();if(window._missing&&window._missing.length)console.warn("Headers not matched:",window._missing);
+  var noSec=window._missing.indexOf("entSector")>-1;
+  $("sub-ent").textContent=noSec?"Enterprise sector column not found in the sheet — showing Yes / No / Not known (add a column named “Enterprise Sector”)":"Women who already run a business, split by sector, next to those who do not · click a bar or a legend item to filter";
   setStatus(label+" · "+new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"}),cls);
   $("sub").textContent=RAW.length+" women registered · read live from the CLEANED DATA tab";
   buildFilters();render();
 }
 
-// ---------- filters (cascading) ----------
+// ---------- filters ----------
 function uniq(f,pool){var s={};pool.forEach(function(r){if(r[f])s[r[f]]=1});return Object.keys(s).sort()}
 function poolFor(f){return RAW.filter(function(r){
   if(f==="district"&&SEL.state&&SEL.state!=="all"&&r.state!==SEL.state)return false;
@@ -346,54 +342,112 @@ function buildFilters(){
     if(!SEL[f]||opts.indexOf(SEL[f])<0)SEL[f]="all";sel.value=SEL[f];
     sel.onchange=function(){SEL[f]=sel.value;if(f==="state"){SEL.district="all";SEL.block="all"}if(f==="district")SEL.block="all";buildFilters();render()};
     box.appendChild(lab)});
-  var b=document.createElement("button");b.className="ghost";b.textContent="Reset";b.onclick=function(){SEL={};buildFilters();render()};box.appendChild(b);
+  var b=document.createElement("button");b.className="ghost";b.textContent="Reset";b.onclick=function(){SEL={};XF={};buildFilters();render()};box.appendChild(b);
 }
-function filtered(){return RAW.filter(function(r){for(var f in SEL){if(SEL[f]&&SEL[f]!=="all"&&r[f]!==SEL[f])return false}return true})}
+
+// ---------- cross-filter engine (click any chart, like Power BI) ----------
+function on(dim,v){var a=XF[dim];return !a||!a.length||a.indexOf(v)>-1}
+function pass(r,except){
+  for(var f in SEL){if(SEL[f]&&SEL[f]!=="all"&&r[f]!==SEL[f])return false}
+  for(var d in XF){if(except.indexOf(d)>-1)continue;if(XF[d].indexOf(r[d])<0)return false}
+  return true}
+function rowsFor(except){return RAW.filter(function(r){return pass(r,except)})}
+function mu(e){var n=e.native||e;return !!(n.ctrlKey||n.metaKey||n.shiftKey)}
+function toggle(dim,val,multi){var a=(XF[dim]||[]).slice(),i=a.indexOf(val);
+  if(multi){if(i>-1)a.splice(i,1);else a.push(val)}else a=(i>-1&&a.length===1)?[]:[val];
+  if(a.length)XF[dim]=a;else delete XF[dim];setTimeout(render,0)}
+function togglePair(pairs,multi){
+  var same=!multi&&pairs.every(function(p){var a=XF[p[0]];return a&&a.length===1&&a[0]===p[1]});
+  pairs.forEach(function(p){var d=p[0],v=p[1],a=(XF[d]||[]).slice(),i=a.indexOf(v);
+    if(same)a=[];else if(multi){if(i>-1)a.splice(i,1);else a.push(v)}else a=[v];
+    if(a.length)XF[d]=a;else delete XF[d]});setTimeout(render,0)}
+function pick(ch,e,axis){var els=ch.getElementsAtEventForMode(e,"nearest",{axis:axis,intersect:false},true);return els.length?els[0].index:-1}
+function xbar(){var h="",n=0;
+  Object.keys(XF).forEach(function(d){XF[d].forEach(function(v){n++;h+='<span class="xchip" data-d="'+d+'" data-v="'+esc(v)+'">'+DN[d]+': <b>'+esc(v)+'</b> ×</span>'})});
+  $("xbar").innerHTML=n?h+'<button class="ghost" id="xclr">Clear selection</button>':'<span class="hint">Click any chart to filter the whole dashboard · Ctrl / Shift + click to pick several · Esc to clear</span>'}
 
 // ---------- chart helpers ----------
 Chart.defaults.font.family=FONT;Chart.defaults.font.size=11.5;Chart.defaults.color="#6f6a5e";
-Chart.defaults.plugins.tooltip.backgroundColor="#2F3A35";Chart.defaults.plugins.tooltip.cornerRadius=10;Chart.defaults.plugins.tooltip.padding=10;
-Chart.defaults.plugins.tooltip.boxPadding=4;
-
+Chart.defaults.plugins.tooltip.backgroundColor="#1F2A26";Chart.defaults.plugins.tooltip.cornerRadius=10;Chart.defaults.plugins.tooltip.padding=10;Chart.defaults.plugins.tooltip.boxPadding=4;
 var VL={id:"vl",afterDatasetsDraw:function(ch){
   var type=ch.config.type,ctx=ch.ctx;ctx.save();ctx.font="700 11px "+FONT;ctx.textBaseline="middle";
   ch.data.datasets.forEach(function(ds,di){var meta=ch.getDatasetMeta(di);if(meta.hidden)return;
     var tot=ds.data.reduce(function(a,b){return a+(+b||0)},0);
     meta.data.forEach(function(el,i){var v=+ds.data[i];if(!v)return;
       if(type==="doughnut"){var p=v/tot;if(p<.06)return;var pos=el.tooltipPosition();ctx.fillStyle="#fff";ctx.textAlign="center";ctx.fillText(Math.round(p*100)+"%",pos.x,pos.y)}
-      else if(type==="line"){ctx.fillStyle=C.ink;ctx.textAlign="center";ctx.fillText(v,el.x,el.y-13)}
       else{var h=ch.options.indexAxis==="y",sc=ch.options.scales[h?"x":"y"],st=sc&&sc.stacked;
         if(st){var w=h?Math.abs(el.x-el.base):Math.abs(el.y-el.base);if(w<22)return;ctx.fillStyle="#fff";ctx.textAlign="center";ctx.fillText(v,h?(el.x+el.base)/2:el.x,h?el.y:(el.y+el.base)/2)}
         else if(h){ctx.fillStyle=C.ink;ctx.textAlign="left";ctx.fillText(v,el.x+8,el.y)}
         else{ctx.fillStyle=C.ink;ctx.textAlign="center";ctx.fillText(v,el.x,el.y-11)}}
     })});ctx.restore()}};
-var SH={id:"sh",beforeDatasetsDraw:function(ch){var c=ch.ctx,d=ch.config.type==="doughnut";c.save();c.shadowColor="rgba(50,40,28,.28)";c.shadowBlur=d?16:8;c.shadowOffsetY=d?7:3},afterDatasetsDraw:function(ch){ch.ctx.restore()}};
+var SH={id:"sh",beforeDatasetsDraw:function(ch){var c=ch.ctx,d=ch.config.type==="doughnut";c.save();c.shadowColor="rgba(40,34,24,.28)";c.shadowBlur=d?16:8;c.shadowOffsetY=d?7:3},afterDatasetsDraw:function(ch){ch.ctx.restore()}};
 var CT={id:"ct",afterDraw:function(ch){var o=ch.options.plugins.ct;if(!o||!o.t)return;
   var a=ch.chartArea,x=(a.left+a.right)/2,y=(a.top+a.bottom)/2,c=ch.ctx;c.save();c.textAlign="center";c.textBaseline="middle";
   c.fillStyle=C.ink;c.font="700 26px "+FONT;c.fillText(o.t,x,y-7);c.fillStyle="#8A8579";c.font="500 11px "+FONT;c.fillText(o.s||"",x,y+15);c.restore()}};
-
 function put(id,cfg,n){
   var cv=$(id),box=cv.parentNode;if(charts[id]){charts[id].destroy();delete charts[id]}
   var old=box.querySelector(".empty");if(old)old.remove();
   if(!n){cv.style.display="none";box.insertAdjacentHTML("beforeend",'<div class="empty">No data for this selection</div>');return}
   cv.style.display="";charts[id]=new Chart(cv,cfg);
 }
-function base(o){o.responsive=true;o.maintainAspectRatio=false;o.animation={duration:500};o.layout={padding:{top:8,right:10,bottom:2}};return o}
+function base(o,pr){o.responsive=true;o.maintainAspectRatio=false;o.animation={duration:350};o.layout={padding:{top:8,right:pr||10,bottom:2}};return o}
 function cnt(rows,fn){var m={};rows.forEach(function(r){var v=fn(r);if(v)m[v]=(m[v]||0)+1});
   return Object.keys(m).map(function(k){return[k,m[k]]}).sort(function(a,b){return b[1]-a[1]})}
-function hbar(id,data,color,th){
-  put(id,{type:"bar",data:{labels:data.map(function(d){return d[0]}),datasets:[{data:data.map(function(d){return d[1]}),backgroundColor:grad(color,true),borderRadius:99,borderSkipped:false,barThickness:th||16}]},
-    options:base({indexAxis:"y",plugins:{legend:{display:false}},scales:{x:{display:false,beginAtZero:true,grace:"15%"},y:{grid:{display:false},border:{display:false},ticks:{font:{size:11.5,weight:"500"}}}}}),plugins:[SH,VL]},data.length)}
-function vbar(id,data,color){
-  put(id,{type:"bar",data:{labels:data.map(function(d){return d[0]}),datasets:[{data:data.map(function(d){return d[1]}),backgroundColor:grad(color,false),borderRadius:10,borderSkipped:false,maxBarThickness:46}]},
-    options:base({plugins:{legend:{display:false}},scales:{y:{display:false,beginAtZero:true,grace:"15%"},x:{grid:{display:false},border:{display:false}}}}),plugins:[SH,VL]},data.length)}
-function donut(id,data,total,sub,cols){
-  put(id,{type:"doughnut",data:{labels:data.map(function(d){return d[0]}),datasets:[{data:data.map(function(d){return d[1]}),backgroundColor:cols||PAL,borderColor:"#FBF9F5",borderWidth:3,hoverOffset:5}]},
-    options:base({cutout:"64%",plugins:{legend:{position:"bottom",labels:{usePointStyle:true,pointStyle:"circle",boxWidth:8,boxHeight:8,padding:12,font:{size:11}}},ct:{t:fmt(total),s:sub}}}),plugins:[SH,VL,CT]},data.length)}
+function barFill(key,horiz,dim,labels){var g=grad(key,horiz);return function(ctx){if(ctx.dataIndex==null)return GR[key][1];return on(dim,labels[ctx.dataIndex])?g(ctx):fade(GR[key][1],.2)}}
+function hbar(id,data,color,dim,th){
+  var L=data.map(function(d){return d[0]});
+  put(id,{type:"bar",data:{labels:L,datasets:[{data:data.map(function(d){return d[1]}),backgroundColor:barFill(color,true,dim,L),borderRadius:99,borderSkipped:false,barThickness:th||16}]},
+    options:base({indexAxis:"y",onClick:function(e,_,ch){var i=pick(ch,e,"y");if(i>-1)toggle(dim,L[i],mu(e))},plugins:{legend:{display:false}},scales:{x:{display:false,beginAtZero:true,grace:"15%"},y:{grid:{display:false},border:{display:false},ticks:{font:{size:11.5,weight:"500"}}}}}),plugins:[SH,VL]},data.length)}
+function vbar(id,data,color,dim){
+  var L=data.map(function(d){return d[0]});
+  put(id,{type:"bar",data:{labels:L,datasets:[{data:data.map(function(d){return d[1]}),backgroundColor:barFill(color,false,dim,L),borderRadius:10,borderSkipped:false,maxBarThickness:46}]},
+    options:base({onClick:function(e,_,ch){var i=pick(ch,e,"x");if(i>-1)toggle(dim,L[i],mu(e))},plugins:{legend:{display:false}},scales:{y:{display:false,beginAtZero:true,grace:"15%"},x:{grid:{display:false},border:{display:false}}}}),plugins:[SH,VL]},data.length)}
+function donut(id,data,dim,cols){
+  var L=data.map(function(d){return d[0]}),tot=0,sel=0;data.forEach(function(d){tot+=d[1];if(on(dim,d[0]))sel+=d[1]});
+  var bg=L.map(function(l,i){var c=cols[i%cols.length];return on(dim,l)?c:fade(c,.22)});
+  put(id,{type:"doughnut",data:{labels:L,datasets:[{data:data.map(function(d){return d[1]}),backgroundColor:bg,borderColor:"#FBF9F5",borderWidth:3,hoverOffset:5}]},
+    options:base({cutout:"64%",onClick:function(e,_,ch){var h=ch.getElementsAtEventForMode(e,"nearest",{intersect:true},true);if(h.length)toggle(dim,L[h[0].index],mu(e))},
+      plugins:{legend:{position:"bottom",onClick:function(e,it){toggle(dim,L[it.index],mu(e))},labels:{usePointStyle:true,pointStyle:"circle",boxWidth:8,boxHeight:8,padding:12,font:{size:11}}},ct:{t:fmt(sel),s:"women"}}}),plugins:[SH,VL,CT]},data.length)}
+
+// ---------- income-spread chart: IQR bar + median + 10–90 whisker + every woman as a dot ----------
+function spread(id,dim,inc,color,capId){
+  var g={};rowsFor([dim]).forEach(function(r){var k=r[dim],v=r[inc];if(k&&v>0)(g[k]=g[k]||[]).push(v)});
+  var S=Object.keys(g).map(function(k){var a=g[k].sort(function(x,y){return x-y});
+    return{k:k,a:a,n:a.length,min:a[0],max:a[a.length-1],p10:quant(a,.1),q1:quant(a,.25),med:quant(a,.5),q3:quant(a,.75),p90:quant(a,.9)}}).sort(function(x,y){return y.med-x.med});
+  var dk=GR[color][1],hi=S.length?Math.max.apply(null,S.map(function(s){return s.max}))*1.05:1,g2=grad(color,true);
+  var plug={id:"sp",beforeDatasetsDraw:function(ch){var c=ch.ctx,sx=ch.scales.x,sy=ch.scales.y;c.save();c.lineWidth=2;c.lineCap="round";
+    S.forEach(function(s,i){var y=sy.getPixelForValue(i);c.strokeStyle=fade(dk,on(dim,s.k)?.6:.15);c.beginPath();c.moveTo(sx.getPixelForValue(s.p10),y);c.lineTo(sx.getPixelForValue(s.p90),y);
+      c.moveTo(sx.getPixelForValue(s.p10),y-6);c.lineTo(sx.getPixelForValue(s.p10),y+6);c.moveTo(sx.getPixelForValue(s.p90),y-6);c.lineTo(sx.getPixelForValue(s.p90),y+6);c.stroke()});c.restore()},
+    afterDatasetsDraw:function(ch){var c=ch.ctx,sx=ch.scales.x,sy=ch.scales.y,ar=ch.chartArea;c.save();
+    S.forEach(function(s,i){var y=sy.getPixelForValue(i),a=on(dim,s.k)?1:.25;
+      s.a.forEach(function(v,j){var jy=y+(((j*37+i*91+13)%17)/17-.5)*22;c.beginPath();c.arc(sx.getPixelForValue(v),jy,3,0,6.283);c.fillStyle="rgba(255,255,255,"+(.9*a)+")";c.fill();c.lineWidth=1.4;c.strokeStyle=fade(dk,.85*a);c.stroke()});
+      var mx=sx.getPixelForValue(s.med);c.beginPath();c.moveTo(mx,y-8);c.lineTo(mx+7,y);c.lineTo(mx,y+8);c.lineTo(mx-7,y);c.closePath();c.fillStyle="#fff";c.fill();c.lineWidth=2.4;c.strokeStyle=fade(dk,a);c.stroke();
+      c.textAlign="left";c.textBaseline="middle";c.fillStyle=fade(C.ink,a);c.font="700 12px "+FONT;c.fillText(inr(s.med),ar.right+12,y-6);c.fillStyle=fade("#8A8579",a);c.font="500 10.5px "+FONT;c.fillText("n = "+s.n,ar.right+12,y+8)});c.restore()}};
+  put(id,{type:"bar",data:{labels:S.map(function(s){return s.k}),datasets:[{data:S.map(function(s){return[s.q1,s.q3]}),minBarLength:10,borderRadius:99,borderSkipped:false,barThickness:20,
+      backgroundColor:function(ctx){if(ctx.dataIndex==null)return dk;return on(dim,S[ctx.dataIndex].k)?fade(dk,.82):fade(dk,.16)}}]},
+    options:base({indexAxis:"y",onClick:function(e,_,ch){var i=pick(ch,e,"y");if(i>-1)toggle(dim,S[i].k,mu(e))},
+      plugins:{legend:{display:false},tooltip:{callbacks:{title:function(it){return S[it[0].dataIndex].k},label:function(it){var s=S[it.dataIndex];return["Median  ₹"+fmt(Math.round(s.med)),"Middle half  ₹"+fmt(Math.round(s.q1))+" – ₹"+fmt(Math.round(s.q3)),"10th–90th pct  ₹"+fmt(Math.round(s.p10))+" – ₹"+fmt(Math.round(s.p90)),"Lowest–highest  ₹"+fmt(s.min)+" – ₹"+fmt(s.max),s.n+" women reporting income"]}}}},
+      scales:{x:{min:0,max:hi,border:{display:false},grid:{color:"rgba(150,135,110,.22)",borderDash:[3,4]},ticks:{callback:function(v){return inr(v)},maxTicksLimit:6}},y:{grid:{display:false},border:{display:false},ticks:{font:{size:11.5,weight:"600"}}}}},96),plugins:[SH,plug]},S.length);
+  $(capId).innerHTML='<span><i style="width:22px;height:9px;border-radius:9px;background:'+fade(dk,.82)+'"></i>middle half of women</span><span><i style="width:9px;height:9px;transform:rotate(45deg);background:#fff;border:2px solid '+dk+'"></i>median</span><span><i style="width:20px;height:2px;background:'+fade(dk,.6)+'"></i>10th–90th percentile</span><span><i style="width:7px;height:7px;border-radius:50%;background:#fff;border:1.5px solid '+dk+'"></i>each woman</span>'}
+
+// ---------- big enterprise chart: state × (sector of those who run one | No | Not known) ----------
+function entChart(){
+  var rows=rowsFor(["state","entCat"]).filter(function(r){return r.entCat}),sts=cnt(rows,function(r){return r.state}).map(function(d){return d[0]});
+  var ds=ENTKEYS.map(function(k){var col=ENTCOL[k];return{label:k,key:k,borderRadius:7,borderSkipped:false,barThickness:28,
+    data:sts.map(function(s){return rows.filter(function(r){return r.state===s&&r.entCat===k}).length}),
+    backgroundColor:function(ctx){if(ctx.dataIndex==null)return col;return on("state",sts[ctx.dataIndex])&&on("entCat",k)?col:fade(col,.2)}}});
+  var tp={id:"tp",afterDatasetsDraw:function(ch){var c=ch.ctx,sx=ch.scales.x,sy=ch.scales.y;c.save();c.textBaseline="middle";c.textAlign="left";
+    sts.forEach(function(s,i){var all=rows.filter(function(r){return r.state===s}),y=rows.filter(function(r){return r.state===s&&r.ent==="Yes"}).length,a=on("state",s)?1:.25,x=sx.getPixelForValue(all.length),yy=sy.getPixelForValue(i);
+      c.fillStyle=fade(C.ink,a);c.font="700 12px "+FONT;c.fillText(Math.round(y/all.length*100)+"% run an enterprise",x+12,yy-6);c.fillStyle=fade("#8A8579",a);c.font="500 10.5px "+FONT;c.fillText("n = "+all.length,x+12,yy+8)});c.restore()}};
+  put("c-ent",{type:"bar",data:{labels:sts,datasets:ds},
+    options:base({indexAxis:"y",onClick:function(e,_,ch){var h=ch.getElementsAtEventForMode(e,"nearest",{intersect:true},true);
+        if(h.length)togglePair([["state",sts[h[0].index]],["entCat",ds[h[0].datasetIndex].key]],mu(e));else{var i=pick(ch,e,"y");if(i>-1)toggle("state",sts[i],mu(e))}},
+      plugins:{legend:{position:"bottom",onClick:function(e,it,lg){toggle("entCat",ds[it.datasetIndex].key,mu(e))},labels:{usePointStyle:true,pointStyle:"circle",boxWidth:9,boxHeight:9,padding:14}}},
+      scales:{x:{stacked:true,display:false},y:{stacked:true,grid:{display:false},border:{display:false},ticks:{font:{size:12.5,weight:"600"}}}}},180),plugins:[SH,VL,tp]},sts.length)}
 
 // ---------- render ----------
 function render(){
-  var rows=filtered(),N=rows.length;
+  var rows=rowsFor([]),N=rows.length;
   var states=cnt(rows,function(r){return r.state}),dists=cnt(rows,function(r){return r.district}),blocks=cnt(rows,function(r){return r.block});
   var shgSet={};rows.forEach(function(r){var k=shgKey(r);if(k)shgSet[k]=1});var shgN=Object.keys(shgSet).length;
   var ages=rows.map(function(r){return r.ageN}).filter(function(v){return v>0});
@@ -401,70 +455,47 @@ function render(){
   var per=rows.map(function(r){return r.per}).filter(function(v){return v>0});
   var answered=rows.filter(function(r){return r.ent}).length,yes=rows.filter(function(r){return r.ent==="Yes"}).length,no=rows.filter(function(r){return r.ent==="No"}).length;
   var pct=function(a,b){return b?Math.round(a/b*100):0};
-
   var K=[["sage","users",fmt(N),"Women enrolled","Avg age "+(ages.length?avg(ages):"–")+" years"],
          ["blue","group",fmt(shgN),"SHG groups","≈ "+(shgN?(N/shgN).toFixed(1):"0")+" women per group"],
          ["beige","pin",fmt(dists.length),"Districts covered",states.length+" states · "+blocks.length+" blocks"],
          ["beige","rupee","₹"+fmt(median(fam)),"Median family income / month","Her own income: ₹"+fmt(median(per))+" (median)"],
          ["rose","store",pct(yes,answered)+"%","Already run an enterprise",fmt(yes)+" of "+fmt(answered)+" women"]];
   $("kpis").innerHTML=K.map(function(k){return '<div class="card kpi '+(k[0]==="sage"?"":k[0])+'"><div class="top"><span class="chip" data-ic="'+k[1]+'"></span>'+k[3]+'</div><div class="v">'+k[2]+'</div><div class="l">'+k[4]+'</div></div>'}).join("");
-
-  var lowInc=fam.filter(function(v){return v<10000}).length;
-  var lowEdu=rows.filter(function(r){return /^(No Formal|Primary|Upper Primary)/.test(r.edu)}).length;
-  var dis=rows.filter(function(r){return /^y/i.test(r.disability)}).length;
-  var I=[["rose","store",fmt(no),"women have no enterprise yet — "+pct(no,answered)+"% of those answered"],
-         ["beige","rupee",fmt(lowInc),"households earn below ₹10,000 a month"],
-         ["blue","cap",fmt(lowEdu),"women studied only up to upper primary"],
-         ["sage","heart",fmt(dis),"women reported a disability"]];
+  var lowInc=fam.filter(function(v){return v<10000}).length,lowEdu=rows.filter(function(r){return /^(No Formal|Primary|Upper Primary)/.test(r.edu)}).length,dis=rows.filter(function(r){return /^y/i.test(r.disability)}).length;
+  var I=[["rose","store",fmt(no),"women have no enterprise yet — "+pct(no,answered)+"% of those answered"],["beige","rupee",fmt(lowInc),"households earn below ₹10,000 a month"],["blue","cap",fmt(lowEdu),"women studied only up to upper primary"],["sage","heart",fmt(dis),"women reported a disability"]];
   $("ins").innerHTML=I.map(function(k){return '<div class="card insc '+(k[0]==="sage"?"":k[0])+'"><span class="chip" data-ic="'+k[1]+'"></span><div><div class="n">'+k[2]+'</div><div class="t">'+k[3]+'</div></div></div>'}).join("");
 
-  hbar("c-block",blocks.slice(0,10),"sage",15);
-  donut("c-state",states,N,"women",[C.blue,C.beige,C.sage,C.rose,C.sage2,C.beige2]);
-  donut("c-cat",cnt(rows,function(r){return r.category}),N,"women",[C.sage,C.beige,C.blue,C.rose,C.grey]);
+  var bl=cnt(rowsFor(["block"]),function(r){return r.block}),top10=bl.slice(0,10);
+  (XF.block||[]).forEach(function(b){if(!top10.some(function(d){return d[0]===b})){var f=bl.filter(function(d){return d[0]===b})[0];if(f)top10.push(f)}});
+  hbar("c-block",top10,"emerald","block",15);
+  donut("c-state",cnt(rowsFor(["state"]),function(r){return r.state}),"state",[C.sapphire,C.gold,C.emerald,C.burgundy,C.plum,C.teal]);
+  donut("c-cat",cnt(rowsFor(["category"]),function(r){return r.category}),"category",[C.emerald,C.gold,C.sapphire,C.burgundy,C.slate]);
 
-  var ed=cnt(rows,function(r){return r.edu});
-  ed.sort(function(a,b){var ia=EDU.map(function(e){return e[0]}).indexOf(a[0]),ib=EDU.map(function(e){return e[0]}).indexOf(b[0]);return (ia<0?99:ia)-(ib<0?99:ib)});
-  hbar("c-edu",ed,"gold",16);
-  var ab={"18–25":0,"26–35":0,"36–45":0,"46–55":0,"56+":0};
-  ages.forEach(function(a){ab[a<=25?"18–25":a<=35?"26–35":a<=45?"36–45":a<=55?"46–55":"56+"]++});
-  vbar("c-age",Object.keys(ab).map(function(k){return[k,ab[k]]}),"gold");
-  var dsc=cnt(rows,function(r){return r.disability});
-  donut("c-dis",dsc,N,"women",dsc.map(function(d){return /^y/i.test(d[0])?C.rose:/^n/i.test(d[0])&&!/disc/i.test(d[0])?C.sage:C.grey}));
+  var order=EDU.map(function(e){return e[0]}),ed=cnt(rowsFor(["edu"]),function(r){return r.edu});
+  ed.sort(function(a,b){var ia=order.indexOf(a[0]),ib=order.indexOf(b[0]);return (ia<0?99:ia)-(ib<0?99:ib)});
+  hbar("c-edu",ed,"gold","edu",16);
+  var bands=["18–25","26–35","36–45","46–55","56+"],ac=cnt(rowsFor(["ageBand"]),function(r){return r.ageBand}),am={};ac.forEach(function(d){am[d[0]]=d[1]});
+  vbar("c-age",bands.map(function(b){return[b,am[b]||0]}),"gold","ageBand");
+  donut("c-dis",cnt(rowsFor(["disability"]),function(r){return r.disability}),"disability",[C.burgundy,C.emerald,C.slate,C.champ]);
 
-  var b={"< ₹5K":0,"₹5–10K":0,"₹10–20K":0,"₹20–30K":0,"> ₹30K":0};
-  fam.forEach(function(v){b[v<5000?"< ₹5K":v<10000?"₹5–10K":v<20000?"₹10–20K":v<30000?"₹20–30K":"> ₹30K"]++});
-  vbar("c-inc",Object.keys(b).map(function(k){return[k,b[k]]}),"gold");
-  hbar("c-liv",cnt(rows,function(r){return r.liv}),"sage",16);
-  hbar("c-occ",cnt(rows,function(r){return r.occ}),"blue",16);
+  spread("c-livinc","liv","fam","sapphire","cap1");
+  spread("c-occinc","occ","per","plum","cap2");
+  entChart();
 
-  var sts=states.map(function(s){return s[0]}),en=["Yes","No","Not known"],ec=[C.sage,C.rose,C.beige];
-  put("c-ent",{type:"bar",data:{labels:sts,datasets:en.map(function(e,i){return{label:e,backgroundColor:ec[i],borderRadius:6,borderSkipped:false,barThickness:22,
-      data:sts.map(function(s){return rows.filter(function(r){return r.state===s&&r.ent===e}).length})}})},
-    options:base({indexAxis:"y",plugins:{legend:{position:"bottom",labels:{usePointStyle:true,pointStyle:"circle",boxWidth:8,boxHeight:8,padding:14}}},
-      scales:{x:{stacked:true,display:false},y:{stacked:true,grid:{display:false},border:{display:false},ticks:{font:{size:12,weight:"500"}}}}}),plugins:[SH,VL]},sts.length);
+  var ym={};rowsFor(["yr"]).forEach(function(r){if(r.yr)ym[r.yr]=(ym[r.yr]||0)+1});
+  vbar("c-year",Object.keys(ym).sort().map(function(k){return[k,ym[k]]}),"emerald","yr");
 
-  var ym={};rows.forEach(function(r){if(r.yr)ym[r.yr]=(ym[r.yr]||0)+1});
-  vbar("c-year",Object.keys(ym).sort().map(function(k){return[k,ym[k]]}),"sage");
+  var en2=cnt(rowsFor(["enumerator"]),function(r){return r.enumerator}),mx=en2.length?en2[0][1]:1;
+  $("enum").innerHTML=en2.length?en2.map(function(e){return '<div class="bar-row'+(on("enumerator",e[0])?"":" dim")+'" data-k="'+esc(e[0])+'"><div class="t"><span>'+esc(e[0])+'</span><b>'+fmt(e[1])+'</b></div><div class="tr"><i style="width:'+Math.round(e[1]/mx*100)+'%"></i></div></div>'}).join(""):'<div style="padding:40px 0;text-align:center;color:var(--mute)">No data for this selection</div>';
 
-  var dm={};rows.forEach(function(r){if(r.date){var k=r.date.getFullYear()+"-"+("0"+(r.date.getMonth()+1)).slice(-2)+"-"+("0"+r.date.getDate()).slice(-2);dm[k]=(dm[k]||0)+1}});
-  var dk=Object.keys(dm).sort();
-  put("c-day",{type:"line",data:{labels:dk.map(function(k){var d=new Date(k);return d.toLocaleDateString("en-GB",{day:"numeric",month:"short"})}),
-    datasets:[{data:dk.map(function(k){return dm[k]}),borderColor:"#43688A",borderWidth:3,tension:.35,pointRadius:5,pointBackgroundColor:"#fff",pointBorderColor:"#43688A",pointBorderWidth:3,fill:true,
-      backgroundColor:function(ctx){var a=ctx.chart.chartArea;if(!a)return "rgba(134,163,181,.2)";var g=ctx.chart.ctx.createLinearGradient(0,a.top,0,a.bottom);g.addColorStop(0,"rgba(94,127,153,.45)");g.addColorStop(1,"rgba(94,127,153,0)");return g}}]},
-    options:base({plugins:{legend:{display:false}},scales:{y:{display:false,beginAtZero:true,grace:"20%"},x:{grid:{display:false},border:{display:false}}}}),plugins:[SH,VL]},dk.length);
-
-  var en2=cnt(rows,function(r){return r.enumerator}),mx=en2.length?en2[0][1]:1;
-  $("enum").innerHTML=en2.length?en2.map(function(e){return '<div class="bar-row"><div class="t"><span>'+esc(e[0])+'</span><b>'+fmt(e[1])+'</b></div><div class="tr"><i style="width:'+Math.round(e[1]/mx*100)+'%"></i></div></div>'}).join(""):'<div style="padding:40px 0;text-align:center;color:var(--mute)">No data for this selection</div>';
-
-  // block table
-  var g={};rows.forEach(function(r){var k=r.block+"|"+r.district;(g[k]=g[k]||{block:r.block,district:r.district,state:r.state,rows:[]}).rows.push(r)});
+  var g={};rowsFor(["block"]).forEach(function(r){var k=r.block+"|"+r.district;(g[k]=g[k]||{block:r.block,district:r.district,state:r.state,rows:[]}).rows.push(r)});
   var list=Object.keys(g).map(function(k){return g[k]}).sort(function(a,b){return b.rows.length-a.rows.length});
   $("tbl").innerHTML='<table><thead><tr><th>Block</th><th>District</th><th>State</th><th class="num">Women</th><th class="num">SHGs</th><th class="num">Avg age</th><th class="num">Median family income</th><th>Enterprise</th></tr></thead><tbody>'+
    list.map(function(x){var rr=x.rows,sg={};rr.forEach(function(r){var k=shgKey(r);if(k)sg[k]=1});
      var a=rr.map(function(r){return r.ageN}).filter(function(v){return v>0}),f=rr.map(function(r){return r.fam}).filter(function(v){return v>0});
      var ans=rr.filter(function(r){return r.ent}).length,y=rr.filter(function(r){return r.ent==="Yes"}).length,p=pct(y,ans);
-     return '<tr><td><b>'+esc(x.block||"–")+'</b></td><td>'+esc(x.district)+'</td><td>'+esc(x.state)+'</td><td class="num"><b>'+rr.length+'</b></td><td class="num">'+Object.keys(sg).length+'</td><td class="num">'+(a.length?avg(a):"–")+'</td><td class="num">₹'+fmt(median(f))+'</td><td>'+p+'%<span class="mini"><i style="width:'+p+'%"></i></span></td></tr>'}).join("")+'</tbody></table>';
-  icons();
+     return '<tr data-k="'+esc(x.block)+'"'+(XF.block&&XF.block.indexOf(x.block)>-1?' class="sel"':'')+'><td><b>'+esc(x.block||"–")+'</b></td><td>'+esc(x.district)+'</td><td>'+esc(x.state)+'</td><td class="num"><b>'+rr.length+'</b></td><td class="num">'+Object.keys(sg).length+'</td><td class="num">'+(a.length?avg(a):"–")+'</td><td class="num">₹'+fmt(median(f))+'</td><td>'+p+'%<span class="mini"><i style="width:'+p+'%"></i></span></td></tr>'}).join("")+'</tbody></table>';
+  xbar();icons();
 }
 
 // ---------- events ----------
@@ -472,6 +503,10 @@ $("today").textContent=new Date().toLocaleDateString("en-IN",{day:"numeric",mont
 icons();
 $("refresh").onclick=load;
 $("file").onchange=function(e){var f=e.target.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){finish(parseCSV(rd.result),"CSV file · "+f.name,"warn")};rd.readAsText(f)};
+$("enum").onclick=function(e){var el=e.target.closest(".bar-row");if(el)toggle("enumerator",el.getAttribute("data-k"),e.ctrlKey||e.metaKey||e.shiftKey)};
+$("tbl").onclick=function(e){var el=e.target.closest("tbody tr");if(el)toggle("block",el.getAttribute("data-k"),e.ctrlKey||e.metaKey||e.shiftKey)};
+$("xbar").onclick=function(e){var c=e.target.closest(".xchip");if(c)return toggle(c.getAttribute("data-d"),c.getAttribute("data-v"),true);if(e.target.closest("#xclr")){XF={};render()}};
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&Object.keys(XF).length){XF={};render()}});
 document.querySelectorAll("aside a").forEach(function(a){a.onclick=function(){document.querySelectorAll("aside a").forEach(function(x){x.classList.remove("on")});a.classList.add("on")}});
 setInterval(function(){if(!document.hidden)load()},AUTO_REFRESH_MIN*60000);
 load();
