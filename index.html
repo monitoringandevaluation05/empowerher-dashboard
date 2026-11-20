@@ -250,7 +250,7 @@ var DN={state:"State",block:"Block",category:"Category",edu:"Education",ageBand:
 var FB=["Below ₹5K","₹5–10K","₹10–20K","₹20–30K","Above ₹30K"],PB=["Below ₹2K","₹2–5K","₹5–10K","₹10–15K","Above ₹15K"],ENT_LV="state",ENT_MODE="n",SECLIST=[],SECCOL={};
 function band(v,cuts,names){if(!(v>0))return "";for(var i=0;i<cuts.length;i++)if(v<cuts[i])return names[i];return names[cuts.length]}
 
-var RAW=[],SEL={},XF={},charts={},
+var RAW=[],SEL={},XF={},charts={};
 function $(id){return document.getElementById(id)}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function fmt(n){return Number(n).toLocaleString("en-IN")}
