@@ -49,6 +49,40 @@ button.ghost,.btn.ghost{background:var(--card);color:var(--ink);box-shadow:var(-
 .sb{display:inline-block;width:130px;height:8px;border-radius:9px;background:var(--sage-t);vertical-align:middle;margin-right:10px;overflow:hidden}
 .sb i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,#6FBFA7,#0B5646)}
 tr.dim td{opacity:.35}
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:30px;padding:26px 30px;border-radius:26px;color:#fff;background:radial-gradient(500px 260px at 95% 0%,rgba(235,203,139,.30),transparent 60%),linear-gradient(135deg,#128069,#0A463A);box-shadow:0 26px 50px -14px rgba(10,70,58,.55),inset 0 1px 0 rgba(255,255,255,.3)}
+.hero .big{font-family:Georgia,serif;font-size:58px;line-height:1;font-weight:600;letter-spacing:-1.5px}
+.hero .big span{font-family:"DM Sans","Segoe UI",Arial,sans-serif;font-size:17px;font-weight:500;letter-spacing:0;opacity:.85;margin:0 14px 0 8px}
+.hero p{margin:14px 0 0;font-size:14.5px;line-height:1.6;opacity:.92;max-width:470px}
+.hero p b{color:#F3D79A}
+.hero .lt{font-size:11px;letter-spacing:1.8px;text-transform:uppercase;font-weight:700;opacity:.75;margin-bottom:10px}
+.lr{display:grid;grid-template-columns:96px 1fr 70px;gap:12px;align-items:center;margin:8px 0;cursor:pointer;transition:opacity .2s}
+.lr.dim{opacity:.35}.lr.sel .lb{font-weight:700;color:#F3D79A}
+.lr .lb{font-size:13px}
+.lr .tk{height:20px;border-radius:99px;background:rgba(255,255,255,.16);overflow:hidden}
+.lr .tk i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#F3D79A,#D9A441);box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.lr .vl{font-size:13px;font-weight:700}
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:14px}
+.gh{grid-column:1/-1;display:flex;gap:10px;align-items:center;font-size:12px;letter-spacing:1.4px;text-transform:uppercase;font-weight:700;margin-top:10px}
+.gh em{font-style:normal;background:var(--sage-t);color:var(--sage-d);border-radius:99px;padding:3px 10px;letter-spacing:0;text-transform:none;font-weight:600}
+.gh::after{content:"";flex:1;height:1px;background:var(--line)}
+.sc{position:relative;overflow:hidden;background:linear-gradient(180deg,#fff,#FAF6EE);border:2px solid #fff;border-radius:18px;padding:16px 16px 12px;box-shadow:var(--shadow);cursor:pointer;transition:transform .15s,opacity .2s}
+.sc:hover{transform:translateY(-3px)}
+.sc::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--bc,#0F6B58)}
+.sc.sel{border-color:var(--sage-d);box-shadow:0 0 0 3px rgba(15,107,88,.18),var(--shadow)}
+.sc.dim{opacity:.35}
+.sc .top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.sc h4{margin:0;font-size:14.5px;line-height:1.25}
+.sc .loc{font-size:11.5px;color:var(--mute);margin-top:3px}
+.sc .n{font-size:32px;font-weight:700;line-height:.95;text-align:right;letter-spacing:-1px}
+.sc .n small{display:block;font-size:10.5px;color:var(--mute);font-weight:500;letter-spacing:0;margin-top:3px}
+.ppl{display:flex;flex-wrap:wrap;gap:3px;margin:12px 0 10px}
+.pp{width:19px;height:19px;fill:#CFC8B8}.pp.y{fill:var(--sage-d)}
+.ppl b{font-size:12px;align-self:center;color:var(--mute);margin-left:3px}
+.sc .ft{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:11.5px;color:var(--mute);border-top:1px dashed var(--line);padding-top:8px}
+.sc .ft b{color:var(--ink)}
+.more{display:block;margin:16px auto 4px}
+.bchip{background:#fff;border:1px solid var(--sage-d);color:var(--sage-d);border-radius:999px;padding:6px 12px;font-size:12px;cursor:pointer}
+@media(max-width:980px){.hero{grid-template-columns:1fr}.hero .big{font-size:46px}}
 .shgn small{display:block;color:var(--mute);font-size:11px;margin-top:2px;font-weight:400}
 .more{display:block;margin:14px auto 4px}
 .bchip{background:#fff;border:1px solid var(--sage-d);color:var(--sage-d);border-radius:999px;padding:6px 12px;font-size:12px;cursor:pointer}
@@ -172,16 +206,14 @@ td.num,th.num{text-align:right}
 </div>
 
 <div class="sec" id="sec-shg">SHG groups</div>
-<div class="ins" id="shgk"></div>
-<div class="grid" style="margin-top:16px">
-  <div class="card blue s5"><div class="ch"><span class="chip" data-ic="group"></span><div><h3>How big are the SHGs?</h3><p>Number of SHGs by beneficiaries registered · click a bar to filter the list</p></div></div><div class="box"><canvas id="c-shgsize"></canvas></div></div>
-  <div class="card s7"><div class="ch"><span class="chip" data-ic="trend"></span><div><h3>Largest SHGs</h3><p>Top 10 by beneficiaries · click a bar to filter the whole dashboard</p></div></div><div class="box"><canvas id="c-shgtop"></canvas></div></div>
-</div>
+<div class="hero" id="shghero"></div>
 <div class="card blue s12" style="margin-top:16px">
-  <div class="ch"><span class="chip" data-ic="table"></span><div><h3>SHG list — beneficiaries in each SHG</h3><p id="shgsub"></p></div></div>
-  <div class="etool"><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><input id="shgq" class="search" placeholder="Search SHG name, village, block…"><span id="shgband"></span></div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><div class="seg" id="shgsort"><button data-s="n" class="on">Most members</button><button data-s="f">Fewest</button><button data-s="a">A–Z</button></div><button class="ghost" id="shgdl">⬇ Download CSV</button></div></div>
-  <div class="tscroll" id="shglist" style="max-height:520px"></div>
+  <div class="ch"><span class="chip" data-ic="group"></span><div><h3>Every SHG at a glance</h3><p id="shgsub"></p></div></div>
+  <div class="etool"><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><input id="shgq" class="search" placeholder="Search SHG, village, block…"><span id="shgband"></span></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><div class="seg" id="shggrp"><button data-g="" class="on">No grouping</button><button data-g="state">By state</button><button data-g="district">By district</button><button data-g="block">By block</button></div>
+    <div class="seg" id="shgsort"><button data-s="n" class="on">Biggest first</button><button data-s="f">Smallest first</button><button data-s="a">A–Z</button></div><button class="ghost" id="shgdl">⬇ CSV</button></div></div>
+  <div class="how" style="margin:0 0 12px">How to read: every card is one SHG. <b>Each person icon is one registered woman</b> — <span style="color:var(--sage-d);font-weight:700">green</span> means she already runs an enterprise, grey means she does not (or not known). Click a card to filter the whole dashboard to that SHG.</div>
+  <div id="shglist"></div>
 </div>
 
 <div class="sec" id="sec-profile">Beneficiary profile</div>
@@ -579,51 +611,52 @@ function render(){
   shgList();xbar();icons();
 }
 
-// ---------- SHG analysis ----------
-var SB=["1–5","6–10","11–15","16–20","21+"],SHG_BAND="",SHG_LIM=40,SHG_CUR=[];
-function sband(n){return n<=5?SB[0]:n<=10?SB[1]:n<=15?SB[2]:n<=20?SB[3]:SB[4]}
+// ---------- SHG analysis (people-icon cards) ----------
+var BD=[["1 woman",1,1],["2–3 women",2,3],["4–5 women",4,5],["6–10 women",6,10],["11+ women",11,99999]],BCOL=["#B9C4BE","#6FBFA7","#0F6B58","#B98B3A","#8B2F3C"];
+var SHG_BAND="",SHG_LIM=48,SHG_CUR=[],SHG_GRP="";
+function bidx(n){for(var i=0;i<BD.length;i++)if(n>=BD[i][1]&&n<=BD[i][2])return i;return 0}
+var PERSON='<svg class="pp #" viewBox="0 0 24 24"><circle cx="12" cy="7" r="5"/><path d="M2.5 23c0-6 4.2-9.5 9.5-9.5s9.5 3.5 9.5 9.5z"/></svg>';
 function shgList(){
   var rows=rowsFor(["shgK"]).filter(function(r){return r.shgK}),g={};
   rows.forEach(function(r){var x=g[r.shgK]||(g[r.shgK]={k:r.shgK,name:r.shgName,village:r.village,block:r.block,district:r.district,state:r.state,n:0,ages:[],fams:[],yes:0,ans:0,yrs:{}});
     x.n++;if(r.ageN>0)x.ages.push(r.ageN);if(r.fam>0)x.fams.push(r.fam);if(r.ent)x.ans++;if(r.ent==="Yes")x.yes++;if(r.yr)x.yrs[r.yr]=(x.yrs[r.yr]||0)+1});
-  var A=Object.keys(g).map(function(k){var x=g[k];x.band=sband(x.n);x.age=avg(x.ages);x.fam=median(x.fams);x.ep=x.ans?Math.round(x.yes/x.ans*100):-1;
+  var A=Object.keys(g).map(function(k){var x=g[k];x.bi=bidx(x.n);x.age=avg(x.ages);x.fam=median(x.fams);x.ep=x.ans?Math.round(x.yes/x.ans*100):-1;
     var ys=Object.keys(x.yrs).sort(function(p,q){return x.yrs[q]-x.yrs[p]});x.yr=ys[0]||"";return x}).sort(function(p,q){return q.n-p.n||p.name.localeCompare(q.name)});
-  var noName=rowsFor(["shgK"]).length-rows.length,big=A[0],small=A.filter(function(x){return x.n<=5}).length;
-  // summary cards
-  var I=[["blue","group",fmt(A.length),"SHGs in this selection"],["sage","users",A.length?(rows.length/A.length).toFixed(1):"0","average beneficiaries per SHG"],["beige","trend",big?big.n:0,big?"largest: "+esc(big.name)+(big.village?" · "+esc(big.village):""):"–"],["rose","clip",fmt(small),"SHGs with 5 or fewer registered so far"]];
-  $("shgk").innerHTML=I.map(function(k){return '<div class="card insc '+(k[0]==="sage"?"":k[0])+'"><span class="chip" data-ic="'+k[1]+'"></span><div><div class="n">'+k[2]+'</div><div class="t">'+k[3]+'</div></div></div>'}).join("");
-  // size distribution
-  var bc={};A.forEach(function(x){bc[x.band]=(bc[x.band]||0)+1});var gf=grad("sapphire",false);
-  put("c-shgsize",{type:"bar",data:{labels:SB.map(function(s){return s+" women"}),datasets:[{data:SB.map(function(s){return bc[s]||0}),borderRadius:10,borderSkipped:false,maxBarThickness:52,
-      backgroundColor:function(c){if(c.dataIndex==null)return GR.sapphire[1];return !SHG_BAND||SHG_BAND===SB[c.dataIndex]?gf(c):fade(GR.sapphire[1],.2)}}]},
-    options:base({onClick:function(e,_,ch){var i=pick(ch,e,"x");if(i>-1){SHG_BAND=SHG_BAND===SB[i]?"":SB[i];SHG_LIM=40;shgList()}},
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(it){return it.raw+" SHGs"}}}},scales:{y:{display:false,beginAtZero:true,grace:"15%"},x:{grid:{display:false},border:{display:false}}}}),plugins:[SH,VL]},A.length);
-  // top 10
-  var T=A.slice(0,10),keys=T.map(function(x){return x.k}),lab=T.map(function(x){return x.name+(x.village?" · "+x.village:"")});
-  (XF.shgK||[]).forEach(function(k){if(keys.indexOf(k)<0){var f=A.filter(function(x){return x.k===k})[0];if(f){keys.push(k);T.push(f);lab.push(f.name+(f.village?" · "+f.village:""))}}});
-  put("c-shgtop",{type:"bar",data:{labels:lab,datasets:[{data:T.map(function(x){return x.n}),backgroundColor:barFill("emerald",true,"shgK",keys),borderRadius:99,borderSkipped:false,barThickness:15}]},
-    options:base({indexAxis:"y",onClick:function(e,_,ch){var i=pick(ch,e,"y");if(i>-1)toggle("shgK",keys[i],mu(e))},
-      plugins:{legend:{display:false},tooltip:{callbacks:{title:function(it){return lab[it[0].dataIndex]},label:function(it){var x=T[it.dataIndex];return x.n+" beneficiaries · "+x.block+", "+x.district}}}},
-      scales:{x:{display:false,beginAtZero:true,grace:"15%"},y:{grid:{display:false},border:{display:false},ticks:{font:{size:11.5,weight:"500"},callback:function(v){var l=this.getLabelForValue(v);return l.length>28?l.slice(0,27)+"…":l}}}}}),plugins:[SH,VL]},T.length);
-  // list
-  var q=$("shgq").value.toLowerCase().trim(),L=A.filter(function(x){return (!SHG_BAND||x.band===SHG_BAND)&&(!q||(x.name+" "+x.village+" "+x.block+" "+x.district).toLowerCase().indexOf(q)>-1)});
+  var noName=rowsFor(["shgK"]).length-rows.length,big=A[0],ones=A.filter(function(x){return x.n===1}).length,avgN=A.length?rows.length/A.length:0;
+  // ---- hero: plain-language story + size ladder
+  var bc=BD.map(function(){return 0});A.forEach(function(x){bc[x.bi]++});var mb=Math.max.apply(null,bc.concat([1]));
+  var story=A.length?(avgN<=2?"Most SHGs have only a few of our women registered so far":"On average, each SHG has about <b>"+avgN.toFixed(1)+" women</b> registered"):"No SHG data for this selection";
+  $("shghero").innerHTML='<div><div class="lt">In plain words</div><div class="big">'+fmt(rows.length)+'<span>women</span>'+fmt(A.length)+'<span>SHGs</span></div>'+
+    '<p>'+(A.length?'The '+fmt(rows.length)+' women we registered belong to <b>'+fmt(A.length)+' different SHGs</b> (an SHG = same group name in the same village). '+story+'. '+(big?'The largest is <b>'+esc(big.name)+'</b>'+(big.village?' in '+esc(big.village):'')+' with <b>'+big.n+' women</b>. ':'')+(ones?'<b>'+ones+'</b> SHG'+(ones>1?'s have':' has')+' just one woman so far.':''):story)+'</p></div>'+
+    '<div><div class="lt">How many SHGs of each size? (click to filter)</div>'+BD.map(function(d,i){return '<div class="lr'+(SHG_BAND===""||SHG_BAND===d[0]?'':' dim')+(SHG_BAND===d[0]?' sel':'')+'" data-b="'+d[0]+'"><span class="lb">'+d[0]+'</span><span class="tk"><i style="width:'+Math.round(bc[i]/mb*100)+'%"></i></span><span class="vl">'+bc[i]+' SHG'+(bc[i]===1?'':'s')+'</span></div>'}).join("")+'</div>';
+  // ---- cards
+  var q=$("shgq").value.toLowerCase().trim(),L=A.filter(function(x){return (!SHG_BAND||BD[x.bi][0]===SHG_BAND)&&(!q||(x.name+" "+x.village+" "+x.block+" "+x.district).toLowerCase().indexOf(q)>-1)});
   if(SHG_SORT==="a")L.sort(function(p,q2){return p.name.localeCompare(q2.name)});else if(SHG_SORT==="f")L.sort(function(p,q2){return p.n-q2.n||p.name.localeCompare(q2.name)});
-  SHG_CUR=L;var tot=0,mx=1;L.forEach(function(x){tot+=x.n;if(x.n>mx)mx=x.n});
-  $("shgsub").textContent=L.length+" SHGs · "+fmt(tot)+" beneficiaries"+(noName?" · "+noName+" women have no SHG name":"")+" · one SHG = same name + same village";
-  var bs=$("shgsort").querySelectorAll("button");for(var i=0;i<bs.length;i++)bs[i].className=bs[i].getAttribute("data-s")===SHG_SORT?"on":"";
-  $("shgband").innerHTML=SHG_BAND?'<span class="bchip" id="bclr">Size: '+SHG_BAND+' women ×</span>':"";
-  $("shglist").innerHTML=L.length?'<table><thead><tr><th>#</th><th>SHG</th><th>Beneficiaries</th><th class="num">Avg age</th><th class="num">Median family income</th><th>Run an enterprise</th><th>Joined</th><th>District · State</th></tr></thead><tbody>'+
-    L.slice(0,SHG_LIM).map(function(x,i){var on_=on("shgK",x.k);return '<tr data-k="'+esc(x.k)+'" class="'+(XF.shgK&&XF.shgK.indexOf(x.k)>-1?'sel':(on_?'':'dim'))+'"><td>'+(i+1)+'</td><td class="shgn"><b>'+esc(x.name)+'</b><small>'+esc((x.village||"–")+" · "+(x.block||"–"))+'</small></td><td><span class="sb"><i style="width:'+Math.round(x.n/mx*100)+'%"></i></span><b>'+x.n+'</b></td><td class="num">'+(x.age||"–")+'</td><td class="num">'+(x.fam?"₹"+fmt(x.fam):"–")+'</td><td>'+(x.ep<0?"–":x.ep+'%<span class="mini"><i style="width:'+x.ep+'%"></i></span>')+'</td><td>'+(x.yr||"–")+'</td><td>'+esc(x.district)+' · '+esc(x.state)+'</td></tr>'}).join("")+'</tbody></table>'+(L.length>SHG_LIM?'<button class="ghost more" id="shgmore">Show more ('+(L.length-SHG_LIM)+' remaining)</button>':'')
-    :'<div style="padding:40px 0;text-align:center;color:var(--mute)">No SHGs for this selection</div>';
+  SHG_CUR=L;var tot=0;L.forEach(function(x){tot+=x.n});
+  $("shgsub").textContent=L.length+" SHGs · "+fmt(tot)+" women"+(noName?" · "+noName+" women have no SHG name":"");
+  [["shgsort","s"],["shggrp","g"]].forEach(function(p){var bs=$(p[0]).querySelectorAll("button"),cur=p[1]==="s"?SHG_SORT:SHG_GRP;for(var i=0;i<bs.length;i++)bs[i].className=bs[i].getAttribute("data-"+p[1])===cur?"on":""});
+  $("shgband").innerHTML=SHG_BAND?'<span class="bchip" id="bclr">Size: '+SHG_BAND+' ×</span>':"";
+  var shown=L.slice(0,SHG_LIM),out="",last=null,gs={};
+  if(SHG_GRP)L.forEach(function(x){var s=gs[x[SHG_GRP]]||(gs[x[SHG_GRP]]={n:0,w:0});s.n++;s.w+=x.n});
+  if(SHG_GRP)shown.sort(function(p,q2){var d=gs[q2[SHG_GRP]].w-gs[p[SHG_GRP]].w;return d||String(p[SHG_GRP]).localeCompare(q2[SHG_GRP])});
+  shown.forEach(function(x){
+    if(SHG_GRP&&x[SHG_GRP]!==last){last=x[SHG_GRP];var s=gs[last];out+='<div class="gh">'+esc(last||"Not stated")+'<em>'+s.n+' SHG'+(s.n>1?'s':'')+' · '+s.w+' women</em></div>'}
+    var ppl="",cap=24,y=x.yes;for(var i=0;i<Math.min(x.n,cap);i++)ppl+=PERSON.replace("#",i<y?"y":"");
+    var sel=XF.shgK&&XF.shgK.indexOf(x.k)>-1;
+    out+='<div class="sc'+(sel?' sel':(on("shgK",x.k)?'':' dim'))+'" data-k="'+esc(x.k)+'" style="--bc:'+BCOL[x.bi]+'"><div class="top"><div><h4>'+esc(x.name)+'</h4><div class="loc">'+esc((x.village||"–")+" · "+(x.block||"–")+" · "+x.district)+'</div></div><div class="n">'+x.n+'<small>women</small></div></div>'+
+      '<div class="ppl">'+ppl+(x.n>cap?'<b>+'+(x.n-cap)+'</b>':'')+'</div><div class="ft">'+(x.ep<0?'':'<span><b>'+x.yes+'</b> of '+x.ans+' run an enterprise</span>')+(x.age?'<span>Avg age <b>'+x.age+'</b></span>':'')+(x.fam?'<span>Family income <b>'+inr(x.fam)+'</b></span>':'')+(x.yr?'<span>Joined <b>'+x.yr+'</b></span>':'')+'</div></div>'});
+  $("shglist").innerHTML=L.length?'<div class="sg">'+out+'</div>'+(L.length>SHG_LIM?'<button class="ghost more" id="shgmore">Show more ('+(L.length-SHG_LIM)+' remaining)</button>':''):'<div style="padding:40px 0;text-align:center;color:var(--mute)">No SHGs for this selection</div>';
 }
 function shgCsv(){var q=function(v){return '"'+String(v).replace(/"/g,'""')+'"'};
-  var t=[["SHG name","Village","Block","District","State","Beneficiaries","Avg age","Median family income","% running enterprise","Year joined"]].concat(SHG_CUR.map(function(x){return [x.name,x.village,x.block,x.district,x.state,x.n,x.age||"",x.fam||"",x.ep<0?"":x.ep,x.yr]}));
+  var t=[["SHG name","Village","Block","District","State","Beneficiaries","Run an enterprise","Avg age","Median family income","Year joined"]].concat(SHG_CUR.map(function(x){return [x.name,x.village,x.block,x.district,x.state,x.n,x.yes,x.age||"",x.fam||"",x.yr]}));
   var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\uFEFF"+t.map(function(r){return r.map(q).join(",")}).join("\r\n")],{type:"text/csv"}));a.download="SHG_list.csv";a.click()}
-$("shgq").oninput=function(){SHG_LIM=40;shgList()};
+$("shgq").oninput=function(){SHG_LIM=48;shgList()};
 $("shgsort").onclick=function(e){var b=e.target.closest("button");if(b){SHG_SORT=b.getAttribute("data-s");shgList()}};
+$("shggrp").onclick=function(e){var b=e.target.closest("button");if(b){SHG_GRP=b.getAttribute("data-g");SHG_LIM=48;shgList()}};
 $("shgdl").onclick=shgCsv;
 $("shgband").onclick=function(){SHG_BAND="";shgList()};
-$("shglist").onclick=function(e){if(e.target.closest("#shgmore")){SHG_LIM+=40;return shgList()}var r=e.target.closest("tbody tr");if(r)toggle("shgK",r.getAttribute("data-k"),e.ctrlKey||e.metaKey||e.shiftKey)};
+$("shghero").onclick=function(e){var r=e.target.closest(".lr");if(r){var b=r.getAttribute("data-b");SHG_BAND=SHG_BAND===b?"":b;SHG_LIM=48;shgList()}};
+$("shglist").onclick=function(e){if(e.target.closest("#shgmore")){SHG_LIM+=48;return shgList()}var r=e.target.closest(".sc");if(r)toggle("shgK",r.getAttribute("data-k"),e.ctrlKey||e.metaKey||e.shiftKey)};
 
 // ---------- events ----------
 $("today").textContent=new Date().toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
