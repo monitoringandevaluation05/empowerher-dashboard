@@ -101,6 +101,20 @@ tr.dim td{opacity:.35}
 .tl:hover{transform:scale(1.22);box-shadow:0 6px 14px rgba(0,0,0,.3);position:relative;z-index:2}
 .tl.sel{outline:3px solid #2F3A35;outline-offset:1px}.tl.dim{opacity:.22}
 @media(max-width:760px){.det{grid-template-columns:70px 1fr}.det .df{grid-column:1/-1}}
+.sr{display:grid;grid-template-columns:104px 1fr 120px;gap:10px;align-items:center;margin:7px 0;cursor:pointer;transition:opacity .2s}
+.sr.dim{opacity:.35}.sr.sel .sn{color:var(--sage-d);text-decoration:underline}
+.sn{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sbar{display:flex;height:26px;gap:2px}
+.sbar i{display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:700;border-radius:8px;min-width:0;overflow:hidden;cursor:pointer;transition:opacity .2s}
+.st{font-size:11.5px;color:var(--mute)}.st b{color:var(--ink)}
+.fr{display:grid;grid-template-columns:20px 1fr 86px 26px;gap:10px;align-items:center;padding:7px 8px;border-radius:12px;cursor:pointer}
+.fr:hover{background:var(--sage-t)}.fr.sel{background:rgba(15,107,88,.16)}.fr.dim{opacity:.35}
+.fr .rk{font-size:11px;color:var(--mute);font-weight:700}
+.fn b{font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fn small{font-size:11px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.fb{height:8px;background:var(--sage-t);border-radius:9px;overflow:hidden}.fb i{display:block;height:100%;border-radius:9px}
+.fv{font-weight:700;text-align:right}
+.yst{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.yst>div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px 12px}.yst b{font-size:20px;display:block}.yst span{font-size:11.5px;color:var(--mute)}
 @media(max-width:980px){.hero{grid-template-columns:1fr}.hero .big{font-size:46px}}
 .shgn small{display:block;color:var(--mute);font-size:11px;margin-top:2px;font-weight:400}
 .more{display:block;margin:14px auto 4px}
@@ -226,13 +240,13 @@ td.num,th.num{text-align:right}
 
 <div class="sec" id="sec-shg">Self-help groups (SHGs)</div>
 <div class="hero" id="shghero"></div>
-<div class="card blue s12" style="margin-top:16px">
-  <div class="ch"><span class="chip" data-ic="group"></span><div><h3>Every SHG on one board</h3><p id="shgsub"></p></div></div>
-  <div class="how" style="margin:0 0 12px"><b>How to read:</b> each coloured square is <b>one SHG</b> (a self-help group of women in one village). The <b>number</b> is how many of our women belong to it — <b>darker = bigger group</b>. Move the mouse over a square to see its details, click it to filter the whole dashboard.</div>
-  <div class="etool"><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><input id="shgq" class="search" placeholder="Search SHG, village, block…"><span id="shgband"></span></div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><div class="seg" id="shggrp"><button data-g="">All together</button><button data-g="state">By state</button><button data-g="district">By district</button><button data-g="block" class="on">By block</button></div><button class="ghost" id="shgdl">⬇ Excel / CSV</button></div></div>
-  <div class="det" id="shgdet"></div>
-  <div class="wall" id="shglist"></div>
+<div class="grid" style="margin-top:16px">
+  <div class="card blue s7"><div class="ch"><span class="chip" data-ic="group"></span><div><h3>How big are the SHGs in each <span id="shgdimn">district</span>?</h3><p>One bar per place · coloured blocks = SHGs of each size (number inside = how many SHGs). Click a place to filter, click a colour to see only that size.</p></div></div>
+    <div class="etool"><div class="seg" id="shggrp"><button data-g="state">By state</button><button data-g="district" class="on">By district</button><button data-g="block">By block</button></div><span id="shgband"></span></div>
+    <div id="shgbars"></div></div>
+  <div class="card s5"><div class="ch"><span class="chip" data-ic="trend"></span><div><h3>Biggest SHGs · find any SHG</h3><p id="shgsub"></p></div></div>
+    <div class="etool"><input id="shgq" class="search" style="min-width:0;flex:1" placeholder="Type an SHG name, village or block…"><button class="ghost" id="shgdl">⬇ CSV</button></div>
+    <div id="shglist"></div></div>
 </div>
 
 <div class="sec" id="sec-profile">Beneficiary profile</div>
@@ -254,10 +268,10 @@ td.num,th.num{text-align:right}
     <div class="leg" id="entleg"></div></div>
 </div>
 
-<div class="sec" id="sec-field">SHG &amp; field operations</div>
+<div class="sec" id="sec-field">Field progress</div>
 <div class="grid">
-  <div class="card s6"><div class="ch"><span class="chip" data-ic="trend"></span><div><h3>SHG membership — year joined</h3><p>When women joined their SHG</p></div></div><div class="box"><canvas id="c-year"></canvas></div></div>
-  <div class="card blue s6"><div class="ch"><span class="chip" data-ic="clip"></span><div><h3>Registrations by enumerator</h3><p>Field team progress</p></div></div><div id="enum"></div></div>
+  <div class="card s7"><div class="ch"><span class="chip" data-ic="trend"></span><div><h3>When did women join their SHG?</h3><p id="yrsub">Women joining each year · click a point to filter</p></div></div><div class="box" style="height:225px"><canvas id="c-year"></canvas></div><div class="yst" id="yrst"></div></div>
+  <div class="card blue s5"><div class="ch"><span class="chip" data-ic="clip"></span><div><h3>Registrations by enumerator</h3><p id="ensub">Field team progress</p></div></div><div class="box" style="height:285px"><canvas id="c-enum"></canvas></div></div>
 </div>
 
 <div class="sec" id="sec-table">Block summary</div>
@@ -386,16 +400,16 @@ function buildRecords(table){
     for(var i=0;i<head.length;i++){if(FIELDS[f][0].test(head[i])){idx=i;break}}
     if(idx<0){idx=FIELDS[f][1];missing.push(f)}map[f]=idx});
   window._missing=missing;window._gpFound=missing.indexOf("gp")<0;
-  var recs=[];
+  var recs=[],badYr=0,NOWY=new Date().getFullYear();
   for(var r=1;r<table.length;r++){var o={},row=table[r];
     Object.keys(map).forEach(function(f){var v=map[f]<0?"":row[map[f]];o[f]=v==null?"":String(v).trim()});
     if(!(o.state||o.district||o.block||o.enumerator))continue;
     o.liv=normWork(o.livelihood);o.occ=normWork(o.occupation);o.ent=normEnt(o.enterprise);o.edu=normEdu(o.education);
     o.ageN=num(o.age);o.ageBand=o.ageN>0?(o.ageN<=25?"18–25":o.ageN<=35?"26–35":o.ageN<=45?"36–45":o.ageN<=55?"46–55":"56+"):"";
     o.fam=num(o.famIncome);o.per=num(o.perIncome);o.famBand=band(o.fam,[5000,10000,20000,30000],FB);o.perBand=band(o.per,[2000,5000,10000,15000],PB);o.gp=o.gp||o.village;o.shgK=shgKey(o);
-    var ym=String(o.shgYear).match(/\b(19|20)\d{2}\b/);o.yr=ym?ym[0]:"";
+    var ym=String(o.shgYear).match(/\b(19|20)\d{2}\b/);o.yr=ym?ym[0]:"";if(o.yr&&(+o.yr>NOWY||+o.yr<1980)){badYr++;o.yr=""}
     recs.push(o)}
-  SHGN={};recs.forEach(function(r){if(r.shgK&&!SHGN[r.shgK])SHGN[r.shgK]=r.shgName+(r.village?" · "+r.village:"")});
+  window._badYr=badYr;SHGN={};recs.forEach(function(r){if(r.shgK&&!SHGN[r.shgK])SHGN[r.shgK]=r.shgName+(r.village?" · "+r.village:"")});
   var sc={};recs.forEach(function(r){if(r.ent==="Yes"){r.sec=normSec(r.entSector)||"Sector not stated";sc[r.sec]=(sc[r.sec]||0)+1}});
   var top=Object.keys(sc).filter(function(k){return k!=="Sector not stated"}).sort(function(a,b){return sc[b]-sc[a]}),keep=top.slice(0,6),cols=[C.emerald,C.gold,C.sapphire,C.plum,C.teal,C.copper];
   recs.forEach(function(r){if(r.ent==="Yes")r.secG=keep.indexOf(r.sec)>-1?r.sec:(r.sec==="Sector not stated"?r.sec:"Other sectors")});
@@ -614,11 +628,11 @@ function render(){
   heat("hm2","ins2","occ","per","perBand",PB,"plum");
   entChart();
 
-  var ym={};rowsFor(["yr"]).forEach(function(r){if(r.yr)ym[r.yr]=(ym[r.yr]||0)+1});
-  vbar("c-year",Object.keys(ym).sort().map(function(k){return[k,ym[k]]}),"emerald","yr");
-
-  var en2=cnt(rowsFor(["enumerator"]),function(r){return r.enumerator}),mx=en2.length?en2[0][1]:1;
-  $("enum").innerHTML=en2.length?en2.map(function(e){return '<div class="bar-row'+(on("enumerator",e[0])?"":" dim")+'" data-k="'+esc(e[0])+'"><div class="t"><span>'+esc(e[0])+'</span><b>'+fmt(e[1])+'</b></div><div class="tr"><i style="width:'+Math.round(e[1]/mx*100)+'%"></i></div></div>'}).join(""):'<div style="padding:40px 0;text-align:center;color:var(--mute)">No data for this selection</div>';
+  yearChart();
+  var en2=cnt(rowsFor(["enumerator"]),function(r){return r.enumerator}),en8=en2.slice(0,8);
+  (XF.enumerator||[]).forEach(function(k){if(!en8.some(function(d){return d[0]===k})){var f=en2.filter(function(d){return d[0]===k})[0];if(f)en8.push(f)}});
+  $("ensub").textContent=en2.length>8?"Top 8 of "+en2.length+" field team members":"Field team progress";
+  hbar("c-enum",en8,"sapphire","enumerator",15);
 
   var g={};rowsFor(["block"]).forEach(function(r){var k=r.block+"|"+r.district;(g[k]=g[k]||{block:r.block,district:r.district,state:r.state,rows:[]}).rows.push(r)});
   var list=Object.keys(g).map(function(k){return g[k]}).sort(function(a,b){return b.rows.length-a.rows.length});
@@ -630,53 +644,70 @@ function render(){
   shgList();xbar();icons();
 }
 
-// ---------- SHG board (one square = one SHG) ----------
+// ---------- SHG section (compact: stacked size bars + ranked finder) ----------
 var BD=[["1 woman",1,1],["2–3 women",2,3],["4–5 women",4,5],["6–10 women",6,10],["11+ women",11,99999]],BCOL=["#CFC8B8","#8FCDB9","#1F8A72","#B98B3A","#8B2F3C"];
-var SHG_BAND="",SHG_CUR=[],SHG_GRP="block",SHG_MAP={},SHG_DEF="";
+var SHG_BAND="",SHG_CUR=[],SHG_GRP="district",SHG_ALL=false;
 function bidx(n){for(var i=0;i<BD.length;i++)if(n>=BD[i][1]&&n<=BD[i][2])return i;return 0}
-var PERSON='<svg class="pp #" viewBox="0 0 24 24"><circle cx="12" cy="7" r="5"/><path d="M2.5 23c0-6 4.2-9.5 9.5-9.5s9.5 3.5 9.5 9.5z"/></svg>';
-function showDet(k){var x=SHG_MAP[k],el=$("shgdet");
-  if(!x){el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--mute)">No SHG for this selection</div>';return}
-  var ppl="",cap=30;for(var i=0;i<Math.min(x.n,cap);i++)ppl+=PERSON.replace("#",i<x.yes?"y":"");
-  el.innerHTML='<div class="dn">'+x.n+'<small>women</small></div><div><h4>'+esc(x.name)+'</h4><div class="loc">Village: '+esc(x.village||"–")+' · Block: '+esc(x.block||"–")+' · District: '+esc(x.district)+'</div><div class="ppl">'+ppl+(x.n>cap?'<b>+'+(x.n-cap)+'</b>':'')+'</div></div>'+
-   '<div class="df">'+(x.ans?'<span><b>'+x.yes+' of '+x.ans+'</b> women already run their own business <i style="font-style:normal;color:var(--sage-d)">(green icons)</i></span>':'')+(x.age?'<span>Average age: <b>'+x.age+' years</b></span>':'')+(x.fam?'<span>A typical family earns about <b>'+inr(x.fam)+' a month</b></span>':'')+(x.yr?'<span>Most women joined this SHG in <b>'+x.yr+'</b></span>':'')+'</div>'}
-function shgList(){
-  var rows=rowsFor(["shgK"]).filter(function(r){return r.shgK}),g={};
+function shgAgg(rows){var g={};
   rows.forEach(function(r){var x=g[r.shgK]||(g[r.shgK]={k:r.shgK,name:r.shgName,village:r.village,block:r.block,district:r.district,state:r.state,n:0,ages:[],fams:[],yes:0,ans:0,yrs:{}});
     x.n++;if(r.ageN>0)x.ages.push(r.ageN);if(r.fam>0)x.fams.push(r.fam);if(r.ent)x.ans++;if(r.ent==="Yes")x.yes++;if(r.yr)x.yrs[r.yr]=(x.yrs[r.yr]||0)+1});
-  var A=Object.keys(g).map(function(k){var x=g[k];x.bi=bidx(x.n);x.age=avg(x.ages);x.fam=median(x.fams);
-    var ys=Object.keys(x.yrs).sort(function(p,q){return x.yrs[q]-x.yrs[p]});x.yr=ys[0]||"";return x}).sort(function(p,q){return q.n-p.n||p.name.localeCompare(q.name)});
-  SHG_MAP={};A.forEach(function(x){SHG_MAP[x.k]=x});
+  return Object.keys(g).map(function(k){var x=g[k];x.bi=bidx(x.n);x.age=avg(x.ages);x.fam=median(x.fams);
+    var ys=Object.keys(x.yrs).sort(function(p,q){return x.yrs[q]-x.yrs[p]});x.yr=ys[0]||"";return x}).sort(function(p,q){return q.n-p.n||p.name.localeCompare(q.name)})}
+function shgList(){
+  var rows=rowsFor(["shgK"]).filter(function(r){return r.shgK}),A=shgAgg(rows);
   var noName=rowsFor(["shgK"]).length-rows.length,big=A[0],ones=A.filter(function(x){return x.n===1}).length,avgN=A.length?rows.length/A.length:0;
-  // hero
   var bc=BD.map(function(){return 0});A.forEach(function(x){bc[x.bi]++});var mb=Math.max.apply(null,bc.concat([1]));
   $("shghero").innerHTML='<div><div class="lt">The big picture</div><div class="big">'+fmt(rows.length)+'<span>women</span>'+fmt(A.length)+'<span>SHGs</span></div>'+
     '<p>'+(A.length?'Our '+fmt(rows.length)+' women belong to <b>'+fmt(A.length)+' self-help groups</b>. A typical group has about <b>'+avgN.toFixed(1)+' of our women</b>. '+(big?'Biggest: <b>'+esc(big.name)+'</b>'+(big.village?' ('+esc(big.village)+')':'')+' with <b>'+big.n+'</b>. ':'')+(ones?'<b>'+fmt(ones)+'</b> group'+(ones>1?'s have':' has')+' only 1 woman so far.':''):'No SHG data for this selection')+'</p></div>'+
     '<div><div class="lt">How many groups of each size? (click to filter)</div>'+BD.map(function(d,i){return '<div class="lr'+(SHG_BAND===""||SHG_BAND===d[0]?'':' dim')+(SHG_BAND===d[0]?' sel':'')+'" data-b="'+d[0]+'"><span class="lb">'+d[0]+'</span><span class="tk"><i style="width:'+Math.round(bc[i]/mb*100)+'%;background:'+BCOL[i]+'"></i></span><span class="vl">'+bc[i]+' group'+(bc[i]===1?'':'s')+'</span></div>'}).join("")+'</div>';
-  // board
-  var q=$("shgq").value.toLowerCase().trim(),L=A.filter(function(x){return (!SHG_BAND||BD[x.bi][0]===SHG_BAND)&&(!q||(x.name+" "+x.village+" "+x.block+" "+x.district).toLowerCase().indexOf(q)>-1)});
-  SHG_CUR=L;var tot=0;L.forEach(function(x){tot+=x.n});
-  $("shgsub").textContent=L.length+" SHGs · "+fmt(tot)+" women"+(noName?" · "+noName+" women have no SHG name":"");
+  // ---- stacked bars: one row per place
+  var dn={state:"state",district:"district",block:"block"};$("shgdimn").textContent=dn[SHG_GRP];
   var bs=$("shggrp").querySelectorAll("button");for(var i=0;i<bs.length;i++)bs[i].className=bs[i].getAttribute("data-g")===SHG_GRP?"on":"";
-  $("shgband").innerHTML=SHG_BAND?'<span class="bchip" id="bclr">Size: '+SHG_BAND+' ×</span>':"";
-  var gs={};L.forEach(function(x){var k=SHG_GRP?(x[SHG_GRP]||"Not stated"):"All SHGs";(gs[k]=gs[k]||{n:0,w:0,l:[]});gs[k].n++;gs[k].w+=x.n;gs[k].l.push(x)});
-  var out=Object.keys(gs).sort(function(p,q2){return gs[q2].w-gs[p].w||p.localeCompare(q2)}).map(function(k){var s=gs[k];
-    return '<div class="gb"><div class="gt"><b>'+esc(k)+'</b><span>'+s.n+' SHG'+(s.n>1?'s':'')+' · '+s.w+' women</span></div><div class="tls">'+s.l.map(function(x){var sel=XF.shgK&&XF.shgK.indexOf(x.k)>-1;
-      return '<div class="tl'+(sel?' sel':(on("shgK",x.k)?'':' dim'))+'" data-k="'+esc(x.k)+'" title="'+esc(x.name+" · "+(x.village||"")+" · "+x.n+" women")+'" style="background:'+BCOL[x.bi]+';color:'+(x.bi<2?"#2F3A35":"#fff")+'">'+x.n+'</div>'}).join("")+'</div></div>'}).join("");
-  $("shglist").innerHTML=L.length?out:'<div style="padding:30px 0;width:100%;text-align:center;color:var(--mute)">No SHGs for this selection</div>';
-  var sel=(XF.shgK||[]).filter(function(k){return SHG_MAP[k]})[0];SHG_DEF=sel||(L[0]?L[0].k:"");showDet(SHG_DEF);
+  $("shgband").innerHTML=SHG_BAND?'<span class="bchip" id="bclr">Showing only: '+SHG_BAND+' ×</span>':"";
+  var B=shgAgg(rowsFor(["shgK",SHG_GRP]).filter(function(r){return r.shgK})),gs={};
+  B.forEach(function(x){var k=x[SHG_GRP]||"Not stated",s=gs[k]||(gs[k]={k:k,n:0,w:0,bc:[0,0,0,0,0]});s.n++;s.w+=x.n;s.bc[x.bi]++});
+  var GL=Object.keys(gs).map(function(k){return gs[k]}).sort(function(p,q){return q.w-p.w||p.k.localeCompare(q.k)}),mx=GL.reduce(function(m,s){return Math.max(m,s.n)},1),CAP=8;
+  var vis=GL.filter(function(s,i){return SHG_ALL||i<CAP||(XF[SHG_GRP]&&XF[SHG_GRP].indexOf(s.k)>-1)});
+  $("shgbars").innerHTML=vis.length?vis.map(function(s){var sel=XF[SHG_GRP]&&XF[SHG_GRP].indexOf(s.k)>-1;
+    return '<div class="sr'+(sel?' sel':(on(SHG_GRP,s.k)?'':' dim'))+'" data-k="'+esc(s.k)+'"><span class="sn" title="'+esc(s.k)+'">'+esc(s.k)+'</span><span class="sbw"><span class="sbar" style="width:'+Math.max(6,Math.round(s.n/mx*100))+'%">'+
+      s.bc.map(function(c,i){return c?'<i data-b="'+BD[i][0]+'" title="'+c+' SHGs with '+BD[i][0]+'" style="flex:'+c+';background:'+BCOL[i]+';color:'+(i<2?"#2F3A35":"#fff")+(SHG_BAND&&SHG_BAND!==BD[i][0]?';opacity:.25':'')+'">'+c+'</i>':''}).join("")+'</span></span><span class="st"><b>'+s.n+'</b> SHGs · <b>'+s.w+'</b> women</span></div>'}).join("")+
+    (GL.length>CAP?'<button class="ghost more" id="shgall">'+(SHG_ALL?'Show fewer':'Show all '+GL.length+' '+dn[SHG_GRP]+'s')+'</button>':''):'<div style="padding:40px 0;text-align:center;color:var(--mute)">No SHGs for this selection</div>';
+  // ---- ranked finder
+  var q=$("shgq").value.toLowerCase().trim(),L=A.filter(function(x){return (!SHG_BAND||BD[x.bi][0]===SHG_BAND)&&(!q||(x.name+" "+x.village+" "+x.block+" "+x.district).toLowerCase().indexOf(q)>-1)});
+  SHG_CUR=L;var top=L.slice(0,10),mxn=top.length?top[0].n:1;
+  (XF.shgK||[]).forEach(function(k){if(!top.some(function(x){return x.k===k})){var f=A.filter(function(x){return x.k===k})[0];if(f)top.push(f)}});
+  $("shgsub").textContent=(q||SHG_BAND?L.length+" SHGs match":"Top 10 of "+fmt(A.length)+" SHGs")+(noName?" · "+noName+" women have no SHG name":"")+" · hover a row for details";
+  $("shglist").innerHTML=top.length?top.map(function(x,i){var sel=XF.shgK&&XF.shgK.indexOf(x.k)>-1;
+    var tip=x.n+" women"+(x.ans?" · "+x.yes+" of "+x.ans+" run their own business":"")+(x.age?" · average age "+x.age:"")+(x.fam?" · typical family income "+inr(x.fam)+" a month":"")+(x.yr?" · joined mostly in "+x.yr:"");
+    return '<div class="fr'+(sel?' sel':(on("shgK",x.k)?'':' dim'))+'" data-k="'+esc(x.k)+'" title="'+esc(tip)+'"><span class="rk">'+(i+1)+'</span><span class="fn"><b>'+esc(x.name)+'</b><small>'+esc((x.village||"–")+" · "+(x.block||"–"))+'</small></span><span class="fb"><i style="width:'+Math.round(x.n/mxn*100)+'%;background:'+BCOL[x.bi]+'"></i></span><span class="fv">'+x.n+'</span></div>'}).join("")+(L.length>10?'<div class="how" style="text-align:center">+ '+(L.length-10)+' more — type in the box to find one, or download the CSV</div>':''):'<div style="padding:30px 0;text-align:center;color:var(--mute)">No SHG matches</div>';
 }
 function shgCsv(){var q=function(v){return '"'+String(v).replace(/"/g,'""')+'"'};
   var t=[["SHG name","Village","Block","District","State","Women","Run a business","Avg age","Median family income","Year joined"]].concat(SHG_CUR.map(function(x){return [x.name,x.village,x.block,x.district,x.state,x.n,x.yes,x.age||"",x.fam||"",x.yr]}));
   var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\uFEFF"+t.map(function(r){return r.map(q).join(",")}).join("\r\n")],{type:"text/csv"}));a.download="SHG_list.csv";a.click()}
 $("shgq").oninput=shgList;
-$("shggrp").onclick=function(e){var b=e.target.closest("button");if(b){SHG_GRP=b.getAttribute("data-g");shgList()}};
+$("shggrp").onclick=function(e){var b=e.target.closest("button");if(b){SHG_GRP=b.getAttribute("data-g");SHG_ALL=false;shgList()}};
 $("shgdl").onclick=shgCsv;
 $("shgband").onclick=function(){SHG_BAND="";shgList()};
 $("shghero").onclick=function(e){var r=e.target.closest(".lr");if(r){var b=r.getAttribute("data-b");SHG_BAND=SHG_BAND===b?"":b;shgList()}};
-$("shglist").onclick=function(e){var r=e.target.closest(".tl");if(r)toggle("shgK",r.getAttribute("data-k"),e.ctrlKey||e.metaKey||e.shiftKey)};
-$("shglist").onmouseover=function(e){var r=e.target.closest(".tl");if(r)showDet(r.getAttribute("data-k"))};
-$("shglist").onmouseleave=function(){showDet(SHG_DEF)};
+$("shgbars").onclick=function(e){if(e.target.closest("#shgall")){SHG_ALL=!SHG_ALL;return shgList()}
+  var s=e.target.closest("i[data-b]");if(s){var b=s.getAttribute("data-b");SHG_BAND=SHG_BAND===b?"":b;return shgList()}
+  var r=e.target.closest(".sr");if(r)toggle(SHG_GRP,r.getAttribute("data-k"),e.ctrlKey||e.metaKey||e.shiftKey)};
+$("shglist").onclick=function(e){var r=e.target.closest(".fr");if(r)toggle("shgK",r.getAttribute("data-k"),e.ctrlKey||e.metaKey||e.shiftKey)};
+
+// ---------- year-joined timeline ----------
+function yearChart(){
+  var rows=rowsFor(["yr"]).filter(function(r){return r.yr}),m={};rows.forEach(function(r){m[r.yr]=(m[r.yr]||0)+1});
+  var ys=Object.keys(m).map(Number).sort(function(a,b){return a-b}),bad=window._badYr||0;
+  $("yrsub").textContent="Women joining each year · click a point to filter"+(bad?" · "+bad+" record"+(bad>1?"s":"")+" with an impossible year (e.g. 2052) ignored — please correct in the sheet":"");
+  if(!ys.length){put("c-year",{},0);$("yrst").innerHTML="";return}
+  var L=[],D=[];for(var y=ys[0];y<=ys[ys.length-1];y++){L.push(String(y));D.push(m[y]||0)}
+  var pk=0;D.forEach(function(v,i){if(v>D[pk])pk=i});
+  var gf=function(c){var a=c.chart.chartArea;if(!a)return "rgba(15,107,88,.2)";var g=c.chart.ctx.createLinearGradient(0,a.top,0,a.bottom);g.addColorStop(0,"rgba(15,107,88,.45)");g.addColorStop(1,"rgba(15,107,88,.02)");return g};
+  var pkp={id:"pk",afterDatasetsDraw:function(ch){var el=ch.getDatasetMeta(0).data[pk];if(!el)return;var c=ch.ctx;c.save();c.font="700 11.5px "+FONT;c.textAlign="center";c.fillStyle=C.burgundy;c.fillText("Busiest: "+L[pk]+" · "+D[pk]+" women",Math.min(Math.max(el.x,90),ch.chartArea.right-90),el.y-14);c.restore()}};
+  put("c-year",{type:"line",data:{labels:L,datasets:[{data:D,borderColor:C.emerald,borderWidth:3,tension:.35,fill:true,backgroundColor:gf,pointRadius:function(c){return XF.yr&&on("yr",L[c.dataIndex])?6:3},pointBackgroundColor:function(c){return on("yr",L[c.dataIndex])?C.emerald:fade(C.emerald,.25)},pointBorderColor:"#fff",pointBorderWidth:2,pointHoverRadius:7}]},
+    options:base({onClick:function(e,_,ch){var i=pick(ch,e,"x");if(i>-1)toggle("yr",L[i],mu(e))},plugins:{legend:{display:false},tooltip:{callbacks:{label:function(it){return it.raw+" women joined"}}}},scales:{y:{display:false,beginAtZero:true,grace:"30%"},x:{grid:{display:false},border:{display:false},ticks:{maxRotation:0,autoSkip:true,maxTicksLimit:12}}}}),plugins:[SH,pkp]},1);
+  var cur=new Date().getFullYear(),n=rows.length,rec=rows.filter(function(r){return +r.yr>=cur-2}).length,old=rows.filter(function(r){return +r.yr<2015}).length;
+  $("yrst").innerHTML='<div><b>'+L[pk]+'</b><span>busiest year · '+D[pk]+' women</span></div><div><b>'+(n?Math.round(rec/n*100):0)+'%</b><span>joined in the last 3 years</span></div><div><b>'+fmt(old)+'</b><span>joined before 2015</span></div>'}
 
 // ---------- events ----------
 $("today").textContent=new Date().toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
@@ -689,7 +720,6 @@ $("hm1").onclick=hmClick("liv","famBand");$("hm2").onclick=hmClick("occ","perBan
 $("enttabs").onclick=function(e){var b=e.target.closest(".tab");if(b){ENT_LV=b.getAttribute("data-l");render()}};
 $("entmode").onclick=function(e){var b=e.target.closest("button");if(b){ENT_MODE=b.getAttribute("data-m");render()}};
 $("entleg").onclick=function(e){var l=e.target.closest(".lg");if(l)toggle("secG",l.getAttribute("data-s"),e.ctrlKey||e.metaKey||e.shiftKey)};
-$("enum").onclick=function(e){var el=e.target.closest(".bar-row");if(el)toggle("enumerator",el.getAttribute("data-k"),e.ctrlKey||e.metaKey||e.shiftKey)};
 $("tbl").onclick=function(e){var el=e.target.closest("tbody tr");if(el)toggle("block",el.getAttribute("data-k"),e.ctrlKey||e.metaKey||e.shiftKey)};
 $("xbar").onclick=function(e){var c=e.target.closest(".xchip");if(c)return toggle(c.getAttribute("data-d"),c.getAttribute("data-v"),true);if(e.target.closest("#xclr")){XF={};render()}};
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&Object.keys(XF).length){XF={};render()}});
