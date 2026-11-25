@@ -115,6 +115,18 @@ tr.dim td{opacity:.35}
 .fv{font-weight:700;text-align:right}
 .yst{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
 .yst>div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px 12px}.yst b{font-size:20px;display:block}.yst span{font-size:11.5px;color:var(--mute)}
+.tm{position:relative;height:340px;border-radius:14px;overflow:hidden;background:var(--sage-t)}
+.tmb{position:absolute;border-radius:10px;padding:8px 10px;overflow:hidden;cursor:pointer;line-height:1.3;transition:opacity .2s,transform .12s;border:2px solid #FBF9F5;box-sizing:border-box}
+.tmb:hover{transform:scale(1.02);z-index:2;box-shadow:0 10px 22px rgba(0,0,0,.28)}
+.tmb.sel{outline:3px solid #2F3A35;outline-offset:-3px;z-index:1}.tmb.dim{opacity:.3}
+.tmb b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tmb span{display:block;font-size:11px;opacity:.92;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tmleg{display:flex;align-items:center;gap:10px;justify-content:center;margin-top:10px;font-size:11.5px;color:var(--mute)}
+.tmleg i{width:150px;height:10px;border-radius:9px;background:linear-gradient(90deg,#CFE6DD,#0B5646)}
+.dir{height:340px;overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fff;padding:4px}
+.yst{grid-template-columns:repeat(4,1fr)!important}
+.yst>div{border-left:5px solid var(--ec,#0F6B58);cursor:pointer;transition:opacity .2s}
+.yst>div.sel{background:var(--sage-t)}.yst>div.dim{opacity:.4}
 @media(max-width:980px){.hero{grid-template-columns:1fr}.hero .big{font-size:46px}}
 .shgn small{display:block;color:var(--mute);font-size:11px;margin-top:2px;font-weight:400}
 .more{display:block;margin:14px auto 4px}
@@ -239,14 +251,18 @@ td.num,th.num{text-align:right}
 </div>
 
 <div class="sec" id="sec-shg">Self-help groups (SHGs)</div>
-<div class="hero" id="shghero"></div>
+<div class="hero">
+  <div id="shgtxt"></div>
+  <div><div class="lt">How many SHGs have 1, 2, 3… of our women? <span style="text-transform:none;letter-spacing:0;font-weight:500">(click a bar to filter)</span></div><div class="box" style="height:178px"><canvas id="c-shghist"></canvas></div></div>
+</div>
 <div class="grid" style="margin-top:16px">
-  <div class="card blue s7"><div class="ch"><span class="chip" data-ic="group"></span><div><h3>How big are the SHGs in each <span id="shgdimn">district</span>?</h3><p>One bar per place · coloured blocks = SHGs of each size (number inside = how many SHGs). Click a place to filter, click a colour to see only that size.</p></div></div>
+  <div class="card blue s8"><div class="ch"><span class="chip" data-ic="map"></span><div><h3>Where are our SHGs? — one box per <span id="shgdimn">district</span></h3><p><b>Bigger box</b> = more women registered · <b>darker green</b> = bigger SHGs on average · click a box to filter the dashboard</p></div></div>
     <div class="etool"><div class="seg" id="shggrp"><button data-g="state">By state</button><button data-g="district" class="on">By district</button><button data-g="block">By block</button></div><span id="shgband"></span></div>
-    <div id="shgbars"></div></div>
-  <div class="card s5"><div class="ch"><span class="chip" data-ic="trend"></span><div><h3>Biggest SHGs · find any SHG</h3><p id="shgsub"></p></div></div>
-    <div class="etool"><input id="shgq" class="search" style="min-width:0;flex:1" placeholder="Type an SHG name, village or block…"><button class="ghost" id="shgdl">⬇ CSV</button></div>
-    <div id="shglist"></div></div>
+    <div class="tm" id="shgtm"></div>
+    <div class="tmleg"><span>Small SHGs (few women each)</span><i></i><span>Big SHGs (many women each)</span></div></div>
+  <div class="card s4"><div class="ch"><span class="chip" data-ic="clip"></span><div><h3>SHG directory</h3><p id="shgsub"></p></div></div>
+    <div class="etool"><input id="shgq" class="search" style="min-width:0;flex:1" placeholder="Search SHG, village, block…"><button class="ghost" id="shgdl">⬇ CSV</button></div>
+    <div class="dir" id="shglist"></div></div>
 </div>
 
 <div class="sec" id="sec-profile">Beneficiary profile</div>
@@ -270,8 +286,8 @@ td.num,th.num{text-align:right}
 
 <div class="sec" id="sec-field">Field progress</div>
 <div class="grid">
-  <div class="card s7"><div class="ch"><span class="chip" data-ic="trend"></span><div><h3>When did women join their SHG?</h3><p id="yrsub">Women joining each year · click a point to filter</p></div></div><div class="box" style="height:225px"><canvas id="c-year"></canvas></div><div class="yst" id="yrst"></div></div>
-  <div class="card blue s5"><div class="ch"><span class="chip" data-ic="clip"></span><div><h3>Registrations by enumerator</h3><p id="ensub">Field team progress</p></div></div><div class="box" style="height:285px"><canvas id="c-enum"></canvas></div></div>
+  <div class="card s7"><div class="ch"><span class="chip" data-ic="trend"></span><div><h3>When did women join their SHG?</h3><p id="yrsub">Women joining each year · click a point to filter</p></div></div><div class="box" style="height:250px"><canvas id="c-year"></canvas></div><div class="yst" id="yrst"></div></div>
+  <div class="card blue s5"><div class="ch"><span class="chip" data-ic="clip"></span><div><h3>Registrations by enumerator</h3><p id="ensub">Field team progress</p></div></div><div class="box" style="height:320px"><canvas id="c-enum"></canvas></div></div>
 </div>
 
 <div class="sec" id="sec-table">Block summary</div>
@@ -644,70 +660,104 @@ function render(){
   shgList();xbar();icons();
 }
 
-// ---------- SHG section (compact: stacked size bars + ranked finder) ----------
-var BD=[["1 woman",1,1],["2–3 women",2,3],["4–5 women",4,5],["6–10 women",6,10],["11+ women",11,99999]],BCOL=["#CFC8B8","#8FCDB9","#1F8A72","#B98B3A","#8B2F3C"];
-var SHG_BAND="",SHG_CUR=[],SHG_GRP="district",SHG_ALL=false;
+// ---------- SHG section: size histogram + treemap + directory ----------
+var BD=[["1 woman",1,1],["2 women",2,2],["3 women",3,3],["4 women",4,4],["5 women",5,5],["6–10 women",6,10],["11+ women",11,99999]],HL=["1","2","3","4","5","6–10","11+"];
+var SHG_BAND="",SHG_CUR=[],SHG_GRP="district";
 function bidx(n){for(var i=0;i<BD.length;i++)if(n>=BD[i][1]&&n<=BD[i][2])return i;return 0}
 function shgAgg(rows){var g={};
   rows.forEach(function(r){var x=g[r.shgK]||(g[r.shgK]={k:r.shgK,name:r.shgName,village:r.village,block:r.block,district:r.district,state:r.state,n:0,ages:[],fams:[],yes:0,ans:0,yrs:{}});
     x.n++;if(r.ageN>0)x.ages.push(r.ageN);if(r.fam>0)x.fams.push(r.fam);if(r.ent)x.ans++;if(r.ent==="Yes")x.yes++;if(r.yr)x.yrs[r.yr]=(x.yrs[r.yr]||0)+1});
   return Object.keys(g).map(function(k){var x=g[k];x.bi=bidx(x.n);x.age=avg(x.ages);x.fam=median(x.fams);
     var ys=Object.keys(x.yrs).sort(function(p,q){return x.yrs[q]-x.yrs[p]});x.yr=ys[0]||"";return x}).sort(function(p,q){return q.n-p.n||p.name.localeCompare(q.name)})}
+// squarified treemap
+function tmap(items,W,H){var tot=0;items.forEach(function(i){tot+=i.v});var out=[],x=0,y=0,w=W,h=H,sc=W*H/tot,rest=items.map(function(i){return{it:i,a:i.v*sc}});
+  function worst(row,s){var sum=0,mx=0,mn=1e18;row.forEach(function(r){sum+=r.a;mx=Math.max(mx,r.a);mn=Math.min(mn,r.a)});return Math.max(s*s*mx/(sum*sum),sum*sum/(s*s*mn))}
+  while(rest.length){var side=Math.min(w,h),row=[rest[0]],i=1;
+    while(i<rest.length){var nr=row.concat([rest[i]]);if(worst(nr,side)<=worst(row,side)){row=nr;i++}else break}
+    var s=0;row.forEach(function(r){s+=r.a});
+    if(w>=h){var cw=s/h,cy=y;row.forEach(function(r){var rh=r.a/cw;out.push({it:r.it,x:x,y:cy,w:cw,h:rh});cy+=rh});x+=cw;w-=cw}
+    else{var rh2=s/w,cx=x;row.forEach(function(r){var rw=r.a/rh2;out.push({it:r.it,x:cx,y:y,w:rw,h:rh2});cx+=rw});y+=rh2;h-=rh2}
+    rest=rest.slice(row.length)}
+  return out}
+function shade(t){t=Math.max(0,Math.min(1,t));var a=[207,230,221],b=[11,86,70];return "rgb("+a.map(function(v,i){return Math.round(v+(b[i]-v)*t)}).join(",")+")"}
+var WL={id:"wl",afterDatasetsDraw:function(ch){var c=ch.ctx;c.save();c.font="700 12px "+FONT;c.fillStyle="#fff";c.textAlign="center";ch.getDatasetMeta(0).data.forEach(function(el,i){var v=ch.data.datasets[0].data[i];if(v)c.fillText(v,el.x,el.y-7)});c.restore()}};
 function shgList(){
+  if(!RAW.length)return;
   var rows=rowsFor(["shgK"]).filter(function(r){return r.shgK}),A=shgAgg(rows);
   var noName=rowsFor(["shgK"]).length-rows.length,big=A[0],ones=A.filter(function(x){return x.n===1}).length,avgN=A.length?rows.length/A.length:0;
-  var bc=BD.map(function(){return 0});A.forEach(function(x){bc[x.bi]++});var mb=Math.max.apply(null,bc.concat([1]));
-  $("shghero").innerHTML='<div><div class="lt">The big picture</div><div class="big">'+fmt(rows.length)+'<span>women</span>'+fmt(A.length)+'<span>SHGs</span></div>'+
-    '<p>'+(A.length?'Our '+fmt(rows.length)+' women belong to <b>'+fmt(A.length)+' self-help groups</b>. A typical group has about <b>'+avgN.toFixed(1)+' of our women</b>. '+(big?'Biggest: <b>'+esc(big.name)+'</b>'+(big.village?' ('+esc(big.village)+')':'')+' with <b>'+big.n+'</b>. ':'')+(ones?'<b>'+fmt(ones)+'</b> group'+(ones>1?'s have':' has')+' only 1 woman so far.':''):'No SHG data for this selection')+'</p></div>'+
-    '<div><div class="lt">How many groups of each size? (click to filter)</div>'+BD.map(function(d,i){return '<div class="lr'+(SHG_BAND===""||SHG_BAND===d[0]?'':' dim')+(SHG_BAND===d[0]?' sel':'')+'" data-b="'+d[0]+'"><span class="lb">'+d[0]+'</span><span class="tk"><i style="width:'+Math.round(bc[i]/mb*100)+'%;background:'+BCOL[i]+'"></i></span><span class="vl">'+bc[i]+' group'+(bc[i]===1?'':'s')+'</span></div>'}).join("")+'</div>';
-  // ---- stacked bars: one row per place
+  var bc=BD.map(function(){return 0});A.forEach(function(x){bc[x.bi]++});
+  $("shgtxt").innerHTML='<div class="lt">The big picture</div><div class="big">'+fmt(rows.length)+'<span>women</span>'+fmt(A.length)+'<span>SHGs</span></div>'+
+    '<p>'+(A.length?'Our '+fmt(rows.length)+' women belong to <b>'+fmt(A.length)+' self-help groups</b>. A typical group has about <b>'+avgN.toFixed(1)+' of our women</b>. '+(big?'Biggest: <b>'+esc(big.name)+'</b>'+(big.village?' ('+esc(big.village)+')':'')+' with <b>'+big.n+'</b>. ':'')+(ones?'<b>'+fmt(ones)+'</b> group'+(ones>1?'s have':' has')+' only 1 woman so far.':''):'No SHG data for this selection')+'</p>';
+  put("c-shghist",{type:"bar",data:{labels:HL,datasets:[{data:bc,borderRadius:8,borderSkipped:false,maxBarThickness:42,backgroundColor:function(c){return !SHG_BAND||SHG_BAND===BD[c.dataIndex][0]?"#F3D79A":"rgba(243,215,154,.28)"}}]},
+    options:base({onClick:function(e,_,ch){var i=pick(ch,e,"x");if(i>-1){SHG_BAND=SHG_BAND===BD[i][0]?"":BD[i][0];shgList()}},
+      plugins:{legend:{display:false},tooltip:{callbacks:{title:function(it){return BD[it[0].dataIndex][0]+" in the SHG"},label:function(it){return it.raw+" SHGs"}}}},
+      scales:{y:{display:false,beginAtZero:true,grace:"22%"},x:{grid:{display:false},border:{display:false},ticks:{color:"rgba(255,255,255,.95)",font:{size:12,weight:"600"}},title:{display:true,text:"Number of our women in the SHG  →",color:"rgba(255,255,255,.72)",font:{size:11}}}}}),plugins:[WL]},A.length);
+  // ---- treemap
   var dn={state:"state",district:"district",block:"block"};$("shgdimn").textContent=dn[SHG_GRP];
   var bs=$("shggrp").querySelectorAll("button");for(var i=0;i<bs.length;i++)bs[i].className=bs[i].getAttribute("data-g")===SHG_GRP?"on":"";
-  $("shgband").innerHTML=SHG_BAND?'<span class="bchip" id="bclr">Showing only: '+SHG_BAND+' ×</span>':"";
-  var B=shgAgg(rowsFor(["shgK",SHG_GRP]).filter(function(r){return r.shgK})),gs={};
-  B.forEach(function(x){var k=x[SHG_GRP]||"Not stated",s=gs[k]||(gs[k]={k:k,n:0,w:0,bc:[0,0,0,0,0]});s.n++;s.w+=x.n;s.bc[x.bi]++});
-  var GL=Object.keys(gs).map(function(k){return gs[k]}).sort(function(p,q){return q.w-p.w||p.k.localeCompare(q.k)}),mx=GL.reduce(function(m,s){return Math.max(m,s.n)},1),CAP=8;
-  var vis=GL.filter(function(s,i){return SHG_ALL||i<CAP||(XF[SHG_GRP]&&XF[SHG_GRP].indexOf(s.k)>-1)});
-  $("shgbars").innerHTML=vis.length?vis.map(function(s){var sel=XF[SHG_GRP]&&XF[SHG_GRP].indexOf(s.k)>-1;
-    return '<div class="sr'+(sel?' sel':(on(SHG_GRP,s.k)?'':' dim'))+'" data-k="'+esc(s.k)+'"><span class="sn" title="'+esc(s.k)+'">'+esc(s.k)+'</span><span class="sbw"><span class="sbar" style="width:'+Math.max(6,Math.round(s.n/mx*100))+'%">'+
-      s.bc.map(function(c,i){return c?'<i data-b="'+BD[i][0]+'" title="'+c+' SHGs with '+BD[i][0]+'" style="flex:'+c+';background:'+BCOL[i]+';color:'+(i<2?"#2F3A35":"#fff")+(SHG_BAND&&SHG_BAND!==BD[i][0]?';opacity:.25':'')+'">'+c+'</i>':''}).join("")+'</span></span><span class="st"><b>'+s.n+'</b> SHGs · <b>'+s.w+'</b> women</span></div>'}).join("")+
-    (GL.length>CAP?'<button class="ghost more" id="shgall">'+(SHG_ALL?'Show fewer':'Show all '+GL.length+' '+dn[SHG_GRP]+'s')+'</button>':''):'<div style="padding:40px 0;text-align:center;color:var(--mute)">No SHGs for this selection</div>';
-  // ---- ranked finder
+  $("shgband").innerHTML=SHG_BAND?'<span class="bchip" id="bclr">Showing only SHGs with '+SHG_BAND+' ×</span>':"";
+  var B=shgAgg(rowsFor(["shgK",SHG_GRP]).filter(function(r){return r.shgK})).filter(function(x){return !SHG_BAND||BD[x.bi][0]===SHG_BAND}),gs={};
+  B.forEach(function(x){var k=x[SHG_GRP]||"Not stated",s=gs[k]||(gs[k]={k:k,n:0,w:0});s.n++;s.w+=x.n});
+  var GL=Object.keys(gs).map(function(k){var s=gs[k];s.v=s.w;s.avg=s.w/s.n;return s}).sort(function(p,q){return q.v-p.v}),sel=XF[SHG_GRP]||[],MAXP=26;
+  var keep=GL.filter(function(s,i){return i<MAXP||sel.indexOf(s.k)>-1}),rest=GL.filter(function(s){return keep.indexOf(s)<0});
+  if(rest.length){var o={k:"Other "+rest.length+" places",n:0,w:0,other:1};rest.forEach(function(s){o.n+=s.n;o.w+=s.w});o.v=o.w;o.avg=o.w/o.n;keep.push(o)}
+  var tm=$("shgtm"),W=tm.clientWidth||720,H=340;
+  if(keep.length){var av=keep.map(function(s){return s.avg}),lo=Math.min.apply(null,av),hi=Math.max.apply(null,av);
+    tm.innerHTML=tmap(keep,W,H).map(function(r){var s=r.it,tt=hi>lo?(s.avg-lo)/(hi-lo):.5,isel=sel.indexOf(s.k)>-1,cls=s.other?"":(isel?" sel":(on(SHG_GRP,s.k)?"":" dim"));
+      var txt=(r.w>86&&r.h>44)?'<b>'+esc(s.k)+'</b><span>'+s.w+' women · '+s.n+' SHG'+(s.n>1?'s':'')+'</span>'+(r.h>80?'<span>avg '+s.avg.toFixed(1)+' women per SHG</span>':''):'';
+      return '<div class="tmb'+cls+'" '+(s.other?'':'data-k="'+esc(s.k)+'" ')+'title="'+esc(s.k+": "+s.w+" women in "+s.n+" SHGs (about "+s.avg.toFixed(1)+" women per SHG)")+'" style="left:'+r.x.toFixed(1)+'px;top:'+r.y.toFixed(1)+'px;width:'+r.w.toFixed(1)+'px;height:'+r.h.toFixed(1)+'px;background:'+(s.other?"#CFC8B8":shade(tt))+';color:'+(!s.other&&tt>.42?"#fff":"#2F3A35")+'">'+txt+'</div>'}).join("")}
+  else tm.innerHTML='<div class="empty">No SHGs for this selection</div>';
+  // ---- directory (fixed height, scrolls inside)
   var q=$("shgq").value.toLowerCase().trim(),L=A.filter(function(x){return (!SHG_BAND||BD[x.bi][0]===SHG_BAND)&&(!q||(x.name+" "+x.village+" "+x.block+" "+x.district).toLowerCase().indexOf(q)>-1)});
-  SHG_CUR=L;var top=L.slice(0,10),mxn=top.length?top[0].n:1;
-  (XF.shgK||[]).forEach(function(k){if(!top.some(function(x){return x.k===k})){var f=A.filter(function(x){return x.k===k})[0];if(f)top.push(f)}});
-  $("shgsub").textContent=(q||SHG_BAND?L.length+" SHGs match":"Top 10 of "+fmt(A.length)+" SHGs")+(noName?" · "+noName+" women have no SHG name":"")+" · hover a row for details";
-  $("shglist").innerHTML=top.length?top.map(function(x,i){var sel=XF.shgK&&XF.shgK.indexOf(x.k)>-1;
-    var tip=x.n+" women"+(x.ans?" · "+x.yes+" of "+x.ans+" run their own business":"")+(x.age?" · average age "+x.age:"")+(x.fam?" · typical family income "+inr(x.fam)+" a month":"")+(x.yr?" · joined mostly in "+x.yr:"");
-    return '<div class="fr'+(sel?' sel':(on("shgK",x.k)?'':' dim'))+'" data-k="'+esc(x.k)+'" title="'+esc(tip)+'"><span class="rk">'+(i+1)+'</span><span class="fn"><b>'+esc(x.name)+'</b><small>'+esc((x.village||"–")+" · "+(x.block||"–"))+'</small></span><span class="fb"><i style="width:'+Math.round(x.n/mxn*100)+'%;background:'+BCOL[x.bi]+'"></i></span><span class="fv">'+x.n+'</span></div>'}).join("")+(L.length>10?'<div class="how" style="text-align:center">+ '+(L.length-10)+' more — type in the box to find one, or download the CSV</div>':''):'<div style="padding:30px 0;text-align:center;color:var(--mute)">No SHG matches</div>';
+  SHG_CUR=L;var wt=0;L.forEach(function(x){wt+=x.n});var mxn=L.length?L[0].n:1;
+  $("shgsub").textContent=fmt(L.length)+" SHGs · "+fmt(wt)+" women"+(noName?" · "+noName+" have no SHG name":"");
+  $("shglist").innerHTML=L.length?L.map(function(x,i){var s=XF.shgK&&XF.shgK.indexOf(x.k)>-1;
+    var tip=x.n+" women"+(x.ans?" · "+x.yes+" of "+x.ans+" run their own business":"")+(x.age?" · average age "+x.age:"")+(x.fam?" · typical family income "+inr(x.fam)+" a month":"");
+    return '<div class="fr'+(s?' sel':(on("shgK",x.k)?'':' dim'))+'" data-k="'+esc(x.k)+'" title="'+esc(tip)+'"><span class="rk">'+(i+1)+'</span><span class="fn"><b>'+esc(x.name)+'</b><small>'+esc((x.village||"–")+" · "+(x.block||"–"))+'</small></span><span class="fb"><i style="width:'+Math.round(x.n/mxn*100)+'%;background:#1F8A72"></i></span><span class="fv">'+x.n+'</span></div>'}).join(""):'<div style="padding:40px 0;text-align:center;color:var(--mute)">No SHG matches</div>';
 }
 function shgCsv(){var q=function(v){return '"'+String(v).replace(/"/g,'""')+'"'};
   var t=[["SHG name","Village","Block","District","State","Women","Run a business","Avg age","Median family income","Year joined"]].concat(SHG_CUR.map(function(x){return [x.name,x.village,x.block,x.district,x.state,x.n,x.yes,x.age||"",x.fam||"",x.yr]}));
   var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\uFEFF"+t.map(function(r){return r.map(q).join(",")}).join("\r\n")],{type:"text/csv"}));a.download="SHG_list.csv";a.click()}
 $("shgq").oninput=shgList;
-$("shggrp").onclick=function(e){var b=e.target.closest("button");if(b){SHG_GRP=b.getAttribute("data-g");SHG_ALL=false;shgList()}};
+$("shggrp").onclick=function(e){var b=e.target.closest("button");if(b){SHG_GRP=b.getAttribute("data-g");shgList()}};
 $("shgdl").onclick=shgCsv;
 $("shgband").onclick=function(){SHG_BAND="";shgList()};
-$("shghero").onclick=function(e){var r=e.target.closest(".lr");if(r){var b=r.getAttribute("data-b");SHG_BAND=SHG_BAND===b?"":b;shgList()}};
-$("shgbars").onclick=function(e){if(e.target.closest("#shgall")){SHG_ALL=!SHG_ALL;return shgList()}
-  var s=e.target.closest("i[data-b]");if(s){var b=s.getAttribute("data-b");SHG_BAND=SHG_BAND===b?"":b;return shgList()}
-  var r=e.target.closest(".sr");if(r)toggle(SHG_GRP,r.getAttribute("data-k"),e.ctrlKey||e.metaKey||e.shiftKey)};
+$("shgtm").onclick=function(e){var r=e.target.closest(".tmb[data-k]");if(r)toggle(SHG_GRP,r.getAttribute("data-k"),e.ctrlKey||e.metaKey||e.shiftKey)};
 $("shglist").onclick=function(e){var r=e.target.closest(".fr");if(r)toggle("shgK",r.getAttribute("data-k"),e.ctrlKey||e.metaKey||e.shiftKey)};
+var _rt;window.addEventListener("resize",function(){clearTimeout(_rt);_rt=setTimeout(shgList,250)});
 
-// ---------- year-joined timeline ----------
+// ---------- year joined: labelled bars + running total ----------
+var ERA=[["Before 2015",0,2014,"#9AA7A0"],["2015–2019",2015,2019,C.sapphire],["2020–2023",2020,2023,C.emerald],["2024 – now",2024,9999,C.gold]],YEC=[];
+function eraOf(y){for(var i=0;i<ERA.length;i++)if(y>=ERA[i][1]&&y<=ERA[i][2])return i;return 0}
+function setYr(keys,multi){var a=(XF.yr||[]).slice(),all=keys.length&&keys.every(function(k){return a.indexOf(k)>-1});
+  if(multi){keys.forEach(function(k){var i=a.indexOf(k);if(all){if(i>-1)a.splice(i,1)}else if(i<0)a.push(k)})}
+  else a=(all&&a.length===keys.length)?[]:keys.slice();
+  if(a.length)XF.yr=a;else delete XF.yr;setTimeout(render,0)}
 function yearChart(){
   var rows=rowsFor(["yr"]).filter(function(r){return r.yr}),m={};rows.forEach(function(r){m[r.yr]=(m[r.yr]||0)+1});
   var ys=Object.keys(m).map(Number).sort(function(a,b){return a-b}),bad=window._badYr||0;
-  $("yrsub").textContent="Women joining each year · click a point to filter"+(bad?" · "+bad+" record"+(bad>1?"s":"")+" with an impossible year (e.g. 2052) ignored — please correct in the sheet":"");
-  if(!ys.length){put("c-year",{},0);$("yrst").innerHTML="";return}
-  var L=[],D=[];for(var y=ys[0];y<=ys[ys.length-1];y++){L.push(String(y));D.push(m[y]||0)}
-  var pk=0;D.forEach(function(v,i){if(v>D[pk])pk=i});
-  var gf=function(c){var a=c.chart.chartArea;if(!a)return "rgba(15,107,88,.2)";var g=c.chart.ctx.createLinearGradient(0,a.top,0,a.bottom);g.addColorStop(0,"rgba(15,107,88,.45)");g.addColorStop(1,"rgba(15,107,88,.02)");return g};
-  var pkp={id:"pk",afterDatasetsDraw:function(ch){var el=ch.getDatasetMeta(0).data[pk];if(!el)return;var c=ch.ctx;c.save();c.font="700 11.5px "+FONT;c.textAlign="center";c.fillStyle=C.burgundy;c.fillText("Busiest: "+L[pk]+" · "+D[pk]+" women",Math.min(Math.max(el.x,90),ch.chartArea.right-90),el.y-14);c.restore()}};
-  put("c-year",{type:"line",data:{labels:L,datasets:[{data:D,borderColor:C.emerald,borderWidth:3,tension:.35,fill:true,backgroundColor:gf,pointRadius:function(c){return XF.yr&&on("yr",L[c.dataIndex])?6:3},pointBackgroundColor:function(c){return on("yr",L[c.dataIndex])?C.emerald:fade(C.emerald,.25)},pointBorderColor:"#fff",pointBorderWidth:2,pointHoverRadius:7}]},
-    options:base({onClick:function(e,_,ch){var i=pick(ch,e,"x");if(i>-1)toggle("yr",L[i],mu(e))},plugins:{legend:{display:false},tooltip:{callbacks:{label:function(it){return it.raw+" women joined"}}}},scales:{y:{display:false,beginAtZero:true,grace:"30%"},x:{grid:{display:false},border:{display:false},ticks:{maxRotation:0,autoSkip:true,maxTicksLimit:12}}}}),plugins:[SH,pkp]},1);
-  var cur=new Date().getFullYear(),n=rows.length,rec=rows.filter(function(r){return +r.yr>=cur-2}).length,old=rows.filter(function(r){return +r.yr<2015}).length;
-  $("yrst").innerHTML='<div><b>'+L[pk]+'</b><span>busiest year · '+D[pk]+' women</span></div><div><b>'+(n?Math.round(rec/n*100):0)+'%</b><span>joined in the last 3 years</span></div><div><b>'+fmt(old)+'</b><span>joined before 2015</span></div>'}
+  $("yrsub").textContent="Bars = women joining that year (number on top) · line = total women so far · click a bar to filter"+(bad?" · "+bad+" record"+(bad>1?"s":"")+" with an impossible year (e.g. 2052) ignored — fix in the sheet":"");
+  if(!ys.length){put("c-year",{},0);$("yrst").innerHTML="";YEC=[];return}
+  var cur=new Date().getFullYear(),st=Math.max(ys[0],cur-18),bars=[];
+  if(ys[0]<st){var ks=[],v=0;ys.forEach(function(y){if(y<st){ks.push(String(y));v+=m[y]}});bars.push({l:"<"+st,t:"Before "+st,k:ks,v:v,e:eraOf(st-1)})}
+  for(var y=st;y<=ys[ys.length-1];y++)bars.push({l:String(y),t:String(y),k:[String(y)],v:m[y]||0,e:eraOf(y)});
+  var D=bars.map(function(b){return b.v}),CUM=[],s=0;D.forEach(function(v){s+=v;CUM.push(s)});
+  var pk=0;D.forEach(function(v,i){if(v>D[pk])pk=i});var mxb=Math.max.apply(null,D)||1,cm=s||1;
+  var act=function(b){return !XF.yr||b.k.some(function(k){return on("yr",k)})};
+  var YL={id:"yl",afterDatasetsDraw:function(ch){var c=ch.ctx;c.save();c.textAlign="center";
+    ch.getDatasetMeta(0).data.forEach(function(el,i){if(!D[i])return;c.font="700 11px "+FONT;c.fillStyle=i===pk?C.burgundy:C.ink;c.fillText(D[i],el.x,el.y-6)});
+    var pts=ch.getDatasetMeta(1).data,l=pts.length-1;if(l>=0){c.font="700 11.5px "+FONT;c.fillStyle=C.ink;c.textAlign="right";c.fillText("Total so far: "+fmt(CUM[l]),pts[l].x+4,pts[l].y+20)}c.restore()}};
+  put("c-year",{type:"bar",data:{labels:bars.map(function(b){return b.l}),datasets:[
+      {type:"bar",data:D,order:1,yAxisID:"y",borderRadius:7,borderSkipped:false,maxBarThickness:34,backgroundColor:function(c){if(c.dataIndex==null)return C.emerald;var b=bars[c.dataIndex];return act(b)?ERA[b.e][3]:fade(ERA[b.e][3],.22)}},
+      {type:"line",data:CUM,order:0,yAxisID:"y2",borderColor:C.ink,borderWidth:2,pointRadius:2.5,pointBackgroundColor:C.ink,tension:.3,fill:false}]},
+    options:base({onClick:function(e,_,ch){var i=pick(ch,e,"x");if(i>-1)setYr(bars[i].k,mu(e))},
+      plugins:{legend:{display:false},tooltip:{callbacks:{title:function(it){return bars[it[0].dataIndex].t},label:function(it){return it.datasetIndex===0?it.raw+" women joined":"Total women so far: "+fmt(it.raw)}}}},
+      scales:{y:{display:false,beginAtZero:true,max:mxb*1.9},y2:{display:false,min:-cm*1.2,max:cm*1.05},x:{grid:{display:false},border:{display:false},ticks:{maxRotation:0,autoSkip:false,font:{size:10.5}}}}}),plugins:[SH,YL]},1);
+  YEC=ERA.map(function(e,i){var ks=ys.filter(function(y){return y>=e[1]&&y<=e[2]}).map(String),n=0;ks.forEach(function(k){n+=m[k]});return{k:ks,n:n,i:i}});
+  var tot=rows.length;
+  $("yrst").innerHTML=YEC.map(function(x){var e=ERA[x.i],sl=XF.yr&&x.k.length&&x.k.every(function(k){return XF.yr.indexOf(k)>-1});
+    return '<div data-e="'+x.i+'" class="'+(sl?'sel':(XF.yr?'dim':''))+'" style="--ec:'+e[3]+'"><b>'+fmt(x.n)+'</b><span>'+e[0]+' · '+(tot?Math.round(x.n/tot*100):0)+'%</span></div>'}).join("")}
+$("yrst").onclick=function(e){var d=e.target.closest("[data-e]");if(d&&YEC[+d.getAttribute("data-e")])setYr(YEC[+d.getAttribute("data-e")].k,e.ctrlKey||e.metaKey||e.shiftKey)};
 
 // ---------- events ----------
 $("today").textContent=new Date().toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
