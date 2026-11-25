@@ -127,15 +127,7 @@ tr.dim td{opacity:.35}
 .yst{grid-template-columns:repeat(4,1fr)!important}
 .yst>div{border-left:5px solid var(--ec,#0F6B58);cursor:pointer;transition:opacity .2s}
 .yst>div.sel{background:var(--sage-t)}.yst>div.dim{opacity:.4}
-.hm{min-width:520px}
-.ek{grid-template-columns:repeat(4,1fr)!important}.ek>div.warn{border-color:#E6C9A0;background:#FFF8EA}
-.dq{display:grid;grid-template-columns:1.5fr 1fr;gap:28px}
-.dqr{display:grid;grid-template-columns:210px 1fr 138px;gap:10px;align-items:center;margin:8px 0;font-size:12.5px}
-.dqb{height:10px;background:var(--sage-t);border-radius:9px;overflow:hidden}.dqb i{display:block;height:100%;border-radius:9px}
-.dqv small{color:var(--mute)}
-.note{padding:10px 13px;border-radius:12px;background:#fff;border:1px solid #BFDCCF;margin-bottom:8px;font-size:12.5px;line-height:1.5}
-.note.w{border-color:#E6C9A0;background:#FFF8EA}
-@media(max-width:980px){.dq{grid-template-columns:1fr}.dqr{grid-template-columns:120px 1fr 110px}.ek{grid-template-columns:repeat(2,1fr)!important}.hero{grid-template-columns:1fr}.hero .big{font-size:46px}}
+@media(max-width:980px){.hero{grid-template-columns:1fr}.hero .big{font-size:46px}}
 .shgn small{display:block;color:var(--mute);font-size:11px;margin-top:2px;font-weight:400}
 .more{display:block;margin:14px auto 4px}
 .bchip{background:#fff;border:1px solid var(--sage-d);color:var(--sage-d);border-radius:999px;padding:6px 12px;font-size:12px;cursor:pointer}
@@ -146,7 +138,7 @@ tr.dim td{opacity:.35}
 .sec{margin:28px 0 12px;display:flex;align-items:center;gap:10px;font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);font-weight:700;scroll-margin-top:16px}
 .sec::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
 .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
-.s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
+.s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s12{grid-column:span 12}
 .card{background:linear-gradient(180deg,#FFFEFB,#F5F0E6);border:2px solid #fff;border-radius:22px;padding:18px 20px;box-shadow:var(--shadow);min-width:0;--acc:#0F6B58;--acc-t:#DDEBE5;--acc-d:#9CC9BB}
 .card.beige{--acc:#9A6F22;--acc-t:#F5E8CC;--acc-d:#DDBE80}.card.blue{--acc:#27497A;--acc-t:#DCE6F2;--acc-d:#93B1D6}.card.rose{--acc:#8B2F3C;--acc-t:#F3DDE0;--acc-d:#D99AA2}.card.plum{--acc:#65477D;--acc-t:#E9E0F0;--acc-d:#BBA1CE}
 .ch{display:flex;gap:11px;align-items:center;margin-bottom:12px}
@@ -210,9 +202,21 @@ td.num,th.num{text-align:right}
 .hm .m{display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700}
 .hm .dim{opacity:.25}.hm .h.sel,.hm .r.sel{color:var(--ink);text-decoration:underline}
 .how{font-size:11.5px;color:var(--mute);margin-top:10px;line-height:1.5}
-@media(max-width:1200px){.kgrid{grid-template-columns:repeat(3,1fr)}.s3,.s4,.s5,.s7,.s8{grid-column:span 6}.ins{grid-template-columns:repeat(2,1fr)}.filters{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:1200px){.kgrid{grid-template-columns:repeat(3,1fr)}.s3,.s4,.s5,.s7{grid-column:span 6}.ins{grid-template-columns:repeat(2,1fr)}.filters{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:760px){aside{display:none}.wrap{margin-left:0;padding:16px}.grid>*{grid-column:span 12!important}.kgrid{grid-template-columns:repeat(2,1fr)}.filters{grid-template-columns:repeat(2,1fr)}}
 @media print{aside,.filters,.xbar,.hr button,.hr .btn{display:none}.wrap{margin:0}body{background:#fff}.card{box-shadow:none;border:1px solid var(--line);break-inside:avoid}}
+
+.tm{height:auto!important;background:none!important;overflow:visible!important;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.tmb{position:relative!important;left:auto!important;top:auto!important;width:auto!important;height:auto!important;min-height:118px;padding:12px 14px 10px;border-radius:16px;background:#fff;border:1px solid var(--line);border-left:7px solid var(--t);box-shadow:0 10px 20px -12px rgba(60,50,30,.4);display:flex;flex-direction:column;gap:2px}
+.tmb b{white-space:normal;font-size:13.5px}.tmb em{font:600 30px/1.1 Georgia,serif;font-style:normal;color:var(--ink);margin-top:2px}
+.tmb span{font-size:11.5px;color:var(--mute);white-space:normal}.tmb i{display:block;height:5px;border-radius:9px;background:var(--t);margin-top:auto;padding:0}.tmb .bar{margin-top:8px;height:5px;background:var(--sage-t);border-radius:9px;overflow:hidden}
+.dir{height:auto!important;max-height:480px;display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:0 20px;align-content:start}
+.wf{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;max-width:250px;margin:4px auto 6px}.wf i{aspect-ratio:1;border-radius:6px;cursor:pointer;transition:transform .12s,opacity .2s}.wf i:hover{transform:scale(1.2)}.wf i.dim{opacity:.16}
+.wl{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:5px 6px;border-radius:8px;cursor:pointer}.wl:hover{background:var(--sage-t)}.wl.dim{opacity:.4}.wl .sw{width:12px;height:12px;border-radius:4px}.wl span:nth-child(2){flex:1}.wl small{color:var(--mute);width:40px;text-align:right}
+.yw{overflow-x:auto}.yg{display:grid;gap:8px;min-width:600px}.ydr{display:grid;grid-template-columns:92px repeat(10,minmax(0,1fr));gap:6px;align-items:stretch}
+.ydl{display:flex;flex-direction:column;justify-content:center;font-weight:700;font-size:13px;cursor:pointer}.ydl small{font-weight:500;color:var(--mute);font-size:10.5px}.ydl.sel{color:var(--sage-d);text-decoration:underline}
+.yc{border-radius:10px;min-height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:transform .12s,opacity .2s}.yc:hover{transform:scale(1.07)}.yc small{font-size:10px;opacity:.8}.yc b{font-size:16px}.yc.pk{outline:3px solid var(--beige);outline-offset:1px}.yc.sel{outline:3px solid var(--ink);outline-offset:1px}.yc.dim{opacity:.28}.yc.no{background:none!important;cursor:default;visibility:hidden}
+.box canvas{max-width:100%}.card{min-width:0}
 </style>
 </head>
 <body>
@@ -249,15 +253,13 @@ td.num,th.num{text-align:right}
 
 <div class="sec" id="sec-overview">Overview</div>
 <div class="kgrid" id="kpis"></div>
-<div class="ins" id="ins" style="margin-top:16px"></div>
-<div class="sec" id="sec-dq">Data health</div>
-<div class="card s12"><div class="ch"><span class="chip" data-ic="clip"></span><div><h3>How complete is the data behind these charts?</h3><p>Share of women with a valid answer · shows what the percentages above are based on</p></div></div><div class="dq" id="dq"></div></div>
+<div class="ins" id="ins" style="margin-top:16px"></div><div class="how" id="dq"></div>
 
 <div class="sec" id="sec-geo">Where we work</div>
 <div class="grid">
   <div class="card s6"><div class="ch"><span class="chip" data-ic="pin"></span><div><h3>Enrollment by block</h3><p>Top 10 blocks · women registered</p></div></div><div class="box" style="height:310px"><canvas id="c-block"></canvas></div></div>
   <div class="card blue s3"><div class="ch"><span class="chip" data-ic="map"></span><div><h3>By state</h3><p>Share of registrations</p></div></div><div class="box" style="height:310px"><canvas id="c-state"></canvas></div></div>
-  <div class="card beige s3"><div class="ch"><span class="chip" data-ic="users"></span><div><h3>Social category</h3><p>Women in each category</p></div></div><div class="box" style="height:310px"><canvas id="c-cat"></canvas></div></div>
+  <div class="card beige s3"><div class="ch"><span class="chip" data-ic="users"></span><div><h3>Social category</h3><p>Share of registrations</p></div></div><div id="catwaffle"></div></div>
 </div>
 
 <div class="sec" id="sec-shg">Self-help groups (SHGs)</div>
@@ -266,11 +268,11 @@ td.num,th.num{text-align:right}
   <div><div class="lt">How many SHGs have 1, 2, 3… of our women? <span style="text-transform:none;letter-spacing:0;font-weight:500">(click a bar to filter)</span></div><div class="box" style="height:178px"><canvas id="c-shghist"></canvas></div></div>
 </div>
 <div class="grid" style="margin-top:16px">
-  <div class="card blue s8"><div class="ch"><span class="chip" data-ic="map"></span><div><h3>Where are our SHGs? — one box per <span id="shgdimn">district</span></h3><p><b>Bigger box</b> = more women registered · <b>darker green</b> = bigger SHGs on average · click a box to filter the dashboard</p></div></div>
+  <div class="card blue s12"><div class="ch"><span class="chip" data-ic="map"></span><div><h3>Where are our SHGs? — one tile per <span id="shgdimn">district</span></h3><p><b>Bigger box</b> = more women registered · <b>darker green</b> = bigger SHGs on average · click a box to filter the dashboard</p></div></div>
     <div class="etool"><div class="seg" id="shggrp"><button data-g="state">By state</button><button data-g="district" class="on">By district</button><button data-g="block">By block</button></div><span id="shgband"></span></div>
     <div class="tm" id="shgtm"></div>
     <div class="tmleg"><span>Small SHGs (few women each)</span><i></i><span>Big SHGs (many women each)</span></div></div>
-  <div class="card s4"><div class="ch"><span class="chip" data-ic="clip"></span><div><h3>SHG directory</h3><p id="shgsub"></p></div></div>
+  <div class="card s12"><div class="ch"><span class="chip" data-ic="clip"></span><div><h3>SHG directory</h3><p id="shgsub"></p></div></div>
     <div class="etool"><input id="shgq" class="search" style="min-width:0;flex:1" placeholder="Search SHG, village, block…"><button class="ghost" id="shgdl">⬇ CSV</button></div>
     <div class="dir" id="shglist"></div></div>
 </div>
@@ -291,16 +293,13 @@ td.num,th.num{text-align:right}
     <div class="crumb" id="entcrumb"></div>
     <div class="ek" id="entk"></div>
     <div class="box" id="entbox" style="height:300px"><canvas id="c-ent"></canvas></div>
-    <div class="leg" id="entleg"></div><div class="how" id="entother"></div></div>
+    <div class="leg" id="entleg"></div></div>
 </div>
 
 <div class="sec" id="sec-field">Field progress</div>
 <div class="grid">
-  <div class="card s7"><div class="ch"><span class="chip" data-ic="trend"></span><div><h3>When did women join their SHG?</h3><p id="yrsub"></p></div></div><div class="box" style="height:250px"><canvas id="c-year"></canvas></div><div class="yst" id="yrst"></div></div>
-  <div class="card plum s5"><div class="ch"><span class="chip" data-ic="cal"></span><div><h3>How long have women been in their SHG?</h3><p id="tnsub">Years since joining (this year minus year joined) · click a bar to filter</p></div></div><div class="box" style="height:250px"><canvas id="c-ten"></canvas></div><div class="yst" id="tnst" style="grid-template-columns:repeat(3,1fr)!important"></div></div>
-  <div class="card blue s12"><div class="ch"><span class="chip" data-ic="clip"></span><div><h3>Registrations by enumerator</h3><p id="ensub"></p></div></div>
-    <div class="etool"><div class="seg" id="enmode"><button data-m="top" class="on">Top 10</button><button data-m="bot">Bottom 10</button><button data-m="all">All</button></div><span class="how" style="margin:0">Dashed line = average per enumerator · click a bar to filter</span></div>
-    <div class="box" style="height:270px"><canvas id="c-en"></canvas></div></div>
+  <div class="card s7"><div class="ch"><span class="chip" data-ic="trend"></span><div><h3>When did women join their SHG?</h3><p id="yrsub">Women joining each year · click a point to filter</p></div></div><div class="yw"><div id="yrgrid"></div></div><div class="yst" id="yrst"></div></div>
+  <div class="card blue s5"><div class="ch"><span class="chip" data-ic="clip"></span><div><h3>Registrations by enumerator</h3><p id="ensub">Field team progress</p></div></div><div class="etool"><span class="how" style="margin:0">Click a bar to filter the dashboard</span><div class="seg" id="enmode"><button data-m="top">Top 8</button><button data-m="bot">Bottom 8</button><button data-m="all">All</button></div></div><div class="box" id="enbox" style="height:320px"><canvas id="c-enum"></canvas></div></div>
 </div>
 
 <div class="sec" id="sec-table">Block summary</div>
@@ -369,7 +368,7 @@ var FIELDS={
 };
 var FILTERS=[["state","State"],["district","District"],["block","Block"],["gp","Gram Panchayat / Village"],["category","Social category"],["enumerator","Enumerator"],["ent","Enterprise"]];
 var DN={state:"State",block:"Block",category:"Category",edu:"Education",ageBand:"Age",disability:"Disability",liv:"Livelihood",occ:"Occupation",yr:"SHG year",enumerator:"Enumerator",secG:"Sector",district:"District",gp:"Gram Panchayat",famBand:"Family income",perBand:"Her income",shgK:"SHG"};var SHGN={},SHG_Q="",SHG_SORT="n",OPEN="";
-var FB=["Below ₹5K","₹5–10K","₹10–20K","₹20–30K","Above ₹30K"],PB=["Below ₹2K","₹2–5K","₹5–10K","₹10–15K","Above ₹15K"],ENT_LV="state",ENT_MODE="n",SECLIST=[],SECCOL={};
+var FB=["Below ₹5K","₹5–10K","₹10–20K","₹20–30K","Above ₹30K"],PB=["Below ₹2K","₹2–5K","₹5–10K","₹10–15K","Above ₹15K"],ENT_LV="state",ENT_MODE="n",EN_MODE="top",SECLIST=[],SECCOL={};
 function band(v,cuts,names){if(!(v>0))return "";for(var i=0;i<cuts.length;i++)if(v<cuts[i])return names[i];return names[cuts.length]}
 
 var RAW=[],SEL={},XF={},charts={};
@@ -397,18 +396,14 @@ function normWork(v){
   if(/home/.test(s))return "Homemaker";
   return "Other";
 }
-function normCat(v){var s=String(v||"").trim();if(!s)return "";var u=s.toUpperCase().replace(/[^A-Z]/g,"");
-  if(/^(GEN|GENERAL|OC|UR|FC)$/.test(u))return "General";if(u==="DNT")return "DNC";
-  return u.length<=4?u:s.toLowerCase().replace(/\b\w/g,function(c){return c.toUpperCase()})}
 function normEnt(v){var s=String(v||"").trim().toLowerCase();if(!s)return "";if(/not\s*know|unknown|don/.test(s))return "Not known";if(/^y/.test(s))return "Yes";if(/^n/.test(s))return "No";return "Not known"}
-function normSec(v){var s=String(v||"").trim().toLowerCase().split(/[,;\/]/)[0].trim();if(!s||/^(na|n\/a|nil|none|no|-)$/.test(s))return "";
+function normSec(v){var s=String(v||"").trim().toLowerCase().split(/[,;\/]/)[0].trim();if(!s||/^(na|n\/a|nil|none|-)$/.test(s))return "";
   if(/agri|farm|crop|vegetable|flower/.test(s))return "Agriculture";
   if(/milch|dairy|cow|cattle|buffalo|goat|sheep|poultry|livestock|animal|egg/.test(s))return "Livestock & Dairy";
   if(/tailor|stitch|garment|sew|embroid|boutique|textile|saree/.test(s))return "Tailoring & Garments";
   if(/^hw$|hand\s*work|handicraft|craft|weav|basket|coir/.test(s))return "Handicraft & Handwork";
   if(/food|snack|tiffin|cater|bakery|hotel|tea|sweet|idli|pickle|millet/.test(s))return "Food & Catering";
-  if(/beauty|beati|parlo|salon|mehend|mehand|bridal/.test(s))return "Beauty & Wellness";
-  if(/shop|retail|grocery|trade|vendor|store|sales|provision|kadai|petti|kirana|business/.test(s))return "Trade & Retail";
+  if(/shop|retail|grocery|trade|vendor|store|sales|provision/.test(s))return "Trade & Retail";
   return s.replace(/\b\w/g,function(c){return c.toUpperCase()})}
 var EDU=[["No Formal Schooling",/no formal|illiter|none/],["Primary",/^primary/],["Upper Primary",/upper primary|middle/],["Secondary",/^secondary|^matric/],["Higher Secondary",/higher secondary|senior|^11|^12/],["Graduate or Above",/graduate|degree|post|diploma/]];
 function normEdu(v){var s=String(v||"").trim().toLowerCase();if(!s)return "";for(var i=0;i<EDU.length;i++)if(EDU[i][1].test(s))return EDU[i][0];return String(v).trim()}
@@ -433,16 +428,16 @@ function buildRecords(table){
     for(var i=0;i<head.length;i++){if(FIELDS[f][0].test(head[i])){idx=i;break}}
     if(idx<0){idx=FIELDS[f][1];missing.push(f)}map[f]=idx});
   window._missing=missing;window._gpFound=missing.indexOf("gp")<0;
-  var recs=[],badYr=0,badF=0,badP=0,NOWY=new Date().getFullYear();
+  window._read=table.length-1;var recs=[],badYr=0,NOWY=new Date().getFullYear();
   for(var r=1;r<table.length;r++){var o={},row=table[r];
     Object.keys(map).forEach(function(f){var v=map[f]<0?"":row[map[f]];o[f]=v==null?"":String(v).trim()});
     if(!(o.state||o.district||o.block||o.enumerator))continue;
-    o.liv=normWork(o.livelihood);o.occ=normWork(o.occupation);o.ent=normEnt(o.enterprise);o.edu=normEdu(o.education);o.category=normCat(o.category);
+    o.liv=normWork(o.livelihood);o.occ=normWork(o.occupation);o.ent=normEnt(o.enterprise);o.edu=normEdu(o.education);
     o.ageN=num(o.age);o.ageBand=o.ageN>0?(o.ageN<=25?"18–25":o.ageN<=35?"26–35":o.ageN<=45?"36–45":o.ageN<=55?"46–55":"56+"):"";
-    o.fam=num(o.famIncome);o.per=num(o.perIncome);if(o.fam>0&&(o.fam<300||o.fam>300000)){badF++;o.fam=0}if(o.per>0&&(o.per<300||o.per>300000)){badP++;o.per=0}o.famBand=band(o.fam,[5000,10000,20000,30000],FB);o.perBand=band(o.per,[2000,5000,10000,15000],PB);o.gp=o.gp||o.village;o.shgK=shgKey(o);
+    o.fam=num(o.famIncome);o.per=num(o.perIncome);o.famBand=band(o.fam,[5000,10000,20000,30000],FB);o.perBand=band(o.per,[2000,5000,10000,15000],PB);o.gp=o.gp||o.village;o.shgK=shgKey(o);
     var ym=String(o.shgYear).match(/\b(19|20)\d{2}\b/);o.yr=ym?ym[0]:"";if(o.yr&&(+o.yr>NOWY||+o.yr<1980)){badYr++;o.yr=""}
     recs.push(o)}
-  window._badYr=badYr;window._badInc={f:badF,p:badP};SHGN={};recs.forEach(function(r){if(r.shgK&&!SHGN[r.shgK])SHGN[r.shgK]=r.shgName+(r.village?" · "+r.village:"")});
+  window._badYr=badYr;SHGN={};recs.forEach(function(r){if(r.shgK&&!SHGN[r.shgK])SHGN[r.shgK]=r.shgName+(r.village?" · "+r.village:"")});
   var sc={};recs.forEach(function(r){if(r.ent==="Yes"){r.sec=normSec(r.entSector)||"Sector not stated";sc[r.sec]=(sc[r.sec]||0)+1}});
   var top=Object.keys(sc).filter(function(k){return k!=="Sector not stated"}).sort(function(a,b){return sc[b]-sc[a]}),keep=top.slice(0,6),cols=[C.emerald,C.gold,C.sapphire,C.plum,C.teal,C.copper];
   recs.forEach(function(r){if(r.ent==="Yes")r.secG=keep.indexOf(r.sec)>-1?r.sec:(r.sec==="Sector not stated"?r.sec:"Other sectors")});
@@ -566,7 +561,7 @@ function barFill(key,horiz,dim,labels){var g=grad(key,horiz);return function(ctx
 function hbar(id,data,color,dim,th){
   var L=data.map(function(d){return d[0]});
   put(id,{type:"bar",data:{labels:L,datasets:[{data:data.map(function(d){return d[1]}),backgroundColor:barFill(color,true,dim,L),borderRadius:99,borderSkipped:false,barThickness:th||16}]},
-    options:base({indexAxis:"y",onClick:function(e,_,ch){var i=pick(ch,e,"y");if(i>-1)toggle(dim,L[i],mu(e))},plugins:{legend:{display:false}},scales:{x:{display:false,beginAtZero:true,grace:"15%"},y:{grid:{display:false},border:{display:false},ticks:{font:{size:11.5,weight:"500"}}}}}),plugins:[SH,VL]},data.length)}
+    options:base({indexAxis:"y",onClick:function(e,_,ch){var i=pick(ch,e,"y");if(i>-1)toggle(dim,L[i],mu(e))},plugins:{legend:{display:false}},scales:{x:{display:false,beginAtZero:true,grace:"15%"},y:{grid:{display:false},border:{display:false},ticks:{autoSkip:false,font:{size:11.5,weight:"500"}}}}}),plugins:[SH,VL]},data.length)}
 function vbar(id,data,color,dim){
   var L=data.map(function(d){return d[0]});
   put(id,{type:"bar",data:{labels:L,datasets:[{data:data.map(function(d){return d[1]}),backgroundColor:barFill(color,false,dim,L),borderRadius:10,borderSkipped:false,maxBarThickness:46}]},
@@ -582,16 +577,16 @@ function donut(id,data,dim,cols){
 function heat(id,insId,dim,inc,bdim,bands,color){
   var rows=rowsFor([dim,bdim]).filter(function(r){return r[dim]&&r[inc]>0}),g={};
   rows.forEach(function(r){(g[r[dim]]=g[r[dim]]||[]).push(r)});
-  var R=Object.keys(g).map(function(k){var a=g[k].map(function(r){return r[inc]}).sort(function(x,y){return x-y});return{k:k,n:a.length,med:quant(a,.5),avg:a.reduce(function(s,v){return s+v},0)/a.length,rows:g[k]}}).sort(function(x,y){return y.avg-x.avg}),el=$(id);
+  var R=Object.keys(g).map(function(k){var a=g[k].map(function(r){return r[inc]}).sort(function(x,y){return x-y});return{k:k,n:a.length,med:quant(a,.5),av:avg(a),rows:g[k]}}).sort(function(x,y){return y.med-x.med}),el=$(id);
   if(!R.length){el.innerHTML='<div style="padding:60px 0;text-align:center;color:var(--mute)">No data for this selection</div>';$(insId).textContent="";return}
   var big=R.filter(function(x){return x.n>=3}),pool=big.length>1?big:R;
-  $(insId).textContent="Average monthly income — highest: "+pool[0].k+" "+inr(pool[0].avg)+" (median "+inr(pool[0].med)+") · lowest: "+pool[pool.length-1].k+" "+inr(pool[pool.length-1].avg)+" (median "+inr(pool[pool.length-1].med)+")";
-  var h='<div class="hm" style="grid-template-columns:120px repeat('+bands.length+',1fr) 62px 62px 48px"><div></div>'+bands.map(function(b){return '<div class="h'+(XF[bdim]&&XF[bdim].indexOf(b)>-1?' sel':'')+'" data-b="'+esc(b)+'">'+b+'</div>'}).join("")+'<div class="h" style="cursor:default">Average</div><div class="h" style="cursor:default">Median</div><div class="h" style="cursor:default">Women</div>';
+  $(insId).textContent="Monthly income, median (average) — highest: "+pool[0].k+" "+inr(pool[0].med)+" ("+inr(pool[0].av)+") · lowest: "+pool[pool.length-1].k+" "+inr(pool[pool.length-1].med)+" ("+inr(pool[pool.length-1].av)+")";
+  var h='<div class="hm" style="grid-template-columns:120px repeat('+bands.length+',1fr) 62px 62px 48px"><div></div>'+bands.map(function(b){return '<div class="h'+(XF[bdim]&&XF[bdim].indexOf(b)>-1?' sel':'')+'" data-b="'+esc(b)+'">'+b+'</div>'}).join("")+'<div class="h" style="cursor:default">Median</div><div class="h" style="cursor:default">Average</div><div class="h" style="cursor:default">Women</div>';
   R.forEach(function(x){var rd=!on(dim,x.k);
     h+='<div class="r'+(XF[dim]&&XF[dim].indexOf(x.k)>-1?' sel':'')+(rd?' dim':'')+'" data-k="'+esc(x.k)+'">'+esc(x.k)+'</div>';
     bands.forEach(function(b){var c=x.rows.filter(function(r){return r[bdim]===b}).length,p=c/x.n,cd=rd||!on(bdim,b);
       h+='<div class="c'+(cd?' dim':'')+'" data-k="'+esc(x.k)+'" data-b="'+esc(b)+'" style="background:'+(c?fade(GR[color][1],.1+.85*p):'rgba(150,135,110,.07)')+';color:'+(c?(p>.5?'#fff':C.ink):'#b5ad9d')+'">'+(c?'<b>'+Math.round(p*100)+'%</b><small>'+c+' women</small>':'–')+'</div>'});
-    h+='<div class="m'+(rd?' dim':'')+'">'+inr(x.avg)+'</div><div class="m'+(rd?' dim':'')+'">'+inr(x.med)+'</div><div class="m'+(rd?' dim':'')+'">'+x.n+'</div>'});
+    h+='<div class="m'+(rd?' dim':'')+'">'+inr(x.med)+'</div><div class="m'+(rd?' dim':'')+'">'+inr(x.av)+'</div><div class="m'+(rd?' dim':'')+'">'+x.n+'</div>'});
   el.innerHTML=h+'</div><div class="how">How to read: each row adds up to 100% of the women in that group. A darker box means more women in that income band. Click a row, a column heading or a box to filter the whole dashboard.</div>'}
 
 // ---------- enterprise explorer ----------
@@ -619,13 +614,8 @@ function entChart(){
   var ms=$("entmode").querySelectorAll("button");for(var i=0;i<ms.length;i++)ms[i].className=ms[i].getAttribute("data-m")===ENT_MODE?"on":"";
   var cr=LV.map(function(x){var a=XF[x[0]]||[],nm=lvName(x).toLowerCase();return a.length?'<b>'+esc(a.length<=2?a.join(", "):a.length+" "+nm+"s selected")+'</b>':'all '+nm+'s'}).join(" › ");
   $("entcrumb").innerHTML='Scope: '+cr+'<br>Showing women who run an enterprise, grouped by <b>'+lab+'</b>'+(extra?' (top '+MAXG+' of '+(MAXG+extra)+')':'')+'. Click a bar to select it (Ctrl/Shift for several), then pick the next tab to drill down.';
-  var all=rowsFor([]),y=all.filter(function(r){return r.ent==="Yes"}),nn=all.filter(function(r){return r.ent==="No"}).length,ans=all.filter(function(r){return r.ent}).length,nk=all.filter(function(r){return r.ent==="Not known"}).length,blank=all.length-ans,ts=cnt(y,function(r){return r.secG})[0],pp=function(a,b){return b?Math.round(a/b*100):0};
-  $("entk").innerHTML='<div><div class="n">'+fmt(y.length)+'</div><div class="t">women run an enterprise · '+pp(y.length,ans)+'% of the '+fmt(ans)+' who answered · '+pp(y.length,all.length)+'% of all '+fmt(all.length)+'</div></div>'+
-    '<div><div class="n">'+fmt(nn)+'</div><div class="t">say they have no enterprise · '+pp(nn,ans)+'% of those who answered</div></div>'+
-    '<div class="'+(blank+nk>all.length*.1?'warn':'')+'"><div class="n">'+fmt(blank+nk)+'</div><div class="t">no answer'+(nk?' ('+fmt(nk)+' “not known”)':'')+' — left out of the % above</div></div>'+
-    '<div><div class="n" style="font-size:18px;padding:4px 0">'+(ts?esc(ts[0]):"–")+'</div><div class="t">most common sector'+(ts?' · '+ts[1]+' women':'')+'</div></div>';
-  var oth=cnt(rows.filter(function(r){return r.secG==="Other sectors"}),function(r){return r.sec}).slice(0,8);
-  $("entother").innerHTML=oth.length?'<b>“Other sectors” includes:</b> '+oth.map(function(o){return esc(o[0])+' ('+o[1]+')'}).join(" · "):"";
+  var all=rowsFor([]),y=all.filter(function(r){return r.ent==="Yes"}),ans=all.filter(function(r){return r.ent}).length,ts=cnt(y,function(r){return r.secG})[0];
+  $("entk").innerHTML='<div><div class="n">'+fmt(y.length)+'</div><div class="t">women run an enterprise</div></div><div><div class="n">'+(ans?Math.round(y.length/ans*100):0)+'%</div><div class="t">of the '+fmt(ans)+' women who answered</div></div><div><div class="n" style="font-size:18px;padding:4px 0">'+(ts?esc(ts[0]):"–")+'</div><div class="t">most common sector'+(ts?' · '+ts[1]+' women':'')+'</div></div>';
   var sc={};rows.forEach(function(r){sc[r.secG]=(sc[r.secG]||0)+1});
   $("entleg").innerHTML=SECLIST.filter(function(s){return sc[s]}).map(function(s){return '<span class="lg'+(on("secG",s)?'':' dim')+'" data-s="'+esc(s)+'"><i style="background:'+SECCOL[s]+'"></i>'+esc(s)+' <b>'+sc[s]+'</b></span>'}).join("")}
 
@@ -639,21 +629,27 @@ function render(){
   var per=rows.map(function(r){return r.per}).filter(function(v){return v>0});
   var answered=rows.filter(function(r){return r.ent}).length,yes=rows.filter(function(r){return r.ent==="Yes"}).length,no=rows.filter(function(r){return r.ent==="No"}).length;
   var pct=function(a,b){return b?Math.round(a/b*100):0};
-  var K=[["sage","users",fmt(N),"Women enrolled","Avg age "+(ages.length?avg(ages):"–")+" years"],
+  var K=[["sage","users",fmt(N),"Women enrolled","Avg age "+(ages.length?avg(ages):"–")+" · median "+(ages.length?median(ages):"–")+" yrs"],
          ["blue","group",fmt(shgN),"SHG groups","≈ "+(shgN?(N/shgN).toFixed(1):"0")+" women per group"],
          ["beige","pin",fmt(dists.length),"Districts covered",states.length+" states · "+blocks.length+" blocks"],
-         ["beige","rupee","₹"+fmt(avg(fam)),"Average family income / month","Median ₹"+fmt(median(fam))+" · her own: avg ₹"+fmt(avg(per))+", median ₹"+fmt(median(per))],
-         ["rose","store",fmt(yes),"Women running an enterprise",pct(yes,answered)+"% of the "+fmt(answered)+" who answered · "+fmt(N-answered)+" not answered"]];
+         ["beige","rupee","₹"+fmt(median(fam)),"Family income / month · median","Average ₹"+fmt(avg(fam))+" · Her own: median ₹"+fmt(median(per))+", avg ₹"+fmt(avg(per))],
+         ["rose","store",pct(yes,answered)+"%","Already run an enterprise",fmt(yes)+" of "+fmt(answered)+" answered · "+fmt(N-answered)+" blank"]];
   $("kpis").innerHTML=K.map(function(k){return '<div class="card kpi '+(k[0]==="sage"?"":k[0])+'"><div class="top"><span class="chip" data-ic="'+k[1]+'"></span>'+k[3]+'</div><div class="v">'+k[2]+'</div><div class="l">'+k[4]+'</div></div>'}).join("");
   var lowInc=fam.filter(function(v){return v<10000}).length,lowEdu=rows.filter(function(r){return /^(No Formal|Primary|Upper Primary)/.test(r.edu)}).length,dis=rows.filter(function(r){return /^y/i.test(r.disability)}).length;
-  var I=[["rose","store",fmt(no),"women say they have no enterprise — "+pct(no,answered)+"% of the "+fmt(answered)+" who answered"],["beige","rupee",fmt(lowInc),"households earn below ₹10,000 a month"],["blue","cap",fmt(lowEdu),"women studied only up to upper primary"],["sage","heart",fmt(dis),"women reported a disability"]];
+  var I=[["rose","store",fmt(no),"women have no enterprise yet — "+pct(no,answered)+"% of those answered"],["beige","rupee",fmt(lowInc),"households earn below ₹10,000 a month"],["blue","cap",fmt(lowEdu),"women studied only up to upper primary"],["sage","heart",fmt(dis),"women reported a disability"]];
   $("ins").innerHTML=I.map(function(k){return '<div class="card insc '+(k[0]==="sage"?"":k[0])+'"><span class="chip" data-ic="'+k[1]+'"></span><div><div class="n">'+k[2]+'</div><div class="t">'+k[3]+'</div></div></div>'}).join("");
 
+  var dqT=window._read||RAW.length;$("dq").innerHTML="<b>Data check</b> · "+fmt(dqT)+" rows in sheet · "+fmt(RAW.length)+" counted"+(dqT>RAW.length?" ("+fmt(dqT-RAW.length)+" skipped: no state/district/block/enumerator)":"")+" · in this view: "+fmt(N-fam.length)+" without family income, "+fmt(N-per.length)+" without her income, "+fmt(N-ages.length)+" without age, "+fmt(rows.filter(function(r){return !r.shgK}).length)+" without SHG name, "+fmt(N-answered)+" enterprise unanswered. Averages and medians use only women who gave a value.";
   var bl=cnt(rowsFor(["block"]),function(r){return r.block}),top10=bl.slice(0,10);
   (XF.block||[]).forEach(function(b){if(!top10.some(function(d){return d[0]===b})){var f=bl.filter(function(d){return d[0]===b})[0];if(f)top10.push(f)}});
   hbar("c-block",top10,"emerald","block",15);
   donut("c-state",cnt(rowsFor(["state"]),function(r){return r.state}),"state",[C.sapphire,C.gold,C.emerald,C.burgundy,C.plum,C.teal]);
-  hbarP("c-cat",cnt(rowsFor(["category"]),function(r){return r.category}),"gold","category",16);
+  (function(){var d=cnt(rowsFor(["category"]),function(r){return r.category}),T=0,cols=[C.emerald,C.gold,C.sapphire,C.burgundy,C.slate,C.plum,C.teal],el=$("catwaffle");d.forEach(function(x){T+=x[1]});
+ if(!T){el.innerHTML='<div style="padding:60px 0;text-align:center;color:var(--mute)">No data for this selection</div>';return}
+ var q=d.map(function(x,i){var e=x[1]/T*100;return{i:i,f:Math.floor(e),r:e-Math.floor(e)}}),left=100-q.reduce(function(a,b){return a+b.f},0);
+ q.slice().sort(function(a,b){return b.r-a.r}).slice(0,left).forEach(function(o){q[o.i].f++});
+ var cells="";q.forEach(function(o){for(var j=0;j<o.f;j++)cells+='<i data-k="'+esc(d[o.i][0])+'" class="'+(on("category",d[o.i][0])?"":"dim")+'" style="background:'+cols[o.i%cols.length]+'" title="'+esc(d[o.i][0])+'"></i>'});
+ el.innerHTML='<div class="wf">'+cells+'</div><div class="how" style="margin:0 0 8px;text-align:center">1 square = 1% of women · click to filter</div>'+d.map(function(x,i){return '<div class="wl'+(on("category",x[0])?"":" dim")+'" data-k="'+esc(x[0])+'"><span class="sw" style="background:'+cols[i%cols.length]+'"></span><span>'+esc(x[0])+'</span><b>'+fmt(x[1])+'</b><small>'+Math.round(x[1]/T*100)+'%</small></div>'}).join("")})();
 
   var order=EDU.map(function(e){return e[0]}),ed=cnt(rowsFor(["edu"]),function(r){return r.edu});
   ed.sort(function(a,b){var ia=order.indexOf(a[0]),ib=order.indexOf(b[0]);return (ia<0?99:ia)-(ib<0?99:ib)});
@@ -666,16 +662,22 @@ function render(){
   heat("hm2","ins2","occ","per","perBand",PB,"plum");
   entChart();
 
-  yearChart();tenureChart();enumChart();
+  yearChart();
+  var en2=cnt(rowsFor(["enumerator"]),function(r){return r.enumerator}),en8=EN_MODE==="bot"?en2.slice().reverse().slice(0,8):(EN_MODE==="all"?en2.slice():en2.slice(0,8));
+  (XF.enumerator||[]).forEach(function(k){if(!en8.some(function(d){return d[0]===k})){var f=en2.filter(function(d){return d[0]===k})[0];if(f)en8.push(f)}});
+  $("ensub").textContent=(EN_MODE==="all"?"All ":EN_MODE==="bot"?"Bottom 8 of ":"Top 8 of ")+en2.length+" field team members";
+  $("enbox").style.height=Math.max(320,en8.length*30+30)+"px";
+  var eb=$("enmode").querySelectorAll("button");for(var ei=0;ei<eb.length;ei++)eb[ei].className=eb[ei].getAttribute("data-m")===EN_MODE?"on":"";
+  hbar("c-enum",en8,"sapphire","enumerator",17);
 
   var g={};rowsFor(["block"]).forEach(function(r){var k=r.block+"|"+r.district;(g[k]=g[k]||{block:r.block,district:r.district,state:r.state,rows:[]}).rows.push(r)});
   var list=Object.keys(g).map(function(k){return g[k]}).sort(function(a,b){return b.rows.length-a.rows.length});
-  $("tbl").innerHTML='<table><thead><tr><th>Block</th><th>District</th><th>State</th><th class="num">Women</th><th class="num">SHGs</th><th class="num">Avg age</th><th class="num">Average family income</th><th class="num">Median family income</th><th>Enterprise</th></tr></thead><tbody>'+
+  $("tbl").innerHTML='<table><thead><tr><th>Block</th><th>District</th><th>State</th><th class="num">Women</th><th class="num">SHGs</th><th class="num">Avg age</th><th class="num">Median family income</th><th class="num">Avg family income</th><th>Enterprise</th></tr></thead><tbody>'+
    list.map(function(x){var rr=x.rows,sg={};rr.forEach(function(r){var k=shgKey(r);if(k)sg[k]=1});
      var a=rr.map(function(r){return r.ageN}).filter(function(v){return v>0}),f=rr.map(function(r){return r.fam}).filter(function(v){return v>0});
      var ans=rr.filter(function(r){return r.ent}).length,y=rr.filter(function(r){return r.ent==="Yes"}).length,p=pct(y,ans);
-     return '<tr data-k="'+esc(x.block)+'"'+(XF.block&&XF.block.indexOf(x.block)>-1?' class="sel"':'')+'><td><b>'+esc(x.block||"–")+'</b></td><td>'+esc(x.district)+'</td><td>'+esc(x.state)+'</td><td class="num"><b>'+rr.length+'</b></td><td class="num">'+Object.keys(sg).length+'</td><td class="num">'+(a.length?avg(a):"–")+'</td><td class="num">₹'+fmt(avg(f))+'</td><td class="num">₹'+fmt(median(f))+'</td><td>'+p+'%<span class="mini"><i style="width:'+p+'%"></i></span></td></tr>'}).join("")+'</tbody></table>';
-  dqRender(rows);shgList();xbar();icons();
+     return '<tr data-k="'+esc(x.block)+'"'+(XF.block&&XF.block.indexOf(x.block)>-1?' class="sel"':'')+'><td><b>'+esc(x.block||"–")+'</b></td><td>'+esc(x.district)+'</td><td>'+esc(x.state)+'</td><td class="num"><b>'+rr.length+'</b></td><td class="num">'+Object.keys(sg).length+'</td><td class="num">'+(a.length?avg(a):"–")+'</td><td class="num">₹'+fmt(median(f))+'</td><td class="num">₹'+fmt(avg(f))+'</td><td>'+p+'%<span class="mini"><i style="width:'+p+'%"></i></span></td></tr>'}).join("")+'</tbody></table>';
+  shgList();xbar();icons();
 }
 
 // ---------- SHG section: size histogram + treemap + directory ----------
@@ -685,7 +687,7 @@ function bidx(n){for(var i=0;i<BD.length;i++)if(n>=BD[i][1]&&n<=BD[i][2])return 
 function shgAgg(rows){var g={};
   rows.forEach(function(r){var x=g[r.shgK]||(g[r.shgK]={k:r.shgK,name:r.shgName,village:r.village,block:r.block,district:r.district,state:r.state,n:0,ages:[],fams:[],yes:0,ans:0,yrs:{}});
     x.n++;if(r.ageN>0)x.ages.push(r.ageN);if(r.fam>0)x.fams.push(r.fam);if(r.ent)x.ans++;if(r.ent==="Yes")x.yes++;if(r.yr)x.yrs[r.yr]=(x.yrs[r.yr]||0)+1});
-  return Object.keys(g).map(function(k){var x=g[k];x.bi=bidx(x.n);x.age=avg(x.ages);x.fam=median(x.fams);x.fa=avg(x.fams);
+  return Object.keys(g).map(function(k){var x=g[k];x.bi=bidx(x.n);x.age=avg(x.ages);x.fam=median(x.fams);x.famA=avg(x.fams);
     var ys=Object.keys(x.yrs).sort(function(p,q){return x.yrs[q]-x.yrs[p]});x.yr=ys[0]||"";return x}).sort(function(p,q){return q.n-p.n||p.name.localeCompare(q.name)})}
 // squarified treemap
 function tmap(items,W,H){var tot=0;items.forEach(function(i){tot+=i.v});var out=[],x=0,y=0,w=W,h=H,sc=W*H/tot,rest=items.map(function(i){return{it:i,a:i.v*sc}});
@@ -716,25 +718,24 @@ function shgList(){
   $("shgband").innerHTML=SHG_BAND?'<span class="bchip" id="bclr">Showing only SHGs with '+SHG_BAND+' ×</span>':"";
   var B=shgAgg(rowsFor(["shgK",SHG_GRP]).filter(function(r){return r.shgK})).filter(function(x){return !SHG_BAND||BD[x.bi][0]===SHG_BAND}),gs={};
   B.forEach(function(x){var k=x[SHG_GRP]||"Not stated",s=gs[k]||(gs[k]={k:k,n:0,w:0});s.n++;s.w+=x.n});
-  var GL=Object.keys(gs).map(function(k){var s=gs[k];s.v=s.w;s.avg=s.w/s.n;return s}).sort(function(p,q){return q.v-p.v}),sel=XF[SHG_GRP]||[],MAXP=26;
+  var GL=Object.keys(gs).map(function(k){var s=gs[k];s.v=s.w;s.avg=s.w/s.n;return s}).sort(function(p,q){return q.v-p.v}),sel=XF[SHG_GRP]||[],MAXP=60;
   var keep=GL.filter(function(s,i){return i<MAXP||sel.indexOf(s.k)>-1}),rest=GL.filter(function(s){return keep.indexOf(s)<0});
   if(rest.length){var o={k:"Other "+rest.length+" places",n:0,w:0,other:1};rest.forEach(function(s){o.n+=s.n;o.w+=s.w});o.v=o.w;o.avg=o.w/o.n;keep.push(o)}
-  var tm=$("shgtm"),W=tm.clientWidth||720,H=340;
-  if(keep.length){var av=keep.map(function(s){return s.avg}),lo=Math.min.apply(null,av),hi=Math.max.apply(null,av);
-    tm.innerHTML=tmap(keep,W,H).map(function(r){var s=r.it,tt=hi>lo?(s.avg-lo)/(hi-lo):.5,isel=sel.indexOf(s.k)>-1,cls=s.other?"":(isel?" sel":(on(SHG_GRP,s.k)?"":" dim"));
-      var txt=(r.w>86&&r.h>44)?'<b>'+esc(s.k)+'</b><span>'+s.w+' women · '+s.n+' SHG'+(s.n>1?'s':'')+'</span>'+(r.h>80?'<span>avg '+s.avg.toFixed(1)+' women per SHG</span>':''):'';
-      return '<div class="tmb'+cls+'" '+(s.other?'':'data-k="'+esc(s.k)+'" ')+'title="'+esc(s.k+": "+s.w+" women in "+s.n+" SHGs (about "+s.avg.toFixed(1)+" women per SHG)")+'" style="left:'+r.x.toFixed(1)+'px;top:'+r.y.toFixed(1)+'px;width:'+r.w.toFixed(1)+'px;height:'+r.h.toFixed(1)+'px;background:'+(s.other?"#CFC8B8":shade(tt))+';color:'+(!s.other&&tt>.42?"#fff":"#2F3A35")+'">'+txt+'</div>'}).join("")}
-  else tm.innerHTML='<div class="empty">No SHGs for this selection</div>';
+  var tm=$("shgtm");
+  if(keep.length){var mxw=Math.max.apply(null,keep.map(function(s){return s.w})),av=keep.map(function(s){return s.avg}),lo=Math.min.apply(null,av),hi=Math.max.apply(null,av);
+    tm.innerHTML=keep.map(function(s){var tt=hi>lo?(s.avg-lo)/(hi-lo):.5,isel=sel.indexOf(s.k)>-1,cls=s.other?"":(isel?" sel":(on(SHG_GRP,s.k)?"":" dim"));
+      return '<div class="tmb'+cls+'" '+(s.other?'':'data-k="'+esc(s.k)+'" ')+'title="'+esc(s.k+": "+s.w+" women in "+s.n+" SHGs")+'" style="--t:'+(s.other?"#CFC8B8":shade(Math.max(tt,.25)))+'"><b>'+esc(s.k)+'</b><em>'+s.w+'</em><span>women · '+s.n+' SHG'+(s.n>1?'s':'')+'</span><span>avg '+s.avg.toFixed(1)+' women per SHG</span><div class="bar"><i style="width:'+Math.round(s.w/mxw*100)+'%"></i></div></div>'}).join("")}
+  else tm.innerHTML='<div class="empty" style="position:static;padding:50px 0">No SHGs for this selection</div>';
   // ---- directory (fixed height, scrolls inside)
   var q=$("shgq").value.toLowerCase().trim(),L=A.filter(function(x){return (!SHG_BAND||BD[x.bi][0]===SHG_BAND)&&(!q||(x.name+" "+x.village+" "+x.block+" "+x.district).toLowerCase().indexOf(q)>-1)});
   SHG_CUR=L;var wt=0;L.forEach(function(x){wt+=x.n});var mxn=L.length?L[0].n:1;
   $("shgsub").textContent=fmt(L.length)+" SHGs · "+fmt(wt)+" women"+(noName?" · "+noName+" have no SHG name":"");
   $("shglist").innerHTML=L.length?L.map(function(x,i){var s=XF.shgK&&XF.shgK.indexOf(x.k)>-1;
-    var tip=x.n+" women"+(x.ans?" · "+x.yes+" of "+x.ans+" run their own business":"")+(x.age?" · average age "+x.age:"")+(x.fam?" · family income: average "+inr(x.fa)+", median "+inr(x.fam)+" a month":"");
+    var tip=x.n+" women"+(x.ans?" · "+x.yes+" of "+x.ans+" run their own business":"")+(x.age?" · average age "+x.age:"")+(x.fam?" · family income a month: median "+inr(x.fam)+", average "+inr(x.famA):"");
     return '<div class="fr'+(s?' sel':(on("shgK",x.k)?'':' dim'))+'" data-k="'+esc(x.k)+'" title="'+esc(tip)+'"><span class="rk">'+(i+1)+'</span><span class="fn"><b>'+esc(x.name)+'</b><small>'+esc((x.village||"–")+" · "+(x.block||"–"))+'</small></span><span class="fb"><i style="width:'+Math.round(x.n/mxn*100)+'%;background:#1F8A72"></i></span><span class="fv">'+x.n+'</span></div>'}).join(""):'<div style="padding:40px 0;text-align:center;color:var(--mute)">No SHG matches</div>';
 }
 function shgCsv(){var q=function(v){return '"'+String(v).replace(/"/g,'""')+'"'};
-  var t=[["SHG name","Village","Block","District","State","Women","Run a business","Avg age","Average family income","Median family income","Year joined"]].concat(SHG_CUR.map(function(x){return [x.name,x.village,x.block,x.district,x.state,x.n,x.yes,x.age||"",x.fa||"",x.fam||"",x.yr]}));
+  var t=[["SHG name","Village","Block","District","State","Women","Run a business","Avg age","Median family income","Average family income","Year joined"]].concat(SHG_CUR.map(function(x){return [x.name,x.village,x.block,x.district,x.state,x.n,x.yes,x.age||"",x.fam||"",x.famA||"",x.yr]}));
   var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\uFEFF"+t.map(function(r){return r.map(q).join(",")}).join("\r\n")],{type:"text/csv"}));a.download="SHG_list.csv";a.click()}
 $("shgq").oninput=shgList;
 $("shggrp").onclick=function(e){var b=e.target.closest("button");if(b){SHG_GRP=b.getAttribute("data-g");shgList()}};
@@ -751,82 +752,25 @@ function setYr(keys,multi){var a=(XF.yr||[]).slice(),all=keys.length&&keys.every
   if(multi){keys.forEach(function(k){var i=a.indexOf(k);if(all){if(i>-1)a.splice(i,1)}else if(i<0)a.push(k)})}
   else a=(all&&a.length===keys.length)?[]:keys.slice();
   if(a.length)XF.yr=a;else delete XF.yr;setTimeout(render,0)}
+var YRD={};
 function yearChart(){
   var rows=rowsFor(["yr"]).filter(function(r){return r.yr}),m={};rows.forEach(function(r){m[r.yr]=(m[r.yr]||0)+1});
-  var ys=Object.keys(m).map(Number).sort(function(a,b){return a-b}),bad=window._badYr||0;
-  $("yrsub").textContent="Bars = women joining that year (number on top) · line = total women so far · click a bar to filter"+(bad?" · "+bad+" record"+(bad>1?"s":"")+" with an impossible year (e.g. 2052) ignored — fix in the sheet":"");
-  if(!ys.length){put("c-year",{},0);$("yrst").innerHTML="";YEC=[];return}
-  var cur=new Date().getFullYear(),st=Math.max(ys[0],cur-18),bars=[];
-  if(ys[0]<st){var ks=[],v=0;ys.forEach(function(y){if(y<st){ks.push(String(y));v+=m[y]}});bars.push({l:"<"+st,t:"Before "+st,k:ks,v:v,e:eraOf(st-1)})}
-  for(var y=st;y<=ys[ys.length-1];y++)bars.push({l:String(y),t:String(y),k:[String(y)],v:m[y]||0,e:eraOf(y)});
-  var D=bars.map(function(b){return b.v}),CUM=[],s=0;D.forEach(function(v){s+=v;CUM.push(s)});
-  var pk=0;D.forEach(function(v,i){if(v>D[pk])pk=i});var mxb=Math.max.apply(null,D)||1,cm=s||1;
-  var act=function(b){return !XF.yr||b.k.some(function(k){return on("yr",k)})};
-  var YL={id:"yl",afterDatasetsDraw:function(ch){var c=ch.ctx;c.save();c.textAlign="center";
-    ch.getDatasetMeta(0).data.forEach(function(el,i){if(!D[i])return;c.font="700 11px "+FONT;c.fillStyle=i===pk?C.burgundy:C.ink;c.fillText(D[i],el.x,el.y-6)});
-    var pts=ch.getDatasetMeta(1).data,l=pts.length-1;if(l>=0){c.font="700 11.5px "+FONT;c.fillStyle=C.ink;c.textAlign="right";c.fillText("Total so far: "+fmt(CUM[l]),Math.min(pts[l].x+4,ch.chartArea.right),pts[l].y+28)}c.restore()}};
-  put("c-year",{type:"bar",data:{labels:bars.map(function(b){return b.l}),datasets:[
-      {type:"bar",data:D,order:1,yAxisID:"y",borderRadius:7,borderSkipped:false,maxBarThickness:34,backgroundColor:function(c){if(c.dataIndex==null)return C.emerald;var b=bars[c.dataIndex];return act(b)?ERA[b.e][3]:fade(ERA[b.e][3],.22)}},
-      {type:"line",data:CUM,order:0,yAxisID:"y2",borderColor:C.ink,borderWidth:2,pointRadius:2.5,pointBackgroundColor:C.ink,tension:.3,fill:false}]},
-    options:base({onClick:function(e,_,ch){var i=pick(ch,e,"x");if(i>-1)setYr(bars[i].k,mu(e))},
-      plugins:{legend:{display:false},tooltip:{callbacks:{title:function(it){return bars[it[0].dataIndex].t},label:function(it){return it.datasetIndex===0?it.raw+" women joined":"Total women so far: "+fmt(it.raw)}}}},
-      scales:{y:{display:false,beginAtZero:true,max:mxb*1.9},y2:{display:false,min:-cm*1.2,max:cm*1.05},x:{grid:{display:false},border:{display:false},ticks:{maxRotation:0,autoSkip:false,font:{size:10.5}}}}}),plugins:[SH,YL]},1);
+  var ys=Object.keys(m).map(Number).sort(function(a,b){return a-b}),bad=window._badYr||0,el=$("yrgrid");
+  $("yrsub").textContent="Every year shown, from the earliest to the latest · darker = more women joined · click a year or decade to filter"+(bad?" · "+bad+" record"+(bad>1?"s":"")+" with an impossible year ignored — fix in the sheet":"");
+  if(!ys.length){el.innerHTML='<div style="padding:60px 0;text-align:center;color:var(--mute)">No data for this selection</div>';$("yrst").innerHTML="";YEC=[];return}
+  var d0=Math.floor(ys[0]/10)*10,d1=Math.floor(ys[ys.length-1]/10)*10,mx=0,pk=ys[0],tt=0;ys.forEach(function(y){tt+=m[y];if(m[y]>mx){mx=m[y];pk=y}});YRD={};
+  var h='<div class="how" style="margin:0 0 10px">Total <b>'+fmt(tt)+'</b> women with a joining year · earliest <b>'+ys[0]+'</b> · peak year <b>'+pk+'</b> ('+mx+' women)</div><div class="yg">';
+  for(var d=d0;d<=d1;d+=10){var ks=[],dn=0,cells="";
+    for(var y=d;y<d+10;y++){var n=m[y]||0;if(y<ys[0]||y>ys[ys.length-1]){cells+='<div class="yc no"></div>';continue}
+      if(n){ks.push(String(y));dn+=n}var sl=XF.yr&&on("yr",String(y)),t=n?Math.pow(n/mx,.7):0;
+      cells+='<div class="yc'+(y===pk?' pk':'')+(sl?' sel':'')+(XF.yr&&!sl?' dim':'')+'" data-y="'+y+'" title="'+y+': '+n+' women joined" style="background:'+(n?shade(t):'rgba(150,135,110,.10)')+';color:'+(t>.45?'#fff':C.ink)+'"><small>'+y+'</small><b>'+(n||'–')+'</b></div>'}
+    YRD[d]=ks;h+='<div class="ydr"><div class="ydl'+(ks.length&&XF.yr&&ks.every(function(k){return XF.yr.indexOf(k)>-1})?' sel':'')+'" data-d="'+d+'">'+d+'s<small>'+fmt(dn)+' women</small></div>'+cells+'</div>'}
+  el.innerHTML=h+'</div>';
   YEC=ERA.map(function(e,i){var ks=ys.filter(function(y){return y>=e[1]&&y<=e[2]}).map(String),n=0;ks.forEach(function(k){n+=m[k]});return{k:ks,n:n,i:i}});
   var tot=rows.length;
   $("yrst").innerHTML=YEC.map(function(x){var e=ERA[x.i],sl=XF.yr&&x.k.length&&x.k.every(function(k){return XF.yr.indexOf(k)>-1});
     return '<div data-e="'+x.i+'" class="'+(sl?'sel':(XF.yr?'dim':''))+'" style="--ec:'+e[3]+'"><b>'+fmt(x.n)+'</b><span>'+e[0]+' · '+(tot?Math.round(x.n/tot*100):0)+'%</span></div>'}).join("")}
 $("yrst").onclick=function(e){var d=e.target.closest("[data-e]");if(d&&YEC[+d.getAttribute("data-e")])setYr(YEC[+d.getAttribute("data-e")].k,e.ctrlKey||e.metaKey||e.shiftKey)};
-
-// ---------- category bar with % ----------
-function hbarP(id,data,color,dim,th){
-  var L=data.map(function(d){return d[0]}),tot=0;data.forEach(function(d){tot+=d[1]});
-  var PL={id:"pl",afterDatasetsDraw:function(ch){var c=ch.ctx;c.save();c.font="700 11px "+FONT;c.fillStyle=C.ink;c.textAlign="left";c.textBaseline="middle";ch.getDatasetMeta(0).data.forEach(function(el,i){var v=data[i][1];c.fillText(fmt(v)+" · "+Math.round(v/tot*100)+"%",el.x+8,el.y)});c.restore()}};
-  put(id,{type:"bar",data:{labels:L,datasets:[{data:data.map(function(d){return d[1]}),backgroundColor:barFill(color,true,dim,L),borderRadius:99,borderSkipped:false,barThickness:th||16}]},
-    options:base({indexAxis:"y",onClick:function(e,_,ch){var i=pick(ch,e,"y");if(i>-1)toggle(dim,L[i],mu(e))},plugins:{legend:{display:false}},scales:{x:{display:false,beginAtZero:true,grace:"48%"},y:{grid:{display:false},border:{display:false},ticks:{font:{size:12,weight:"600"}}}}}),plugins:[SH,PL]},data.length)}
-
-// ---------- tenure: how long in the SHG ----------
-var TB=[["Joined this year",0,0,"#B98B3A"],["1–2 years",1,2,"#8FCDB9"],["3–5 years",3,5,"#1F8A72"],["6–10 years",6,10,"#27497A"],["Over 10 years",11,999,"#65477D"]];
-function tenureChart(){
-  var cur=new Date().getFullYear(),rows=rowsFor(["yr"]).filter(function(r){return r.yr&&cur-(+r.yr)>=0}),N=rows.length;
-  if(!N){put("c-ten",{},0);$("tnst").innerHTML="";return}
-  var bn=TB.map(function(){return 0}),bk=TB.map(function(){return[]}),ten=[];
-  rows.forEach(function(r){var tt=cur-(+r.yr);ten.push(tt);for(var i=0;i<TB.length;i++)if(tt>=TB[i][1]&&tt<=TB[i][2]){bn[i]++;if(bk[i].indexOf(r.yr)<0)bk[i].push(r.yr);break}});
-  var act=function(i){return !XF.yr||bk[i].some(function(k){return on("yr",k)})};
-  var TL={id:"tl",afterDatasetsDraw:function(ch){var c=ch.ctx;c.save();c.font="700 11.5px "+FONT;c.fillStyle=C.ink;c.textAlign="left";c.textBaseline="middle";ch.getDatasetMeta(0).data.forEach(function(el,i){c.fillText(fmt(bn[i])+" · "+Math.round(bn[i]/N*100)+"%",el.x+8,el.y)});c.restore()}};
-  put("c-ten",{type:"bar",data:{labels:TB.map(function(b){return b[0]}),datasets:[{data:bn,borderRadius:99,borderSkipped:false,barThickness:26,backgroundColor:function(c){if(c.dataIndex==null)return C.emerald;return act(c.dataIndex)?TB[c.dataIndex][3]:fade(TB[c.dataIndex][3],.2)}}]},
-    options:base({indexAxis:"y",onClick:function(e,_,ch){var i=pick(ch,e,"y");if(i>-1)setYr(bk[i],mu(e))},plugins:{legend:{display:false},tooltip:{callbacks:{label:function(it){return it.raw+" women"}}}},scales:{x:{display:false,beginAtZero:true,grace:"40%"},y:{grid:{display:false},border:{display:false},ticks:{font:{size:12,weight:"600"}}}}},10),plugins:[SH,TL]},N);
-  var sum=0;ten.forEach(function(v){sum+=v});ten.sort(function(a,b){return a-b});
-  var old=ten.filter(function(v){return v>=5}).length;
-  $("tnst").innerHTML='<div style="--ec:#1F8A72"><b>'+(sum/N).toFixed(1)+' yrs</b><span>average time in SHG</span></div><div style="--ec:#27497A"><b>'+Math.round(quant(ten,.5))+' yrs</b><span>median time in SHG</span></div><div style="--ec:#65477D"><b>'+Math.round(old/N*100)+'%</b><span>in their SHG 5+ years</span></div>'}
-
-// ---------- enumerators: top 10 / bottom 10 / all ----------
-var EN_MODE="top";
-function enName(k){return String(k).replace(/^[a-z]{0,4}\d*\./i,"").replace(/\b\w/g,function(c){return c.toUpperCase()})}
-function enumChart(){
-  var all=cnt(rowsFor(["enumerator"]),function(r){return r.enumerator}),n=all.length,tot=0;all.forEach(function(d){tot+=d[1]});
-  var av=n?tot/n:0,list=EN_MODE==="all"?all.slice():EN_MODE==="bot"?all.slice().reverse().slice(0,10):all.slice(0,10),keys=list.map(function(d){return d[0]});
-  var bs=$("enmode").querySelectorAll("button");for(var i=0;i<bs.length;i++)bs[i].className=bs[i].getAttribute("data-m")===EN_MODE?"on":"";
-  $("ensub").textContent=(EN_MODE==="all"?"All "+n:(EN_MODE==="top"?"Top ":"Bottom ")+Math.min(10,n)+" of "+n)+" field team members · average "+Math.round(av)+" registrations each · highest "+(n?all[0][1]:0)+" · lowest "+(n?all[n-1][1]:0);
-  var AV={id:"av",afterDatasetsDraw:function(ch){var y=ch.scales.y.getPixelForValue(av),a=ch.chartArea,c=ch.ctx;c.save();c.setLineDash([6,5]);c.strokeStyle=C.burgundy;c.lineWidth=1.6;c.beginPath();c.moveTo(a.left,y);c.lineTo(a.right,y);c.stroke();c.setLineDash([]);c.fillStyle=C.burgundy;c.font="700 11.5px "+FONT;c.textAlign="right";c.fillText("Average "+Math.round(av),a.right,y-6);c.restore()}};
-  put("c-en",{type:"bar",data:{labels:list.map(function(d){return enName(d[0])}),datasets:[{data:list.map(function(d){return d[1]}),backgroundColor:barFill("sapphire",false,"enumerator",keys),borderRadius:9,borderSkipped:false,maxBarThickness:44}]},
-    options:base({onClick:function(e,_,ch){var i=pick(ch,e,"x");if(i>-1)toggle("enumerator",keys[i],mu(e))},plugins:{legend:{display:false},tooltip:{callbacks:{title:function(it){return keys[it[0].dataIndex]},label:function(it){return it.raw+" women registered"}}}},scales:{y:{display:false,beginAtZero:true,grace:"15%"},x:{grid:{display:false},border:{display:false},ticks:{autoSkip:false,maxRotation:40,font:{size:11}}}}}),plugins:[SH,VL,AV]},list.length)}
-$("enmode").onclick=function(e){var b=e.target.closest("button");if(b){EN_MODE=b.getAttribute("data-m");enumChart()}};
-
-// ---------- data health ----------
-function dqRender(rows){
-  var N=rows.length,el=$("dq");if(!N){el.innerHTML="";return}
-  var yes=rows.filter(function(r){return r.ent==="Yes"});
-  var F=[["Age",rows,function(r){return r.ageN>0}],["Social category",rows,function(r){return r.category}],["Education",rows,function(r){return r.edu}],["Disability",rows,function(r){return r.disability}],["SHG name",rows,function(r){return r.shgName}],["Village",rows,function(r){return r.village}],["Year joined SHG",rows,function(r){return r.yr}],["Family income",rows,function(r){return r.fam>0}],["Her own income",rows,function(r){return r.per>0}],["Existing enterprise (Yes / No)",rows,function(r){return r.ent}],["Sector (women with an enterprise)",yes,function(r){return r.sec&&r.sec!=="Sector not stated"}]];
-  var bars=F.map(function(f){var tot=f[1].length,ok=f[1].filter(f[2]).length,p=tot?Math.round(ok/tot*100):0,col=p>=95?"#1F8A72":p>=80?"#B98B3A":"#8B2F3C";
-    return '<div class="dqr"><span>'+f[0]+'</span><span class="dqb"><i style="width:'+p+'%;background:'+col+'"></i></span><span class="dqv"><b>'+p+'%</b> <small>'+(tot-ok?fmt(tot-ok)+' missing':'complete')+'</small></span></div>'}).join("");
-  var ans=rows.filter(function(r){return r.ent}).length,bi=window._badInc||{f:0,p:0},by=window._badYr||0,noShg=rows.filter(function(r){return !r.shgName}).length,notes=[];
-  if(ans<N*.9)notes.push(['w','<b>Enterprise question:</b> only '+fmt(ans)+' of '+fmt(N)+' women ('+Math.round(ans/N*100)+'%) have an answer. Every enterprise percentage uses these '+fmt(ans)+' women; the other '+fmt(N-ans)+' are blank (the question may have been added to the survey later).']);
-  if(bi.f+bi.p)notes.push(['w','<b>Income typing errors:</b> '+(bi.f?fmt(bi.f)+' family income':'')+(bi.f&&bi.p?' and ':'')+(bi.p?fmt(bi.p)+' personal income':'')+' entr'+(bi.f+bi.p>1?'ies are':'y is')+' below ₹300 or above ₹3 lakh a month. They are left out of averages and medians — please correct them in the sheet.']);
-  if(by)notes.push(['w','<b>Impossible join year:</b> '+fmt(by)+' record'+(by>1?'s have':' has')+' a year in the future or before 1980 (e.g. 2052). Left out of the year charts.']);
-  if(noShg)notes.push(['w','<b>No SHG name:</b> '+fmt(noShg)+' women have no SHG name, so they are not counted in any SHG.']);
-  if(!notes.length)notes.push(['','<b>All good:</b> no missing answers or impossible values found in this selection.']);
-  notes.push(['','<b>How to read the numbers:</b> “Average” adds all values and divides by the number of women; “Median” is the middle woman. If the two differ a lot, a few very high or very low incomes are pulling the average.']);
-  el.innerHTML='<div>'+bars+'</div><div>'+notes.map(function(n){return '<div class="note'+(n[0]?' '+n[0]:'')+'">'+n[1]+'</div>'}).join("")+'</div>'}
 
 // ---------- events ----------
 $("today").textContent=new Date().toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
@@ -835,6 +779,9 @@ $("refresh").onclick=load;
 $("file").onchange=function(e){var f=e.target.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){finish(parseCSV(rd.result),"CSV file · "+f.name,"warn")};rd.readAsText(f)};
 function hmClick(dim,bdim){return function(e){var m=e.ctrlKey||e.metaKey||e.shiftKey,c=e.target.closest(".c"),r=e.target.closest(".r"),h=e.target.closest(".h[data-b]");
   if(c)togglePair([[dim,c.getAttribute("data-k")],[bdim,c.getAttribute("data-b")]],m);else if(r)toggle(dim,r.getAttribute("data-k"),m);else if(h)toggle(bdim,h.getAttribute("data-b"),m)}}
+$("catwaffle").onclick=function(e){var c=e.target.closest("[data-k]");if(c)toggle("category",c.getAttribute("data-k"),e.ctrlKey||e.metaKey||e.shiftKey)};
+$("enmode").onclick=function(e){var b=e.target.closest("button");if(b){EN_MODE=b.getAttribute("data-m");render()}};
+$("yrgrid").onclick=function(e){var mu2=e.ctrlKey||e.metaKey||e.shiftKey,c=e.target.closest("[data-y]"),d=e.target.closest("[data-d]");if(c&&!c.classList.contains("no"))setYr([c.getAttribute("data-y")],mu2);else if(d&&YRD[d.getAttribute("data-d")])setYr(YRD[d.getAttribute("data-d")],mu2)};
 $("hm1").onclick=hmClick("liv","famBand");$("hm2").onclick=hmClick("occ","perBand");
 $("enttabs").onclick=function(e){var b=e.target.closest(".tab");if(b){ENT_LV=b.getAttribute("data-l");render()}};
 $("entmode").onclick=function(e){var b=e.target.closest("button");if(b){ENT_MODE=b.getAttribute("data-m");render()}};
