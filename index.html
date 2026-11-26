@@ -219,7 +219,7 @@ td.num,th.num{text-align:right}
 .box canvas{max-width:100%}.card{min-width:0}
 
 /* --- geo row: equal-height cards, no empty gap --- */
-.geo{align-items:stretch}.geo>.card{display:flex;flex-direction:column}.geo>.card>.box,.geo>.card>.fillbox{flex:1;min-height:340px}
+.geo{align-items:stretch}.geo>.card{display:flex;flex-direction:column}.geo>.card>.box,.geo>.card>.fillbox{flex:1;min-height:340px;display:flex;align-items:center}.fillbox>div{width:100%}
 .fillbox{position:relative}
 .indm{width:100%;height:auto;display:block}
 .indm path.st{stroke:#fff;stroke-width:1;cursor:pointer;transition:opacity .2s,filter .15s}
@@ -295,8 +295,8 @@ td.num,th.num{text-align:right}
 
 <div class="sec" id="sec-geo">Where we work</div>
 <div class="grid geo">
-  <div class="card s4"><div class="ch"><span class="chip" data-ic="pin"></span><div><h3>Enrollment by block</h3><p>Top 12 blocks · women registered</p></div></div><div class="box"><canvas id="c-block"></canvas></div></div>
-  <div class="card blue s5"><div class="ch"><span class="chip" data-ic="map"></span><div><h3>Where we work — India map</h3><p>Highlighted states are where women are registered · click a state to filter</p></div></div><div class="fillbox"><div id="statemap"></div></div><div class="mleg"><span>Fewer women</span><i></i><span>More women</span><b></b><span>No registrations</span></div><div class="mapnote" id="mapnote"></div></div>
+  <div class="card s3"><div class="ch"><span class="chip" data-ic="pin"></span><div><h3>Enrollment by block</h3><p>Top 12 blocks · women registered</p></div></div><div class="box"><canvas id="c-block"></canvas></div></div>
+  <div class="card blue s6"><div class="ch"><span class="chip" data-ic="map"></span><div><h3>Where we work — India map</h3><p>Highlighted states are where women are registered · click a state to filter</p></div></div><div class="fillbox"><div id="statemap"></div></div><div class="mleg"><span>Fewer women</span><i></i><span>More women</span><b></b><span>No registrations</span></div><div class="mapnote" id="mapnote"></div></div>
   <div class="card beige s3"><div class="ch"><span class="chip" data-ic="users"></span><div><h3>Social category</h3><p>Share of registrations</p></div></div><div id="catwaffle"></div></div>
 </div>
 
@@ -435,7 +435,7 @@ function stateMap(){
       '<rect x="'+(p[1]<0?-250:626)+'" y="'+(b.ly-26)+'" width="224" height="52" rx="12" fill="#fff" stroke="#E9E2D6" opacity=".96"/>'+
       '<text x="'+(p[1]<0?-38:638)+'" y="'+(b.ly-3)+'" text-anchor="'+al+'" font-size="23" font-weight="700" fill="#2F3A35">'+esc(b.k)+'</text>'+
       '<text x="'+(p[1]<0?-38:638)+'" y="'+(b.ly+19)+'" text-anchor="'+al+'" font-size="19" fill="#0F6B58" font-weight="600">'+b.n+' women · '+Math.round(b.n/tot*100)+'%</text></g>'})});
-  el.innerHTML=d.length?'<svg class="indm" viewBox="-260 -8 1130 712" role="img" aria-label="Map of India with registered states highlighted">'+paths+lab+'</svg>':'<div style="padding:80px 0;text-align:center;color:var(--mute)">No data for this selection</div>';
+  el.innerHTML=d.length?'<svg class="indm" viewBox="-248 -4 1106 704" role="img" aria-label="Map of India with registered states highlighted">'+paths+lab+'</svg>':'<div style="padding:80px 0;text-align:center;color:var(--mute)">No data for this selection</div>';
   $("mapnote").textContent=(lost.length?"Not shown on map (name not recognised): "+lost.map(function(x){return x[0]+" ("+x[1]+")"}).join(", ")+". ":"")+Object.keys(byId).length+" of "+d.length+" state"+(d.length===1?"":"s")+" mapped."}
 var SB_N={};
 function sbArc(cx,cy,r0,r1,a0,a1){var g=.004;a0+=g;a1-=g;if(a1-a0>6.2831)a1=a0+6.2831;if(a1<=a0)return "";
