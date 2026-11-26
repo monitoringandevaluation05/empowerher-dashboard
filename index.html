@@ -239,6 +239,14 @@ td.num,th.num{text-align:right}
 .bleg{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center;font-size:11.5px;color:var(--mute);margin-top:6px}
 .bleg i.g{display:inline-block;width:110px;height:9px;border-radius:9px;background:linear-gradient(90deg,rgba(139,47,60,.2),#8B2F3C);vertical-align:middle;margin:0 6px}
 .bleg i.d{display:inline-block;border-radius:50%;background:#B9C4BE;vertical-align:middle;margin-right:4px}
+
+.shgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px;margin-top:12px}
+.shc{display:flex;gap:14px;align-items:flex-start;background:linear-gradient(180deg,#fff,#FAF6EE);border:2px solid #fff;border-radius:16px;padding:14px;box-shadow:var(--shadow);cursor:pointer;transition:transform .15s,opacity .2s}
+.shc:hover{transform:translateY(-2px)}.shc.sel{border-color:var(--sage-d)}.shc.dim{opacity:.4}
+.shn{font:600 34px/1 Georgia,serif;color:var(--sage-d);text-align:center;min-width:54px}.shn small{display:block;font:500 10.5px "DM Sans",Arial,sans-serif;color:var(--mute);margin-top:3px}
+.shb{min-width:0;flex:1}.shb h4{margin:0;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.shb .loc{font-size:11.5px;color:var(--mute);margin:2px 0 8px}
+.shb .ppl{margin:0 0 8px;gap:2px}.shb .pp{width:16px;height:16px}.shb .ppl b{font-size:11px}
+.shf{font-size:11.5px;color:var(--mute);line-height:1.6}.shf b{color:var(--ink)}.mb{display:inline-block;width:60px;height:6px;border-radius:9px;background:var(--rose-t);vertical-align:middle;margin-right:6px;overflow:hidden}.mb i{display:block;height:100%;background:var(--sage-d)}
 </style>
 </head>
 <body>
@@ -294,11 +302,10 @@ td.num,th.num{text-align:right}
     <div class="etool"><div class="seg" id="shggrp"><button data-g="state">By state</button><button data-g="district" class="on">By district</button><button data-g="block">By block</button></div><span id="shgband"></span></div>
     <div class="tm" id="shgtm"></div>
     <div class="tmleg"><span>Small SHGs (few women each)</span><i></i><span>Big SHGs (many women each)</span></div></div>
-  <div class="card s12"><div class="ch"><span class="chip" data-ic="clip"></span><div><h3>SHG explorer — every group as a bubble</h3><p id="shgsub"></p></div></div>
+  <div class="card s12"><div class="ch"><span class="chip" data-ic="clip"></span><div><h3>SHG explorer — biggest groups first</h3><p id="shgsub"></p></div></div>
     <div class="etool"><input id="shgq" class="search" style="min-width:0;flex:1" placeholder="Search SHG, village, block…"><button class="ghost" id="shgdl">⬇ CSV</button></div>
-    <div class="binfo" id="shginfo">Hover over a bubble to see the SHG details · click a bubble to filter the whole dashboard.</div>
     <div id="shgbub"></div>
-    <div class="bleg"><span><b>Bubble size</b> = number of our women in the SHG</span><span><b>Colour</b> <span style="margin-left:4px">0%</span><i class="g"></i>100% of women run a business</span><span><i class="d" style="width:12px;height:12px"></i>Not answered</span></div></div>
+    <div class="bleg"><span>Each card is one SHG · big number = our women in it</span><span><svg class="pp y" viewBox="0 0 24 24" style="width:14px;height:14px;vertical-align:middle"><circle cx="12" cy="7" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg> runs a business &nbsp; <svg class="pp" viewBox="0 0 24 24" style="width:14px;height:14px;vertical-align:middle"><circle cx="12" cy="7" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg> does not / not answered</span><span>Click a card to filter the dashboard</span></div></div>
 </div>
 
 <div class="sec" id="sec-profile">Beneficiary profile</div>
@@ -422,40 +429,23 @@ function stateMap(){
       '<text x="'+(p[1]<0?-38:638)+'" y="'+(b.ly+19)+'" text-anchor="'+al+'" font-size="19" fill="#0F6B58" font-weight="600">'+b.n+' women · '+Math.round(b.n/tot*100)+'%</text></g>'})});
   el.innerHTML=d.length?'<svg class="indm" viewBox="-260 -8 1130 712" role="img" aria-label="Map of India with registered states highlighted">'+paths+lab+'</svg>':'<div style="padding:80px 0;text-align:center;color:var(--mute)">No data for this selection</div>';
   $("mapnote").textContent=(lost.length?"Not shown on map (name not recognised): "+lost.map(function(x){return x[0]+" ("+x[1]+")"}).join(", ")+". ":"")+Object.keys(byId).length+" of "+d.length+" state"+(d.length===1?"":"s")+" mapped."}
-function packBub(L){
-  var P=[],cap=400,items=L.slice(0,cap),G={},CS=70;
-  items.forEach(function(x){x.r=8+6.5*Math.sqrt(x.n)});
-  function cellKey(i,j){return i+","+j}
-  items.forEach(function(x){
-    var ang=0,rr=0,placed=false,guard=0;
-    while(!placed&&guard<60000){guard++;
-      var px=rr*Math.cos(ang)*1.7,py=rr*Math.sin(ang),ok=true,ci=Math.floor(px/CS),cj=Math.floor(py/CS);
-      for(var di=-2;di<=2&&ok;di++)for(var dj=-2;dj<=2&&ok;dj++){var c=G[cellKey(ci+di,cj+dj)];if(!c)continue;
-        for(var k=0;k<c.length;k++){var dx=px-c[k].px,dy=py-c[k].py,m=x.r+c[k].r+2;if(dx*dx+dy*dy<m*m){ok=false;break}}}
-      if(ok){x.px=px;x.py=py;placed=true;(G[cellKey(ci,cj)]=G[cellKey(ci,cj)]||[]).push(x);P.push(x)}
-      else{ang+=3/Math.max(rr,6);rr=.55*ang}}
-    if(!placed){x.px=0;x.py=0}
-  });
-  return {P:P,more:L.length-items.length}}
-function bubFill(x){if(!x.ans)return "#B9C4BE";var p=x.yes/x.ans;return fade(C.burgundy,.22+.78*p)}
+var SHG_SHOW=24,SHG_SIG="";
 function shgBubbles(L){
-  var el=$("shgbub");
-  if(!L.length){el.innerHTML='<div style="padding:60px 0;text-align:center;color:var(--mute)">No SHG matches</div>';return}
-  var pk=packBub(L),P=pk.P,x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
-  P.forEach(function(b){x0=Math.min(x0,b.px-b.r);x1=Math.max(x1,b.px+b.r);y0=Math.min(y0,b.py-b.r);y1=Math.max(y1,b.py+b.r)});
-  var sel=XF.shgK||[],any=sel.length>0,h="";
-  P.forEach(function(b){var s=sel.indexOf(b.k)>-1,pc=b.ans?b.yes/b.ans:0,tc=(b.ans&&pc>=.5)?"#fff":C.ink,cl=s?"sel":(any?"dim":"");
-    h+='<circle class="'+cl+'" data-k="'+esc(b.k)+'" cx="'+b.px.toFixed(1)+'" cy="'+b.py.toFixed(1)+'" r="'+b.r.toFixed(1)+'" fill="'+bubFill(b)+'"/>';
-    if(b.r>=17)h+='<text x="'+b.px.toFixed(1)+'" y="'+(b.py+(b.r>=34?-2:5)).toFixed(1)+'" text-anchor="middle" font-size="'+(b.r>=34?20:14)+'" font-weight="700" fill="'+tc+'">'+b.n+'</text>';
-    if(b.r>=34){var nm=b.name.length>16?b.name.slice(0,15)+"…":b.name;h+='<text x="'+b.px.toFixed(1)+'" y="'+(b.py+15).toFixed(1)+'" text-anchor="middle" font-size="11" fill="'+tc+'">'+esc(nm)+'</text>'}});
-  var pad=10;el.innerHTML='<svg class="bub" viewBox="'+(x0-pad)+' '+(y0-pad)+' '+(x1-x0+2*pad)+' '+(y1-y0+2*pad)+'">'+h+'</svg>'+(pk.more?'<div class="mapnote" style="text-align:center">Showing the biggest '+P.length+' of '+L.length+' SHGs — use the search box to find a specific one.</div>':'');
-  var M={};P.forEach(function(b){M[b.k]=b});
-  var info=$("shginfo"),svg=el.querySelector("svg");
-  function show(k){var b=M[k];if(!b)return;
-    info.innerHTML='<b class="t">'+esc(b.name)+'</b> · '+esc((b.village||"–")+", "+(b.block||"–")+", "+(b.district||"–"))+'<br><b>'+b.n+'</b> of our women'+(b.ans?' · <b>'+b.yes+' of '+b.ans+'</b> run their own business ('+Math.round(b.yes/b.ans*100)+'%)':' · enterprise not answered')+(b.age?' · average age <b>'+b.age+'</b>':'')+(b.fam?' · family income / month: median <b>'+inr(b.fam)+'</b>, average <b>'+inr(b.famA)+'</b>':'')}
-  svg.onmouseover=function(e){var c=e.target.closest("circle[data-k]");if(c)show(c.getAttribute("data-k"))};
-  svg.onclick=function(e){var c=e.target.closest("circle[data-k]");if(c)toggle("shgK",c.getAttribute("data-k"),e.ctrlKey||e.metaKey||e.shiftKey)};
-  if(sel.length&&M[sel[0]])show(sel[0])
+  var el=$("shgbub"),sig=L.length+"|"+(L[0]?L[0].k:"")+"|"+$("shgq").value+"|"+SHG_BAND;
+  if(sig!==SHG_SIG){SHG_SHOW=24;SHG_SIG=sig}
+  if(!L.length){el.innerHTML='<div style="padding:50px 0;text-align:center;color:var(--mute)">No SHG matches</div>';return}
+  var sel=XF.shgK||[],any=sel.length>0,part=L.slice(0,SHG_SHOW),mx=L[0].n,h="";
+  part.forEach(function(x,i){
+    var ppl="",show=Math.min(x.n,12);
+    for(var j=0;j<show;j++)ppl+='<svg class="pp'+(x.ans&&j<Math.round(x.yes/x.ans*show)?' y':'')+'" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg>';
+    if(x.n>12)ppl+='<b>+'+(x.n-12)+'</b>';
+    var p=x.ans?Math.round(x.yes/x.ans*100):0,s=sel.indexOf(x.k)>-1;
+    h+='<div class="shc'+(s?' sel':(any?' dim':''))+'" data-k="'+esc(x.k)+'"><div class="shn">'+x.n+'<small>women</small></div><div class="shb"><h4>'+(i+1)+'. '+esc(x.name)+'</h4><div class="loc">'+esc((x.village||"–")+" · "+(x.block||"–")+" · "+(x.district||"–"))+'</div><div class="ppl">'+ppl+'</div>'+
+      '<div class="shf">'+(x.ans?'<span class="mb"><i style="width:'+p+'%"></i></span><b>'+x.yes+' of '+x.ans+'</b> run a business':'<span>Business question not answered</span>')+(x.age?' · avg age <b>'+x.age+'</b>':'')+(x.fam?' · family income <b>'+inr(x.fam)+'</b>/mo':'')+'</div></div></div>'});
+  if(L.length>SHG_SHOW)h+='<button class="more ghost" id="shgmore" style="grid-column:1/-1">Show '+Math.min(24,L.length-SHG_SHOW)+' more · '+(L.length-SHG_SHOW)+' remaining</button>';
+  el.innerHTML='<div class="shgrid">'+h+'</div>';
+  var m=$("shgmore");if(m)m.onclick=function(){SHG_SHOW+=24;shgBubbles(L)};
+  el.querySelector(".shgrid").onclick=function(e){var c=e.target.closest(".shc");if(c)toggle("shgK",c.getAttribute("data-k"),e.ctrlKey||e.metaKey||e.shiftKey)}
 }
 var RAW=[],SEL={},XF={},charts={};
 function $(id){return document.getElementById(id)}
