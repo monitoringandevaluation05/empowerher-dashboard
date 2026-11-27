@@ -3,208 +3,229 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>EmpowerHer — Data Quality Dashboard</title>
+<title>EmpowerHer — Data Quality</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f1f4f3; --card:#ffffff; --card-alt:#f6f9f8; --text:#16221e; --muted:#5d6b66;
-    --accent:#0f8a7c; --accent-dark:#0b5f56; --accent-soft:#e3f4f1;
-    --warn:#c77b12; --bad:#c23b2e; --good:#1c8a53;
-    --border:#dfe6e3; --header-bg:#0b1f1c;
+    --bg:#f2ecdd; --ink:#1b2724; --muted:#5e6d64;
+    --card:#ffffff; --card-alt:#faf5e7;
+    --accent:#b9842a; --accent-ink:#5c3f10;
+    --good:#3f8a52; --good-soft:#e4f0e3;
+    --warn:#b9842a; --warn-soft:#fbf0dc;
+    --bad:#be5a43; --bad-soft:#f8e8e2;
+    --border:#e1d8c2; --masthead:#16262a; --masthead-ink:#f2ecdd;
     color-scheme: light;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --bg:#0c1210; --card:#141b19; --card-alt:#192120; --text:#e9f2ef; --muted:#93a39d;
-      --accent:#2dd4c0; --accent-dark:#1f9c8e; --accent-soft:#102723;
-      --warn:#e0a94d; --bad:#ef6b5e; --good:#4fd896;
-      --border:#253230; --header-bg:#070d0b;
+      --bg:#121b1a; --ink:#f2ecdd; --muted:#9fb3ac;
+      --card:#1b2724; --card-alt:#1f2d29;
+      --accent:#d9a441; --accent-ink:#2b1c06;
+      --good:#5fae6b; --good-soft:#1c2e22;
+      --warn:#d9a441; --warn-soft:#2e2611;
+      --bad:#c1584a; --bad-soft:#301e1a;
+      --border:#2c3e39; --masthead:#0e1718; --masthead-ink:#f2ecdd;
       color-scheme: dark;
     }
   }
   :root[data-theme="dark"]{
-    --bg:#0c1210; --card:#141b19; --card-alt:#192120; --text:#e9f2ef; --muted:#93a39d;
-    --accent:#2dd4c0; --accent-dark:#1f9c8e; --accent-soft:#102723;
-    --warn:#e0a94d; --bad:#ef6b5e; --good:#4fd896;
-    --border:#253230; --header-bg:#070d0b;
+    --bg:#121b1a; --ink:#f2ecdd; --muted:#9fb3ac;
+    --card:#1b2724; --card-alt:#1f2d29;
+    --accent:#d9a441; --accent-ink:#2b1c06;
+    --good:#5fae6b; --good-soft:#1c2e22;
+    --warn:#d9a441; --warn-soft:#2e2611;
+    --bad:#c1584a; --bad-soft:#301e1a;
+    --border:#2c3e39; --masthead:#0e1718; --masthead-ink:#f2ecdd;
   }
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth; scroll-padding-top:120px;}
+  html{scroll-behavior:smooth; scroll-padding-top:128px;}
   body{
-    margin:0; background:var(--bg); color:var(--text);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"IBM Plex Sans",-apple-system,sans-serif;
     padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
   }
   body::before{
     content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px);
-    background:var(--header-bg); z-index:40;
+    background:var(--masthead); z-index:40;
   }
+  h1,h2,.serif{font-family:"Fraunces",Georgia,serif;}
 
-  header.hero{
-    padding:22px clamp(16px,4vw,40px) 16px; background:linear-gradient(135deg,var(--header-bg),var(--accent-dark));
-    color:#fff;
+  /* ---------- masthead ---------- */
+  header.masthead{
+    background:var(--masthead); color:var(--masthead-ink);
+    padding:34px clamp(18px,5vw,48px) 26px;
+    border-bottom:1px solid rgba(242,236,221,0.12);
   }
-  .hero-top{display:flex; flex-wrap:wrap; gap:14px; align-items:center; justify-content:space-between;}
-  .hero-top h1{margin:0; font-size:1.4rem; letter-spacing:-0.01em;}
-  .hero-top .meta{font-size:0.82rem; opacity:0.75; margin-top:2px;}
+  .masthead-row{display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap;}
+  .masthead-eyebrow{font-size:0.78rem; color:#c7a96a; letter-spacing:0.02em; margin:0 0 6px;}
+  header.masthead h1{font-size:clamp(1.9rem,4vw,2.6rem); font-weight:600; margin:0; line-height:1.08;}
+  header.masthead .sub{font-family:"Fraunces",serif; font-style:italic; font-weight:500; color:#c7a96a; font-size:1.05rem; margin-top:6px;}
+  .masthead-meta{font-size:0.8rem; color:#a9b8b2; text-align:right;}
+  .masthead-meta .dot{color:var(--accent);}
   button#refreshBtn{
-    background:#fff; color:var(--accent-dark); border:none; border-radius:8px;
-    padding:9px 16px; font-weight:700; cursor:pointer; font-size:0.85rem;
-    display:inline-flex; align-items:center; gap:6px; box-shadow:0 1px 2px rgba(0,0,0,0.2);
+    margin-top:10px; background:var(--accent); color:var(--accent-ink); border:none; border-radius:4px;
+    padding:9px 18px; font-weight:600; cursor:pointer; font-size:0.84rem; font-family:"IBM Plex Sans",sans-serif;
+    display:inline-flex; align-items:center; gap:7px;
   }
-  button#refreshBtn:hover{opacity:0.92;}
+  button#refreshBtn:hover{filter:brightness(1.08);}
   button#refreshBtn .spin{display:inline-block; transition:transform 0.5s;}
   button#refreshBtn.loading .spin{animation:spin 0.9s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
 
   nav.sectionNav{
     position:sticky; top:0; z-index:35;
-    display:flex; gap:6px; overflow-x:auto; padding:10px clamp(16px,4vw,40px);
-    background:var(--header-bg); border-bottom:1px solid rgba(255,255,255,0.08);
+    display:flex; gap:4px; overflow-x:auto; padding:9px clamp(18px,5vw,48px);
+    background:var(--masthead); border-bottom:1px solid rgba(242,236,221,0.12);
     -webkit-overflow-scrolling:touch; scrollbar-width:thin;
   }
   nav.sectionNav::-webkit-scrollbar{height:4px;}
   nav.sectionNav a{
     flex:0 0 auto; display:inline-flex; align-items:center; gap:7px;
-    color:rgba(255,255,255,0.8); text-decoration:none; font-size:0.82rem; font-weight:600;
-    padding:7px 13px; border-radius:20px; background:rgba(255,255,255,0.06);
-    border:1px solid rgba(255,255,255,0.08); white-space:nowrap; transition:background 0.15s, color 0.15s;
+    color:#c7cfca; text-decoration:none; font-size:0.8rem; font-weight:500;
+    padding:7px 12px; border-radius:3px; border-bottom:2px solid transparent; white-space:nowrap;
+    transition:color 0.15s, border-color 0.15s;
   }
-  nav.sectionNav a .ic{font-size:0.95rem; line-height:1;}
-  nav.sectionNav a:hover{background:rgba(255,255,255,0.14); color:#fff;}
-  nav.sectionNav a.active{background:#fff; color:var(--accent-dark);}
-  nav.sectionNav a .n{background:rgba(255,255,255,0.18); border-radius:10px; padding:1px 7px; font-size:0.75rem;}
-  nav.sectionNav a.active .n{background:var(--accent-soft); color:var(--accent-dark);}
+  nav.sectionNav a:hover{color:#fff;}
+  nav.sectionNav a.active{color:var(--accent); border-bottom-color:var(--accent);}
+  nav.sectionNav a .n{font-family:"IBM Plex Mono",monospace; font-size:0.72rem; color:#8a9a93;}
+  nav.sectionNav a.active .n{color:var(--accent);}
 
-  main{padding:22px clamp(16px,4vw,40px) 40px; width:100%; margin:0; max-width:none;}
+  main{padding:28px clamp(18px,5vw,48px) 48px; width:100%; margin:0; max-width:none;}
 
-  .summary{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:14px; margin-bottom:24px;}
-  .summary .card{
-    background:var(--card); border:1px solid var(--border); border-left:4px solid var(--bad);
-    border-radius:12px; padding:16px 18px; cursor:pointer; transition:transform 0.15s, box-shadow 0.15s;
+  /* ---------- overview strip ---------- */
+  .overview{
+    display:flex; gap:0; margin-bottom:30px; border:1px solid var(--border); border-radius:6px;
+    overflow:hidden; background:var(--card);
   }
-  .summary .card:hover{transform:translateY(-2px); box-shadow:0 6px 18px rgba(10,30,25,0.1);}
-  .summary .card.zero-border{border-left-color:var(--good);}
-  .summary .card .num{font-size:2rem; font-weight:800; color:var(--bad); line-height:1;}
-  .summary .card .num.zero{color:var(--good);}
-  .summary .card .label{font-size:0.82rem; color:var(--muted); margin-top:6px; font-weight:600;}
+  .overview .dial{
+    flex:0 0 auto; width:150px; display:flex; align-items:center; justify-content:center;
+    background:var(--card-alt); border-right:1px solid var(--border); padding:14px;
+  }
+  .overview .dial svg{width:100%; height:auto;}
+  .overview .figures{display:flex; flex:1 1 auto; flex-wrap:wrap;}
+  .overview .fig{
+    flex:1 1 150px; padding:16px 20px; border-right:1px solid var(--border); cursor:pointer;
+    transition:background 0.15s;
+  }
+  .overview .fig:last-child{border-right:none;}
+  .overview .fig:hover{background:var(--card-alt);}
+  .overview .fig .num{font-family:"Fraunces",serif; font-weight:600; font-size:2rem; line-height:1; color:var(--bad);}
+  .overview .fig .num.zero{color:var(--good);}
+  .overview .fig .lbl{font-size:0.76rem; color:var(--muted); margin-top:6px; line-height:1.3;}
 
   section.panel{
-    background:var(--card); border:1px solid var(--border); border-radius:14px;
-    margin-bottom:22px; overflow:hidden; scroll-margin-top:120px;
-    box-shadow:0 1px 3px rgba(10,30,25,0.05);
+    background:var(--card); border:1px solid var(--border); border-radius:6px;
+    margin-bottom:20px; overflow:hidden; scroll-margin-top:128px;
   }
   section.panel .panel-header{
-    padding:15px 20px; background:var(--accent-soft); color:var(--text);
-    font-weight:700; display:flex; justify-content:space-between; align-items:center;
+    padding:15px 20px; background:var(--card); color:var(--ink);
+    display:flex; justify-content:space-between; align-items:center;
     cursor:pointer; flex-wrap:wrap; gap:10px; border-bottom:1px solid var(--border);
   }
-  section.panel .panel-header .title-wrap{display:flex; align-items:center; gap:10px; min-width:0;}
-  section.panel .panel-header .title-wrap .ic{
-    font-size:1.1rem; flex:0 0 auto; width:34px; height:34px; display:flex; align-items:center;
-    justify-content:center; background:var(--card); border-radius:9px; border:1px solid var(--border);
-  }
-  section.panel .panel-header .title-text{overflow-wrap:anywhere;}
+  section.panel .panel-header .title-wrap{display:flex; align-items:baseline; gap:10px; min-width:0;}
+  section.panel .panel-header .idx{font-family:"IBM Plex Mono",monospace; font-size:0.72rem; color:var(--accent); flex:0 0 auto;}
+  section.panel .panel-header .title-text{font-family:"Fraunces",serif; font-weight:600; font-size:1.08rem; overflow-wrap:anywhere;}
   section.panel .panel-header .count{
-    font-weight:700; background:var(--accent); color:#fff; padding:3px 12px; border-radius:14px; font-size:0.82rem;
-    flex:0 0 auto;
+    font-weight:600; font-family:"IBM Plex Mono",monospace; background:var(--bad-soft); color:var(--bad);
+    padding:3px 11px; border-radius:3px; font-size:0.78rem; flex:0 0 auto;
   }
-  section.panel .panel-header .count.zero{background:var(--good);}
-  section.panel .panel-header .chev{transition:transform 0.2s; opacity:0.6; flex:0 0 auto;}
+  section.panel .panel-header .count.zero{background:var(--good-soft); color:var(--good);}
+  section.panel .panel-header .chev{transition:transform 0.2s; opacity:0.5; flex:0 0 auto;}
   section.panel.collapsed .panel-header .chev{transform:rotate(-90deg);}
 
-  /* ---- filter bar ---- */
   .filter-bar{
     display:flex; flex-wrap:wrap; align-items:center; gap:10px;
     padding:12px 20px; background:var(--card-alt); border-bottom:1px solid var(--border);
   }
   .filter-bar .fgroup{display:flex; flex-direction:column; gap:3px;}
-  .filter-bar label{font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.03em; color:var(--muted);}
+  .filter-bar label{font-size:0.66rem; font-weight:600; color:var(--muted);}
   .filter-bar select{
-    font-size:0.82rem; padding:6px 9px; border-radius:7px; border:1px solid var(--border);
-    background:var(--card); color:var(--text); min-width:140px; max-width:220px;
+    font-size:0.82rem; padding:6px 9px; border-radius:3px; border:1px solid var(--border);
+    background:var(--card); color:var(--ink); min-width:140px; max-width:220px; font-family:"IBM Plex Sans",sans-serif;
   }
   .filter-bar .spacer{flex:1 1 auto;}
   .filter-bar .btn-reset, .filter-bar .btn-download{
-    font-size:0.8rem; font-weight:700; padding:7px 14px; border-radius:7px; border:none; cursor:pointer;
-    display:inline-flex; align-items:center; gap:6px;
+    font-size:0.8rem; font-weight:600; padding:7px 14px; border-radius:3px; border:none; cursor:pointer;
+    display:inline-flex; align-items:center; gap:6px; font-family:"IBM Plex Sans",sans-serif;
   }
   .filter-bar .btn-reset{background:transparent; color:var(--muted); border:1px solid var(--border);}
   .filter-bar .btn-reset:hover{background:var(--border);}
-  .filter-bar .btn-download{background:var(--accent); color:#fff;}
-  .filter-bar .btn-download:hover{background:var(--accent-dark);}
-  .filter-bar .btn-download:disabled{opacity:0.45; cursor:not-allowed;}
+  .filter-bar .btn-download{background:var(--accent); color:var(--accent-ink);}
+  .filter-bar .btn-download:hover{filter:brightness(1.06);}
+  .filter-bar .btn-download:disabled{opacity:0.4; cursor:not-allowed;}
 
-  /* ---- top mirrored horizontal scrollbar ---- */
   .scroll-track{
-    overflow-x:auto; overflow-y:hidden; height:14px;
+    overflow-x:auto; overflow-y:hidden; height:12px;
     border-bottom:1px solid var(--border); background:var(--card-alt);
   }
   .scroll-track-inner{height:1px;}
-  .scroll-track::-webkit-scrollbar{height:10px;}
-  .scroll-track::-webkit-scrollbar-thumb{background:var(--border); border-radius:6px;}
+  .scroll-track::-webkit-scrollbar{height:8px;}
+  .scroll-track::-webkit-scrollbar-thumb{background:var(--border); border-radius:4px;}
 
-  /* ---- per-section frozen-pane table frame ---- */
-  .table-frame{
-    max-height:58vh; overflow:auto; -webkit-overflow-scrolling:touch; position:relative;
-    isolation:isolate;
-  }
-  table{border-collapse:separate; border-spacing:0; width:100%; font-size:0.84rem; min-width:max-content;}
-  th, td{padding:9px 12px; border-bottom:1px solid var(--border); white-space:nowrap; text-align:left;}
+  .table-frame{max-height:58vh; overflow:auto; -webkit-overflow-scrolling:touch; position:relative; isolation:isolate;}
+  table{border-collapse:separate; border-spacing:0; width:100%; font-size:0.83rem; min-width:max-content;}
+  th, td{padding:9px 13px; border-bottom:1px solid var(--border); white-space:nowrap; text-align:left;}
   th{
-    background:var(--accent-dark); color:#fff; position:sticky; top:0; z-index:3; font-weight:600;
-    text-transform:uppercase; font-size:0.7rem; letter-spacing:0.03em;
-    background-clip:padding-box;
+    background:var(--masthead); color:#e6ddc6; position:sticky; top:0; z-index:3; font-weight:500;
+    font-size:0.68rem; letter-spacing:0.02em; background-clip:padding-box; font-family:"IBM Plex Mono",monospace;
   }
   th:first-child, td:first-child{
-    position:sticky; left:0; z-index:2;
-    box-shadow:2px 0 4px -2px rgba(0,0,0,0.18);
-    background-clip:padding-box;
-    contain:paint;
+    position:sticky; left:0; z-index:2; box-shadow:2px 0 4px -2px rgba(0,0,0,0.18);
+    background-clip:padding-box; contain:paint;
   }
-  th:first-child{ z-index:4; background:var(--accent-dark); }
-  td:first-child{ background:var(--card); font-weight:600; color:var(--text); }
+  th:first-child{ z-index:4; background:var(--masthead); }
+  td:first-child{ background:var(--card); font-weight:600; }
   tbody tr:nth-child(even) td{ background:var(--card-alt); }
   tbody tr:nth-child(even) td:first-child{ background:var(--card-alt); }
   tbody tr:nth-child(odd) td:first-child{ background:var(--card); }
-  tbody tr:hover td{background:var(--accent-soft);}
-  tbody tr:hover td:first-child{background:var(--accent-soft);}
+  tbody tr:hover td{background:var(--warn-soft);}
+  tbody tr:hover td:first-child{background:var(--warn-soft);}
   tbody tr.hiddenRow{display:none;}
 
-  .empty-msg{padding:20px; color:var(--good); font-weight:700; display:flex; align-items:center; gap:8px;}
+  .empty-msg{padding:22px 20px; color:var(--good); font-weight:600; display:flex; align-items:center; gap:8px;}
   .loading, .error-msg{padding:40px; text-align:center; color:var(--muted);}
   .error-msg{color:var(--bad); white-space:pre-line; text-align:left; line-height:1.6;}
-  .note{padding:10px 20px 16px; font-size:0.78rem; color:var(--muted); border-top:1px dashed var(--border);}
+  .note{padding:12px 20px 18px; font-size:0.78rem; color:var(--muted); border-top:1px dashed var(--border); font-style:italic;}
 
-  footer{text-align:center; padding:22px; color:var(--muted); font-size:0.78rem;}
+  footer{text-align:center; padding:26px; color:var(--muted); font-size:0.78rem; border-top:1px solid var(--border);}
 
   @media (max-width:640px){
     nav.sectionNav a span.label-text{display:none;}
     .table-frame{max-height:50vh;}
+    .overview{flex-direction:column;}
+    .overview .dial{width:100%; border-right:none; border-bottom:1px solid var(--border);}
+    .overview .fig{border-right:none; border-bottom:1px solid var(--border);}
   }
 </style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="hero-top">
+<header class="masthead">
+  <div class="masthead-row">
     <div>
-      <h1>🌿 EmpowerHer — Data Quality Dashboard</h1>
-      <div class="meta" id="generatedAt">Loading…</div>
+      <p class="masthead-eyebrow">EmpowerHer · Field Data Programme</p>
+      <h1>Data Quality</h1>
+      <p class="sub">What needs a second look before it reaches the record.</p>
+      <button id="refreshBtn" onclick="loadAll()"><span class="spin">⟳</span> Refresh</button>
     </div>
-    <button id="refreshBtn" onclick="loadAll()"><span class="spin">⟳</span> Refresh</button>
+    <div class="masthead-meta">
+      <div id="generatedAt">Loading…</div>
+    </div>
   </div>
 </header>
 
 <nav class="sectionNav" id="sectionNav"></nav>
 
 <main>
-  <div class="summary" id="summaryCards"></div>
+  <div class="overview" id="overview"></div>
   <div id="sections"></div>
   <div id="status"></div>
 </main>
 
 <footer>
-  Reads live from the linked Google Sheet's public CSV export. No data is stored on GitHub, no deployment needed.
+  Reads live from the linked Google Sheet's public export. Nothing is stored here — close the tab, nothing is kept.
 </footer>
 
 <script>
@@ -212,21 +233,14 @@
 const SHEET_ID = "1ETUSd0DlatPcraorNA0541yV3C-LmvtpCMea5gGP-KY";
 // =====================================
 
-// expectColumn: a column name (substring match, case-insensitive) that MUST
-// appear in the fetched tab's own header row. If it's missing, the CSV
-// endpoint most likely silently fell back to the workbook's first tab
-// (often "Sheet1" / raw import) instead of the named tab — this catches
-// that instead of silently showing the wrong sheet's data.
 const SECTIONS_CONFIG = [
-  { id: "duplicates",        icon: "🧾", title: "Duplicate Data (full-row matches)",                         sheet: "DUPLICATE DATA_FLAT",  expectColumn: "duplicate" },
-  { id: "fatherHusbandName", icon: "👨", title: "Husband / Father Name — Blank, Single Letter, or Numeric", sheet: "ERR_FATHER_NAME",      expectColumn: "father" },
-  { id: "lowFamilyIncome",   icon: "💵", title: "Family Monthly Income Below ₹2000",                          sheet: "ERR_FAMILY_INCOME",    expectColumn: "family" },
-  { id: "lowPersonalIncome", icon: "👩‍👧", title: "Personal Occupation (Homemaker-type) with Low/Missing Income", sheet: "ERR_PERSONAL_INCOME",  expectColumn: "personal" },
-  { id: "enterpriseUnknown", icon: "🏬", title: 'Existing Enterprise = "???"',                                sheet: "ERR_ENTERPRISE",       expectColumn: "enterprise" }
+  { id: "duplicates",        num: "01", title: "Duplicate records",                    short:"Duplicates",      sheet: "DUPLICATE DATA_FLAT",  expectColumn: "duplicate" },
+  { id: "fatherHusbandName", num: "02", title: "Husband / father name missing or invalid", short:"Father name",  sheet: "ERR_FATHER_NAME",      expectColumn: "father" },
+  { id: "lowFamilyIncome",   num: "03", title: "Family income below ₹2,000",            short:"Family income",   sheet: "ERR_FAMILY_INCOME",    expectColumn: "family" },
+  { id: "lowPersonalIncome", num: "04", title: "Personal income missing for homemaker-type work", short:"Personal income", sheet: "ERR_PERSONAL_INCOME",  expectColumn: "personal" },
+  { id: "enterpriseUnknown", num: "05", title: 'Enterprise field left as "???"',        short:"Enterprise",      sheet: "ERR_ENTERPRISE",       expectColumn: "enterprise" }
 ];
 
-// location columns every section is filterable by (header match is
-// case-insensitive "includes"); order here = cascading hierarchy order
 const FILTER_DIMS = [
   { key: "state",     label: "State",          match: "state" },
   { key: "district",  label: "District",       match: "district" },
@@ -324,18 +338,17 @@ async function loadAll() {
       const table = await loadSheet(cfg.sheet);
 
       if (table.length === 0 || isEmptyStateTable(table)) {
-        results.push({ id: cfg.id, icon: cfg.icon, title: cfg.title, columns: [], rows: [], error: null, explicitEmpty: true });
+        results.push({ id: cfg.id, num: cfg.num, title: cfg.title, short: cfg.short, columns: [], rows: [], error: null, explicitEmpty: true });
         continue;
       }
 
       const headers = table[0];
 
-      // tab-mismatch safeguard: confirm this really is the expected tab
       if (cfg.expectColumn) {
         const hasExpected = headers.some(h => String(h).toLowerCase().includes(cfg.expectColumn));
         if (!hasExpected) {
           results.push({
-            id: cfg.id, icon: cfg.icon, title: cfg.title, columns: [], rows: [], explicitEmpty: false,
+            id: cfg.id, num: cfg.num, title: cfg.title, short: cfg.short, columns: [], rows: [], explicitEmpty: false,
             error: 'This came back without a "' + cfg.expectColumn + '"-type column, so the tab named "' + cfg.sheet +
               '" probably doesn\'t exist right now (or its name doesn\'t match exactly) and Google served the workbook\'s ' +
               'first tab instead. Check the tab name in the Sheet, then Refresh.'
@@ -355,14 +368,14 @@ async function loadAll() {
         });
       }
 
-      results.push({ id: cfg.id, icon: cfg.icon, title: cfg.title, columns: headers, rows: rows, error: null, explicitEmpty: false });
+      results.push({ id: cfg.id, num: cfg.num, title: cfg.title, short: cfg.short, columns: headers, rows: rows, error: null, explicitEmpty: false });
     } catch (err) {
-      results.push({ id: cfg.id, icon: cfg.icon, title: cfg.title, columns: [], rows: [], error: err.message, explicitEmpty: false });
+      results.push({ id: cfg.id, num: cfg.num, title: cfg.title, short: cfg.short, columns: [], rows: [], error: err.message, explicitEmpty: false });
     }
   }
 
   statusEl.innerHTML = "";
-  genEl.textContent = "Last loaded: " + new Date().toLocaleString();
+  genEl.innerHTML = "Last synced <span class='dot'>·</span> " + new Date().toLocaleString();
   btn.classList.remove("loading");
   render(results);
 }
@@ -372,8 +385,7 @@ function buildNav(sections) {
   nav.innerHTML = sections.map(sec => {
     const count = sec.error ? "–" : sec.rows.length;
     return '<a href="#panel-' + sec.id + '" data-target="panel-' + sec.id + '">' +
-      '<span class="ic">' + sec.icon + '</span>' +
-      '<span class="label-text">' + escapeHtml(sec.title.split(" (")[0].split(" —")[0]) + '</span>' +
+      '<span class="label-text">' + escapeHtml(sec.short) + '</span>' +
       '<span class="n">' + count + '</span>' +
       '</a>';
   }).join("");
@@ -417,7 +429,6 @@ function downloadCSV(filename, headers, rows) {
   setTimeout(() => URL.revokeObjectURL(url), 2000);
 }
 
-// builds the filter bar for one section and wires up cascading + CSV export
 function buildFilterBar(sec, headers, rows, trEls, panel, countBadge) {
   const colIdx = {};
   FILTER_DIMS.forEach(d => {
@@ -489,7 +500,7 @@ function buildFilterBar(sec, headers, rows, trEls, panel, countBadge) {
       trEls[i].classList.toggle("hiddenRow", !show);
       if (show) visibleCount++;
     });
-    countBadge.textContent = visibleCount + " row(s)" + (visibleCount !== rows.length ? " (of " + rows.length + ")" : "");
+    countBadge.textContent = visibleCount + " row(s)" + (visibleCount !== rows.length ? " of " + rows.length : "");
     dlBtn.disabled = visibleCount === 0;
     return visibleCount;
   }
@@ -524,13 +535,40 @@ function buildFilterBar(sec, headers, rows, trEls, panel, countBadge) {
   return bar;
 }
 
+function buildOverview(sections) {
+  const el = document.getElementById("overview");
+  const totalFlagged = sections.reduce((sum, s) => sum + (s.error ? 0 : s.rows.length), 0);
+  const totalClean = sections.filter(s => !s.error && (s.explicitEmpty || s.rows.length === 0)).length;
+
+  const r = 52, c = 2 * Math.PI * r;
+  const pct = Math.min(totalFlagged / 400, 1); // visual scale, not a literal percentage
+  const offset = c * (1 - pct);
+
+  el.innerHTML =
+    '<div class="dial"><svg viewBox="0 0 120 120">' +
+      '<circle cx="60" cy="60" r="' + r + '" fill="none" stroke="var(--border)" stroke-width="10"/>' +
+      '<circle cx="60" cy="60" r="' + r + '" fill="none" stroke="var(--accent)" stroke-width="10" ' +
+        'stroke-dasharray="' + c + '" stroke-dashoffset="' + offset + '" stroke-linecap="round" transform="rotate(-90 60 60)"/>' +
+      '<text x="60" y="56" text-anchor="middle" font-family="Fraunces, serif" font-weight="600" font-size="26" fill="var(--ink)">' + totalFlagged + '</text>' +
+      '<text x="60" y="76" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="9" fill="var(--muted)">flagged rows</text>' +
+    '</svg></div>' +
+    '<div class="figures">' +
+    sections.map(sec => {
+      const n = sec.error ? "?" : (sec.explicitEmpty ? 0 : sec.rows.length);
+      const zero = !sec.error && n === 0;
+      return '<div class="fig" onclick="document.getElementById(\'panel-' + sec.id + '\').scrollIntoView({behavior:\'smooth\',block:\'start\'})">' +
+        '<div class="num' + (zero ? " zero" : "") + '">' + n + '</div>' +
+        '<div class="lbl">' + escapeHtml(sec.title) + '</div></div>';
+    }).join('') +
+    '</div>';
+}
+
 function render(sections) {
-  const summaryEl = document.getElementById("summaryCards");
   const sectionsEl = document.getElementById("sections");
-  summaryEl.innerHTML = "";
   sectionsEl.innerHTML = "";
 
   buildNav(sections);
+  buildOverview(sections);
 
   const anyFatalError = sections.every(s => s.error);
   if (anyFatalError) {
@@ -545,26 +583,15 @@ function render(sections) {
     const count = sec.error ? null : sec.rows.length;
     const isZero = sec.explicitEmpty || count === 0;
 
-    const card = document.createElement("div");
-    card.className = "card" + (isZero ? " zero-border" : "");
-    card.onclick = () => document.getElementById("panel-" + sec.id).scrollIntoView({ behavior: "smooth", block: "start" });
-    if (sec.error) {
-      card.innerHTML = '<div class="num zero">?</div><div class="label">' + sec.icon + ' ' + escapeHtml(sec.title) + ' (could not load)</div>';
-    } else {
-      card.innerHTML = '<div class="num ' + (isZero ? "zero" : "") + '">' + (isZero ? 0 : count) + '</div>' +
-        '<div class="label">' + sec.icon + ' ' + escapeHtml(sec.title) + '</div>';
-    }
-    summaryEl.appendChild(card);
-
     const panel = document.createElement("section");
     panel.className = "panel";
     panel.id = "panel-" + sec.id;
 
     const header = document.createElement("div");
     header.className = "panel-header";
-    const countLabel = sec.error ? "error" : (isZero ? "0 row(s)" : count + " row(s)");
+    const countLabel = sec.error ? "error" : (isZero ? "0 rows" : count + " row" + (count === 1 ? "" : "s"));
     header.innerHTML =
-      '<div class="title-wrap"><span class="ic">' + sec.icon + '</span><span class="title-text">' + escapeHtml(sec.title) + '</span></div>' +
+      '<div class="title-wrap"><span class="idx">' + sec.num + '</span><span class="title-text">' + escapeHtml(sec.title) + '</span></div>' +
       '<span class="count' + (sec.error ? "" : isZero ? " zero" : "") + '">' + countLabel + '</span>' +
       '<span class="chev">▾</span>';
 
@@ -577,7 +604,7 @@ function render(sections) {
       panel.appendChild(body);
     } else if (isZero) {
       const body = document.createElement("div");
-      body.innerHTML = '<div class="empty-msg">✅ No issues found in this category.</div>';
+      body.innerHTML = '<div class="empty-msg">✓ Nothing flagged here right now.</div>';
       panel.appendChild(body);
     } else {
       const trEls = [];
@@ -639,7 +666,7 @@ function render(sections) {
     if (sec.id === "duplicates" && !sec.error) {
       const note = document.createElement("div");
       note.className = "note";
-      note.textContent = "This list is exact full-row repeats only — when one row matches another, every row in that matching group is shown (not just one), grouped under a Duplicate Series No, so you can see all copies and decide which to keep.";
+      note.textContent = "Every row in a matching set is shown — not just one — grouped under a Duplicate Series No, so you can compare copies before deciding which to keep.";
       panel.appendChild(note);
     }
 
@@ -655,7 +682,7 @@ function render(sections) {
         link.classList.add("active");
       }
     });
-  }, { rootMargin: "-120px 0px -70% 0px" });
+  }, { rootMargin: "-128px 0px -70% 0px" });
   document.querySelectorAll("section.panel").forEach(p => io.observe(p));
 }
 
