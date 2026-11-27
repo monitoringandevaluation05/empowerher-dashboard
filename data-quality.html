@@ -125,10 +125,7 @@ function escapeHtml(str) {
     .replace(/"/g, "&quot;");
 }
 
-let jsonpTimeoutId = null;
-let jsonpCallCounter = 0;
-
-function loadData() {
+async function loadData() {
   const statusEl = document.getElementById("status");
   const url = getWebAppUrl();
   document.getElementById("configUrl").value = url || "";
@@ -140,45 +137,30 @@ function loadData() {
 
   statusEl.innerHTML = '<div class="loading">Loading latest data…</div>';
 
-  // JSONP: loads the response via a <script> tag instead of fetch(), which
-  // sidesteps the browser's CORS restriction entirely (Apps Script /exec
-  // doesn't send CORS headers for plain fetch requests). This matches the
-  // technique your already-working index.html dashboard uses.
-  jsonpCallCounter++;
-  const callbackName = "empowerHerDQCallback_" + jsonpCallCounter;
-  const scriptId = "empowerHerDQScript_" + jsonpCallCounter;
+  // Google's Apps Script Web App responses get blocked by the browser's
+  // CORB/CORS protections when loaded directly from a different website
+  // (GitHub Pages). We route the request through a public CORS relay
+  // (allorigins.win) which re-serves the same response with the headers
+  // browsers require to allow it through. No Apps Script changes needed —
+  // this only changes how the browser fetches the already-working URL.
+  const proxiedUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
 
-  window[callbackName] = function (data) {
-    clearTimeout(jsonpTimeoutId);
+  try {
+    const res = await fetchWithTimeout(proxiedUrl, 25000);
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
     statusEl.innerHTML = "";
     render(data);
-    cleanupJsonp(callbackName, scriptId);
-  };
-
-  const sep = url.indexOf("?") === -1 ? "?" : "&";
-  const script = document.createElement("script");
-  script.id = scriptId;
-  script.src = url + sep + "callback=" + callbackName;
-  script.onerror = function () {
-    clearTimeout(jsonpTimeoutId);
-    statusEl.innerHTML = '<div class="error-msg">Could not load data: the request to the Apps Script Web App failed. ' +
-      'Make sure the deployment access is set to "Anyone with the link" and the URL ends in /exec.</div>';
-    cleanupJsonp(callbackName, scriptId);
-  };
-
-  jsonpTimeoutId = setTimeout(function () {
-    statusEl.innerHTML = '<div class="error-msg">Could not load data: request timed out after 20 seconds. ' +
-      'Check the Web App URL and that it is deployed with access "Anyone with the link".</div>';
-    cleanupJsonp(callbackName, scriptId);
-  }, 20000);
-
-  document.body.appendChild(script);
+  } catch (err) {
+    statusEl.innerHTML = '<div class="error-msg">Could not load data: ' + escapeHtml(err.message) +
+      '. Double-check the Web App URL is correct and ends in /exec, and that deployment access is "Anyone with the link".</div>';
+  }
 }
 
-function cleanupJsonp(callbackName, scriptId) {
-  const el = document.getElementById(scriptId);
-  if (el) el.remove();
-  delete window[callbackName];
+function fetchWithTimeout(resource, timeoutMs) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeoutMs);
+  return fetch(resource, { signal: controller.signal }).finally(() => clearTimeout(id));
 }
 
 function render(data) {
