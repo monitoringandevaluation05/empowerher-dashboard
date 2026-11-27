@@ -6,82 +6,162 @@
 <title>EmpowerHer — Data Quality Dashboard</title>
 <style>
   :root{
-    --bg:#f5f7fb; --card:#ffffff; --text:#202124; --muted:#5f6368;
-    --accent:#1a73e8; --warn:#fbbc04; --bad:#d93025; --good:#188038;
-    --border:#e3e6ea;
+    --bg:#f3f5f9; --card:#ffffff; --text:#1c1f26; --muted:#667085;
+    --accent:#2f5fe0; --accent-dark:#1f3fa8; --accent-soft:#eaf0ff;
+    --warn:#f59e0b; --bad:#e2483b; --good:#1a9e5c;
+    --border:#e5e8ee; --header-bg:#1f2a44;
     color-scheme: light;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --bg:#14161a; --card:#1e2127; --text:#e8eaed; --muted:#9aa0a6;
-      --accent:#8ab4f8; --warn:#fdd663; --bad:#f28b82; --good:#81c995;
-      --border:#33363d;
+      --bg:#0f1117; --card:#171a22; --text:#eef1f6; --muted:#9aa3b2;
+      --accent:#6e8fff; --accent-dark:#5676e0; --accent-soft:#1b2440;
+      --warn:#f3b94d; --bad:#ff7a6e; --good:#4fd896;
+      --border:#2a2f3b; --header-bg:#11141c;
       color-scheme: dark;
     }
   }
   :root[data-theme="dark"]{
-    --bg:#14161a; --card:#1e2127; --text:#e8eaed; --muted:#9aa0a6;
-    --accent:#8ab4f8; --warn:#fdd663; --bad:#f28b82; --good:#81c995;
-    --border:#33363d;
+    --bg:#0f1117; --card:#171a22; --text:#eef1f6; --muted:#9aa3b2;
+    --accent:#6e8fff; --accent-dark:#5676e0; --accent-soft:#1b2440;
+    --warn:#f3b94d; --bad:#ff7a6e; --good:#4fd896;
+    --border:#2a2f3b; --header-bg:#11141c;
   }
   *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; scroll-padding-top:118px;}
   body{
     margin:0; background:var(--bg); color:var(--text);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
   }
-  header{
-    padding:20px 24px; background:var(--accent); color:#fff;
-    display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between;
+  body::before{
+    content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px);
+    background:var(--header-bg); z-index:30;
   }
-  header h1{margin:0; font-size:1.25rem;}
-  header .meta{font-size:0.85rem; opacity:0.9;}
-  button{
-    background:#fff; color:var(--accent); border:none; border-radius:6px;
-    padding:8px 14px; font-weight:600; cursor:pointer; font-size:0.85rem;
+
+  /* ---------- Hero / header ---------- */
+  header.hero{
+    padding:22px clamp(16px,4vw,40px) 16px; background:linear-gradient(135deg,var(--header-bg),var(--accent-dark));
+    color:#fff;
   }
-  button:hover{opacity:0.9;}
-  main{padding:20px; max-width:1200px; margin:0 auto;}
-  .summary{display:flex; flex-wrap:wrap; gap:14px; margin-bottom:20px;}
+  .hero-top{display:flex; flex-wrap:wrap; gap:14px; align-items:center; justify-content:space-between;}
+  .hero-top h1{margin:0; font-size:1.4rem; letter-spacing:-0.01em;}
+  .hero-top .meta{font-size:0.82rem; opacity:0.75; margin-top:2px;}
+  button#refreshBtn{
+    background:#fff; color:var(--accent-dark); border:none; border-radius:8px;
+    padding:9px 16px; font-weight:700; cursor:pointer; font-size:0.85rem;
+    display:inline-flex; align-items:center; gap:6px; box-shadow:0 1px 2px rgba(0,0,0,0.2);
+  }
+  button#refreshBtn:hover{opacity:0.92;}
+  button#refreshBtn .spin{display:inline-block; transition:transform 0.5s;}
+  button#refreshBtn.loading .spin{animation:spin 0.9s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  /* ---------- Sticky section nav ---------- */
+  nav.sectionNav{
+    position:sticky; top:0; z-index:20;
+    display:flex; gap:6px; overflow-x:auto; padding:10px clamp(16px,4vw,40px);
+    background:var(--header-bg); border-bottom:1px solid rgba(255,255,255,0.08);
+    -webkit-overflow-scrolling:touch; scrollbar-width:thin;
+  }
+  nav.sectionNav::-webkit-scrollbar{height:4px;}
+  nav.sectionNav a{
+    flex:0 0 auto; display:inline-flex; align-items:center; gap:7px;
+    color:rgba(255,255,255,0.8); text-decoration:none; font-size:0.82rem; font-weight:600;
+    padding:7px 13px; border-radius:20px; background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.08); white-space:nowrap; transition:background 0.15s, color 0.15s;
+  }
+  nav.sectionNav a .ic{font-size:0.95rem; line-height:1;}
+  nav.sectionNav a:hover{background:rgba(255,255,255,0.14); color:#fff;}
+  nav.sectionNav a.active{background:#fff; color:var(--accent-dark);}
+  nav.sectionNav a .n{
+    background:rgba(255,255,255,0.18); border-radius:10px; padding:1px 7px; font-size:0.75rem;
+  }
+  nav.sectionNav a.active .n{background:var(--accent-soft); color:var(--accent-dark);}
+
+  main{padding:22px clamp(16px,4vw,40px) 40px; width:100%; margin:0; max-width:none;}
+
+  .summary{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:14px; margin-bottom:24px;}
   .summary .card{
-    flex:1 1 180px; background:var(--card); border:1px solid var(--border);
-    border-radius:10px; padding:16px; text-align:center;
+    background:var(--card); border:1px solid var(--border); border-left:4px solid var(--bad);
+    border-radius:12px; padding:16px 18px; cursor:pointer; transition:transform 0.15s, box-shadow 0.15s;
   }
-  .summary .card .num{font-size:1.8rem; font-weight:700; color:var(--bad);}
+  .summary .card:hover{transform:translateY(-2px); box-shadow:0 6px 18px rgba(20,30,60,0.08);}
+  .summary .card.zero-border{border-left-color:var(--good);}
+  .summary .card .num{font-size:2rem; font-weight:800; color:var(--bad); line-height:1;}
   .summary .card .num.zero{color:var(--good);}
-  .summary .card .label{font-size:0.85rem; color:var(--muted); margin-top:4px;}
+  .summary .card .label{font-size:0.82rem; color:var(--muted); margin-top:6px; font-weight:600;}
+
   section.panel{
-    background:var(--card); border:1px solid var(--border); border-radius:10px;
-    margin-bottom:20px; overflow:hidden;
+    background:var(--card); border:1px solid var(--border); border-radius:14px;
+    margin-bottom:22px; overflow:hidden; scroll-margin-top:118px;
+    box-shadow:0 1px 3px rgba(20,30,60,0.04);
   }
   section.panel .panel-header{
-    padding:14px 18px; background:var(--warn); color:#202124;
+    padding:15px 20px; background:var(--accent-soft); color:var(--text);
     font-weight:700; display:flex; justify-content:space-between; align-items:center;
-    cursor:pointer; flex-wrap:wrap; gap:8px;
+    cursor:pointer; flex-wrap:wrap; gap:10px; border-bottom:1px solid var(--border);
   }
-  section.panel .panel-header .count{font-weight:700; background:rgba(0,0,0,0.15); padding:2px 10px; border-radius:12px; font-size:0.85rem;}
-  .table-wrap{overflow-x:auto;}
-  table{border-collapse:collapse; width:100%; font-size:0.85rem;}
-  th, td{padding:8px 10px; border-bottom:1px solid var(--border); white-space:nowrap; text-align:left;}
-  th{background:var(--accent); color:#fff; position:sticky; top:0;}
-  tbody tr:nth-child(even){background:rgba(128,128,128,0.06);}
-  .empty-msg{padding:16px 18px; color:var(--good); font-weight:600;}
+  section.panel .panel-header .title-wrap{display:flex; align-items:center; gap:10px; min-width:0;}
+  section.panel .panel-header .title-wrap .ic{
+    font-size:1.1rem; flex:0 0 auto; width:34px; height:34px; display:flex; align-items:center;
+    justify-content:center; background:var(--card); border-radius:9px; border:1px solid var(--border);
+  }
+  section.panel .panel-header .title-text{overflow-wrap:anywhere;}
+  section.panel .panel-header .count{
+    font-weight:700; background:var(--accent); color:#fff; padding:3px 12px; border-radius:14px; font-size:0.82rem;
+    flex:0 0 auto;
+  }
+  section.panel .panel-header .count.zero{background:var(--good);}
+  section.panel .panel-header .chev{transition:transform 0.2s; opacity:0.6; flex:0 0 auto;}
+  section.panel.collapsed .panel-header .chev{transform:rotate(-90deg);}
+
+  .table-wrap{
+    overflow-x:auto; -webkit-overflow-scrolling:touch; position:relative;
+  }
+  table{border-collapse:separate; border-spacing:0; width:100%; font-size:0.84rem; min-width:max-content;}
+  th, td{padding:9px 12px; border-bottom:1px solid var(--border); white-space:nowrap; text-align:left;}
+  th{
+    background:var(--accent); color:#fff; position:sticky; top:0; z-index:2; font-weight:600;
+    text-transform:uppercase; font-size:0.7rem; letter-spacing:0.03em;
+  }
+  /* sticky first column so identity stays visible while scrolling right */
+  th:first-child, td:first-child{
+    position:sticky; left:0; z-index:1;
+    box-shadow:2px 0 4px -2px rgba(0,0,0,0.12);
+  }
+  th:first-child{ z-index:3; background:var(--accent-dark); }
+  td:first-child{ background:var(--card); font-weight:600; }
+  tbody tr:nth-child(even) td:first-child{ background:rgba(128,128,128,0.045); }
+  tbody tr:nth-child(even){background:rgba(128,128,128,0.035);}
+  tbody tr:hover td{background:var(--accent-soft);}
+  tbody tr:hover td:first-child{background:var(--accent-soft);}
+
+  .empty-msg{padding:20px; color:var(--good); font-weight:700; display:flex; align-items:center; gap:8px;}
   .loading, .error-msg{padding:40px; text-align:center; color:var(--muted);}
-  .error-msg{color:var(--bad); white-space:pre-line;}
-  footer{text-align:center; padding:20px; color:var(--muted); font-size:0.8rem;}
+  .error-msg{color:var(--bad); white-space:pre-line; text-align:left; line-height:1.6;}
+  .note{padding:10px 20px 16px; font-size:0.78rem; color:var(--muted); border-top:1px dashed var(--border); margin-top:-1px;}
+
+  footer{text-align:center; padding:22px; color:var(--muted); font-size:0.78rem;}
+
+  @media (max-width:640px){
+    nav.sectionNav a span.label-text{display:none;}
+  }
 </style>
 </head>
 <body>
 
-<header>
-  <div>
-    <h1>EmpowerHer — Data Quality Dashboard</h1>
-    <div class="meta" id="generatedAt">Loading…</div>
-  </div>
-  <div>
-    <button onclick="loadAll()">Refresh</button>
+<header class="hero">
+  <div class="hero-top">
+    <div>
+      <h1>🩺 EmpowerHer — Data Quality Dashboard</h1>
+      <div class="meta" id="generatedAt">Loading…</div>
+    </div>
+    <button id="refreshBtn" onclick="loadAll()"><span class="spin">⟳</span> Refresh</button>
   </div>
 </header>
+
+<nav class="sectionNav" id="sectionNav"></nav>
 
 <main>
   <div class="summary" id="summaryCards"></div>
@@ -94,17 +174,21 @@
 </footer>
 
 <script>
-// ===== CONFIGURE THESE TWO LINES ONLY =====
+// ===== CONFIGURE THIS LINE ONLY =====
 const SHEET_ID = "1ETUSd0DlatPcraorNA0541yV3C-LmvtpCMea5gGP-KY";
-// ===========================================
+// =====================================
 
 const SECTIONS_CONFIG = [
-  { id: "duplicates",        title: "Duplicate Data (full-row matches)",                         sheet: "DUPLICATE DATA_FLAT" },
-  { id: "fatherHusbandName", title: "Husband / Father Name — Missing, Blank, Single Word, or Numeric Only", sheet: "ERR_FATHER_NAME" },
-  { id: "lowFamilyIncome",   title: "Family Monthly Income Below ₹2000",                          sheet: "ERR_FAMILY_INCOME" },
-  { id: "lowPersonalIncome", title: "Personal Occupation (Homemaker-type) with Low/Missing Personal Income", sheet: "ERR_PERSONAL_INCOME" },
-  { id: "enterpriseUnknown", title: 'Existing Enterprise = "???"',                                sheet: "ERR_ENTERPRISE" }
+  { id: "duplicates",        icon: "📑", title: "Duplicate Data (full-row matches)",                         sheet: "DUPLICATE DATA_FLAT" },
+  { id: "fatherHusbandName", icon: "🧑",  title: "Husband / Father Name — Blank, Single Letter, or Numeric", sheet: "ERR_FATHER_NAME" },
+  { id: "lowFamilyIncome",   icon: "💰", title: "Family Monthly Income Below ₹2000",                          sheet: "ERR_FAMILY_INCOME" },
+  { id: "lowPersonalIncome", icon: "👛", title: "Personal Occupation (Homemaker-type) with Low/Missing Income", sheet: "ERR_PERSONAL_INCOME" },
+  { id: "enterpriseUnknown", icon: "🏪", title: 'Existing Enterprise = "???"',                                sheet: "ERR_ENTERPRISE" }
 ];
+
+// Phrases that mean "this tab intentionally reports zero issues" even though
+// gviz returns it as a single text row/cell rather than an empty table.
+const EMPTY_STATE_PATTERNS = [/no\s+duplicate/i, /no\s+issues?/i, /no\s+errors?/i, /no\s+records?\s+found/i];
 
 function escapeHtml(str) {
   if (str === null || str === undefined) return "";
@@ -173,9 +257,21 @@ function loadSheet(sheetName) {
   return viaFetch(sheetName).catch(function () { return viaJsonp(sheetName); });
 }
 
+function isEmptyStateTable(table) {
+  // A tab that only holds a single status message looks like one row with
+  // one non-blank cell, e.g. ["No duplicate records found."]
+  if (table.length === 1 && table[0].length <= 2) {
+    var text = table[0].join(" ").trim();
+    return EMPTY_STATE_PATTERNS.some(function (re) { return re.test(text); });
+  }
+  return false;
+}
+
 async function loadAll() {
   const statusEl = document.getElementById("status");
   const genEl = document.getElementById("generatedAt");
+  const btn = document.getElementById("refreshBtn");
+  btn.classList.add("loading");
   statusEl.innerHTML = '<div class="loading">Loading latest data…</div>';
   genEl.textContent = "Loading…";
 
@@ -183,7 +279,13 @@ async function loadAll() {
   for (const cfg of SECTIONS_CONFIG) {
     try {
       const table = await loadSheet(cfg.sheet);
-      const headers = table.length ? table[0] : [];
+
+      if (table.length === 0 || isEmptyStateTable(table)) {
+        results.push({ id: cfg.id, icon: cfg.icon, title: cfg.title, columns: [], rows: [], error: null, explicitEmpty: true });
+        continue;
+      }
+
+      const headers = table[0];
       let rows = table.slice(1);
 
       // The flattened duplicate-series column can repeat blanks in merged
@@ -197,15 +299,35 @@ async function loadAll() {
         });
       }
 
-      results.push({ id: cfg.id, title: cfg.title, columns: headers, rows: rows, error: null });
+      results.push({ id: cfg.id, icon: cfg.icon, title: cfg.title, columns: headers, rows: rows, error: null, explicitEmpty: false });
     } catch (err) {
-      results.push({ id: cfg.id, title: cfg.title, columns: [], rows: [], error: err.message });
+      results.push({ id: cfg.id, icon: cfg.icon, title: cfg.title, columns: [], rows: [], error: err.message, explicitEmpty: false });
     }
   }
 
   statusEl.innerHTML = "";
   genEl.textContent = "Last loaded: " + new Date().toLocaleString();
+  btn.classList.remove("loading");
   render(results);
+}
+
+function buildNav(sections) {
+  const nav = document.getElementById("sectionNav");
+  nav.innerHTML = sections.map(sec => {
+    const count = sec.error ? "–" : sec.rows.length;
+    return '<a href="#panel-' + sec.id + '" data-target="panel-' + sec.id + '">' +
+      '<span class="ic">' + sec.icon + '</span>' +
+      '<span class="label-text">' + escapeHtml(sec.title.split(" (")[0].split(" —")[0]) + '</span>' +
+      '<span class="n">' + count + '</span>' +
+      '</a>';
+  }).join("");
+
+  nav.querySelectorAll("a").forEach(a => {
+    a.addEventListener("click", () => {
+      nav.querySelectorAll("a").forEach(x => x.classList.remove("active"));
+      a.classList.add("active");
+    });
+  });
 }
 
 function render(sections) {
@@ -214,35 +336,43 @@ function render(sections) {
   summaryEl.innerHTML = "";
   sectionsEl.innerHTML = "";
 
+  buildNav(sections);
+
   const anyFatalError = sections.every(s => s.error);
   if (anyFatalError) {
     document.getElementById("status").innerHTML =
-      '<div class="error-msg">Could not read the Google Sheet.\n\n' +
+      '<div class="error-msg">⚠️ Could not read the Google Sheet.\n\n' +
       '1) In the Sheet, click Share → General access → set to "Anyone with the link" (Viewer).\n' +
       '2) Make sure tab names in the Sheet exactly match: DUPLICATE DATA_FLAT, ERR_FATHER_NAME, ERR_FAMILY_INCOME, ERR_PERSONAL_INCOME, ERR_ENTERPRISE.\n' +
       '3) Run generateDuplicateReport() and generateErrorReport() at least once so these tabs exist.</div>';
   }
 
   sections.forEach(sec => {
-    const count = sec.rows.length;
+    const count = sec.error ? null : sec.rows.length;
+    const isZero = sec.explicitEmpty || count === 0;
 
     const card = document.createElement("div");
-    card.className = "card";
+    card.className = "card" + (isZero ? " zero-border" : "");
+    card.onclick = () => document.getElementById("panel-" + sec.id).scrollIntoView({ behavior: "smooth", block: "start" });
     if (sec.error) {
-      card.innerHTML = '<div class="num zero">?</div><div class="label">' + escapeHtml(sec.title) + ' (could not load)</div>';
+      card.innerHTML = '<div class="num zero">?</div><div class="label">' + sec.icon + ' ' + escapeHtml(sec.title) + ' (could not load)</div>';
     } else {
-      card.innerHTML = '<div class="num ' + (count === 0 ? "zero" : "") + '">' + count + '</div>' +
-        '<div class="label">' + escapeHtml(sec.title) + '</div>';
+      card.innerHTML = '<div class="num ' + (isZero ? "zero" : "") + '">' + (isZero ? 0 : count) + '</div>' +
+        '<div class="label">' + sec.icon + ' ' + escapeHtml(sec.title) + '</div>';
     }
     summaryEl.appendChild(card);
 
     const panel = document.createElement("section");
     panel.className = "panel";
+    panel.id = "panel-" + sec.id;
 
     const header = document.createElement("div");
     header.className = "panel-header";
-    const countLabel = sec.error ? "error" : (count + " row(s)");
-    header.innerHTML = '<span>' + escapeHtml(sec.title) + '</span><span class="count">' + countLabel + '</span>';
+    const countLabel = sec.error ? "error" : (isZero ? "0 row(s)" : count + " row(s)");
+    header.innerHTML =
+      '<div class="title-wrap"><span class="ic">' + sec.icon + '</span><span class="title-text">' + escapeHtml(sec.title) + '</span></div>' +
+      '<span class="count' + (sec.error ? "" : isZero ? " zero" : "") + '">' + countLabel + '</span>' +
+      '<span class="chev">▾</span>';
 
     const body = document.createElement("div");
     body.className = "table-wrap";
@@ -250,7 +380,7 @@ function render(sections) {
 
     if (sec.error) {
       body.innerHTML = '<div class="error-msg">' + escapeHtml(sec.error) + '</div>';
-    } else if (count === 0) {
+    } else if (isZero) {
       body.innerHTML = '<div class="empty-msg">✅ No issues found in this category.</div>';
     } else {
       let html = "<table><thead><tr>";
@@ -266,13 +396,36 @@ function render(sections) {
     }
 
     header.addEventListener("click", () => {
-      body.style.display = body.style.display === "none" ? "block" : "none";
+      const collapsed = body.style.display === "none";
+      body.style.display = collapsed ? "block" : "none";
+      panel.classList.toggle("collapsed", !collapsed);
     });
 
     panel.appendChild(header);
     panel.appendChild(body);
+
+    if (sec.id === "duplicates") {
+      const note = document.createElement("div");
+      note.className = "note";
+      note.textContent = "If this count doesn't match what you see in the Sheet tab right now, it's usually a timing gap — the hourly automation can re-run between the two checks, not a dashboard bug. Hit Refresh to re-pull.";
+      panel.appendChild(note);
+    }
+
     sectionsEl.appendChild(panel);
   });
+
+  // highlight nav item for section currently in view
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const link = document.querySelector('nav.sectionNav a[data-target="' + e.target.id + '"]');
+      if (!link) return;
+      if (e.isIntersecting) {
+        document.querySelectorAll("nav.sectionNav a").forEach(a => a.classList.remove("active"));
+        link.classList.add("active");
+      }
+    });
+  }, { rootMargin: "-120px 0px -70% 0px" });
+  document.querySelectorAll("section.panel").forEach(p => io.observe(p));
 }
 
 loadAll();
