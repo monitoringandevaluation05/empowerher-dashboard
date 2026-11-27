@@ -112,6 +112,28 @@
   section.panel .panel-header .chev{transition:transform 0.2s; opacity:0.6; flex:0 0 auto;}
   section.panel.collapsed .panel-header .chev{transform:rotate(-90deg);}
 
+  /* ---- filter bar ---- */
+  .filter-bar{
+    display:flex; flex-wrap:wrap; align-items:center; gap:10px;
+    padding:12px 20px; background:var(--card-alt); border-bottom:1px solid var(--border);
+  }
+  .filter-bar .fgroup{display:flex; flex-direction:column; gap:3px;}
+  .filter-bar label{font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.03em; color:var(--muted);}
+  .filter-bar select{
+    font-size:0.82rem; padding:6px 9px; border-radius:7px; border:1px solid var(--border);
+    background:var(--card); color:var(--text); min-width:140px; max-width:220px;
+  }
+  .filter-bar .spacer{flex:1 1 auto;}
+  .filter-bar .btn-reset, .filter-bar .btn-download{
+    font-size:0.8rem; font-weight:700; padding:7px 14px; border-radius:7px; border:none; cursor:pointer;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .filter-bar .btn-reset{background:transparent; color:var(--muted); border:1px solid var(--border);}
+  .filter-bar .btn-reset:hover{background:var(--border);}
+  .filter-bar .btn-download{background:var(--accent); color:#fff;}
+  .filter-bar .btn-download:hover{background:var(--accent-dark);}
+  .filter-bar .btn-download:disabled{opacity:0.45; cursor:not-allowed;}
+
   /* ---- top mirrored horizontal scrollbar ---- */
   .scroll-track{
     overflow-x:auto; overflow-y:hidden; height:14px;
@@ -133,7 +155,6 @@
     text-transform:uppercase; font-size:0.7rem; letter-spacing:0.03em;
     background-clip:padding-box;
   }
-  /* sticky first column, fully opaque so nothing bleeds through on scroll */
   th:first-child, td:first-child{
     position:sticky; left:0; z-index:2;
     box-shadow:2px 0 4px -2px rgba(0,0,0,0.18);
@@ -147,6 +168,7 @@
   tbody tr:nth-child(odd) td:first-child{ background:var(--card); }
   tbody tr:hover td{background:var(--accent-soft);}
   tbody tr:hover td:first-child{background:var(--accent-soft);}
+  tbody tr.hiddenRow{display:none;}
 
   .empty-msg{padding:20px; color:var(--good); font-weight:700; display:flex; align-items:center; gap:8px;}
   .loading, .error-msg{padding:40px; text-align:center; color:var(--muted);}
@@ -190,12 +212,26 @@
 const SHEET_ID = "1ETUSd0DlatPcraorNA0541yV3C-LmvtpCMea5gGP-KY";
 // =====================================
 
+// expectColumn: a column name (substring match, case-insensitive) that MUST
+// appear in the fetched tab's own header row. If it's missing, the CSV
+// endpoint most likely silently fell back to the workbook's first tab
+// (often "Sheet1" / raw import) instead of the named tab — this catches
+// that instead of silently showing the wrong sheet's data.
 const SECTIONS_CONFIG = [
-  { id: "duplicates",        icon: "🧾", title: "Duplicate Data (full-row matches)",                         sheet: "DUPLICATE DATA_FLAT" },
-  { id: "fatherHusbandName", icon: "👨", title: "Husband / Father Name — Blank, Single Letter, or Numeric", sheet: "ERR_FATHER_NAME" },
-  { id: "lowFamilyIncome",   icon: "💵", title: "Family Monthly Income Below ₹2000",                          sheet: "ERR_FAMILY_INCOME" },
-  { id: "lowPersonalIncome", icon: "👩‍👧", title: "Personal Occupation (Homemaker-type) with Low/Missing Income", sheet: "ERR_PERSONAL_INCOME" },
-  { id: "enterpriseUnknown", icon: "🏬", title: 'Existing Enterprise = "???"',                                sheet: "ERR_ENTERPRISE" }
+  { id: "duplicates",        icon: "🧾", title: "Duplicate Data (full-row matches)",                         sheet: "DUPLICATE DATA_FLAT",  expectColumn: "duplicate" },
+  { id: "fatherHusbandName", icon: "👨", title: "Husband / Father Name — Blank, Single Letter, or Numeric", sheet: "ERR_FATHER_NAME",      expectColumn: "father" },
+  { id: "lowFamilyIncome",   icon: "💵", title: "Family Monthly Income Below ₹2000",                          sheet: "ERR_FAMILY_INCOME",    expectColumn: "family" },
+  { id: "lowPersonalIncome", icon: "👩‍👧", title: "Personal Occupation (Homemaker-type) with Low/Missing Income", sheet: "ERR_PERSONAL_INCOME",  expectColumn: "personal" },
+  { id: "enterpriseUnknown", icon: "🏬", title: 'Existing Enterprise = "???"',                                sheet: "ERR_ENTERPRISE",       expectColumn: "enterprise" }
+];
+
+// location columns every section is filterable by (header match is
+// case-insensitive "includes"); order here = cascading hierarchy order
+const FILTER_DIMS = [
+  { key: "state",     label: "State",          match: "state" },
+  { key: "district",  label: "District",       match: "district" },
+  { key: "block",     label: "Block",          match: "block" },
+  { key: "gram",      label: "Gram Panchayat", match: "gram panchayat" }
 ];
 
 const EMPTY_STATE_PATTERNS = [/no\s+duplicate/i, /no\s+issues?/i, /no\s+errors?/i, /no\s+records?\s+found/i];
@@ -293,6 +329,21 @@ async function loadAll() {
       }
 
       const headers = table[0];
+
+      // tab-mismatch safeguard: confirm this really is the expected tab
+      if (cfg.expectColumn) {
+        const hasExpected = headers.some(h => String(h).toLowerCase().includes(cfg.expectColumn));
+        if (!hasExpected) {
+          results.push({
+            id: cfg.id, icon: cfg.icon, title: cfg.title, columns: [], rows: [], explicitEmpty: false,
+            error: 'This came back without a "' + cfg.expectColumn + '"-type column, so the tab named "' + cfg.sheet +
+              '" probably doesn\'t exist right now (or its name doesn\'t match exactly) and Google served the workbook\'s ' +
+              'first tab instead. Check the tab name in the Sheet, then Refresh.'
+          });
+          continue;
+        }
+      }
+
       let rows = table.slice(1);
 
       if (cfg.id === "duplicates") {
@@ -335,8 +386,6 @@ function buildNav(sections) {
   });
 }
 
-// keeps a slim scrollbar above the table in sync with the table's own
-// horizontal scroll, so you never have to hunt for the scrollbar below rows
 function wireTopScrollbar(track, trackInner, frame, table) {
   trackInner.style.width = table.scrollWidth + "px";
   let syncing = false;
@@ -351,6 +400,128 @@ function wireTopScrollbar(track, trackInner, frame, table) {
     syncing = false;
   });
   window.addEventListener("resize", () => { trackInner.style.width = table.scrollWidth + "px"; });
+}
+
+function csvEscape(v) {
+  const s = v === null || v === undefined ? "" : String(v);
+  return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+}
+
+function downloadCSV(filename, headers, rows) {
+  const lines = [headers.map(csvEscape).join(",")].concat(rows.map(r => r.map(csvEscape).join(",")));
+  const blob = new Blob(["\uFEFF" + lines.join("\r\n")], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+
+// builds the filter bar for one section and wires up cascading + CSV export
+function buildFilterBar(sec, headers, rows, trEls, panel, countBadge) {
+  const colIdx = {};
+  FILTER_DIMS.forEach(d => {
+    colIdx[d.key] = headers.findIndex(h => String(h).toLowerCase().includes(d.match));
+  });
+  const activeDims = FILTER_DIMS.filter(d => colIdx[d.key] !== -1);
+  if (activeDims.length === 0) return null;
+
+  const filters = {}; activeDims.forEach(d => filters[d.key] = "");
+
+  const bar = document.createElement("div");
+  bar.className = "filter-bar";
+
+  const selects = {};
+  activeDims.forEach(d => {
+    const group = document.createElement("div");
+    group.className = "fgroup";
+    const label = document.createElement("label");
+    label.textContent = d.label;
+    const select = document.createElement("select");
+    select.dataset.dim = d.key;
+    group.appendChild(label);
+    group.appendChild(select);
+    bar.appendChild(group);
+    selects[d.key] = select;
+  });
+
+  const spacer = document.createElement("div");
+  spacer.className = "spacer";
+  bar.appendChild(spacer);
+
+  const resetBtn = document.createElement("button");
+  resetBtn.className = "btn-reset";
+  resetBtn.textContent = "Reset filters";
+  bar.appendChild(resetBtn);
+
+  const dlBtn = document.createElement("button");
+  dlBtn.className = "btn-download";
+  dlBtn.innerHTML = "⬇ Download CSV";
+  bar.appendChild(dlBtn);
+
+  function rowMatches(row, excludeDim) {
+    return activeDims.every(d => {
+      if (d.key === excludeDim) return true;
+      if (!filters[d.key]) return true;
+      return String(row[colIdx[d.key]]).trim() === filters[d.key];
+    });
+  }
+
+  function refreshOptions() {
+    activeDims.forEach(d => {
+      const current = filters[d.key];
+      const opts = Array.from(new Set(
+        rows.filter(r => rowMatches(r, d.key)).map(r => String(r[colIdx[d.key]]).trim()).filter(Boolean)
+      )).sort((a, b) => a.localeCompare(b));
+
+      const select = selects[d.key];
+      const keep = opts.includes(current) ? current : "";
+      if (keep !== current) filters[d.key] = keep;
+      select.innerHTML = '<option value="">All ' + d.label + '</option>' +
+        opts.map(o => '<option value="' + escapeHtml(o) + '"' + (o === keep ? " selected" : "") + '>' + escapeHtml(o) + "</option>").join("");
+    });
+  }
+
+  function applyFilters() {
+    let visibleCount = 0;
+    rows.forEach((r, i) => {
+      const show = rowMatches(r, null);
+      trEls[i].classList.toggle("hiddenRow", !show);
+      if (show) visibleCount++;
+    });
+    countBadge.textContent = visibleCount + " row(s)" + (visibleCount !== rows.length ? " (of " + rows.length + ")" : "");
+    dlBtn.disabled = visibleCount === 0;
+    return visibleCount;
+  }
+
+  Object.keys(selects).forEach(key => {
+    selects[key].addEventListener("change", () => {
+      filters[key] = selects[key].value;
+      refreshOptions();
+      applyFilters();
+    });
+  });
+
+  resetBtn.addEventListener("click", () => {
+    activeDims.forEach(d => filters[d.key] = "");
+    refreshOptions();
+    applyFilters();
+  });
+
+  dlBtn.addEventListener("click", () => {
+    const visibleRows = rows.filter((r) => rowMatches(r, null));
+    const namePart = activeDims
+      .filter(d => filters[d.key])
+      .map(d => filters[d.key].replace(/[^a-z0-9]+/gi, "_"))
+      .join("_");
+    const filename = sec.id + (namePart ? "_" + namePart : "_all") + ".csv";
+    downloadCSV(filename, headers, visibleRows);
+  });
+
+  refreshOptions();
+  applyFilters();
+
+  return bar;
 }
 
 function render(sections) {
@@ -398,6 +569,7 @@ function render(sections) {
       '<span class="chev">▾</span>';
 
     panel.appendChild(header);
+    const countBadge = header.querySelector(".count");
 
     if (sec.error) {
       const body = document.createElement("div");
@@ -408,49 +580,66 @@ function render(sections) {
       body.innerHTML = '<div class="empty-msg">✅ No issues found in this category.</div>';
       panel.appendChild(body);
     } else {
+      const trEls = [];
+
+      const frame = document.createElement("div");
+      frame.className = "table-frame";
+
+      const tableEl = document.createElement("table");
+      const thead = document.createElement("thead");
+      const headTr = document.createElement("tr");
+      sec.columns.forEach(c => {
+        const th = document.createElement("th");
+        th.textContent = c;
+        headTr.appendChild(th);
+      });
+      thead.appendChild(headTr);
+      const tbody = document.createElement("tbody");
+      sec.rows.forEach(row => {
+        const tr = document.createElement("tr");
+        row.forEach(cell => {
+          const td = document.createElement("td");
+          td.textContent = cell;
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+        trEls.push(tr);
+      });
+      tableEl.appendChild(thead);
+      tableEl.appendChild(tbody);
+      frame.appendChild(tableEl);
+
+      const filterBar = buildFilterBar(sec, sec.columns, sec.rows, trEls, panel, countBadge);
+      if (filterBar) panel.appendChild(filterBar);
+
       const track = document.createElement("div");
       track.className = "scroll-track";
       const trackInner = document.createElement("div");
       trackInner.className = "scroll-track-inner";
       track.appendChild(trackInner);
 
-      const frame = document.createElement("div");
-      frame.className = "table-frame";
-
-      let html = "<table><thead><tr>";
-      sec.columns.forEach(c => html += "<th>" + escapeHtml(c) + "</th>");
-      html += "</tr></thead><tbody>";
-      sec.rows.forEach(row => {
-        html += "<tr>";
-        row.forEach(cell => html += "<td>" + escapeHtml(cell) + "</td>");
-        html += "</tr>";
-      });
-      html += "</tbody></table>";
-      frame.innerHTML = html;
-
       panel.appendChild(track);
       panel.appendChild(frame);
 
-      requestAnimationFrame(() => {
-        const table = frame.querySelector("table");
-        wireTopScrollbar(track, trackInner, frame, table);
-      });
+      requestAnimationFrame(() => wireTopScrollbar(track, trackInner, frame, tableEl));
     }
 
     header.addEventListener("click", () => {
+      const filterBarEl = panel.querySelector(".filter-bar");
       const scrollTrack = panel.querySelector(".scroll-track");
       const frameEl = panel.querySelector(".table-frame");
       const simpleBody = panel.querySelector(".empty-msg, .error-msg");
       const nowHidden = panel.classList.toggle("collapsed");
+      if (filterBarEl) filterBarEl.style.display = nowHidden ? "none" : "flex";
       if (scrollTrack) scrollTrack.style.display = nowHidden ? "none" : "block";
       if (frameEl) frameEl.style.display = nowHidden ? "none" : "block";
       if (simpleBody) simpleBody.style.display = nowHidden ? "none" : "flex";
     });
 
-    if (sec.id === "duplicates") {
+    if (sec.id === "duplicates" && !sec.error) {
       const note = document.createElement("div");
       note.className = "note";
-      note.textContent = "This list is exact full-row repeats only — same Enumerator through Enrollment Date, grouped under a Duplicate Series No. If the count here doesn't match the Sheet tab at the moment you're looking, it's usually a timing gap: the hourly automation can re-run between the two checks. Hit Refresh to re-pull.";
+      note.textContent = "This list is exact full-row repeats only — when one row matches another, every row in that matching group is shown (not just one), grouped under a Duplicate Series No, so you can see all copies and decide which to keep.";
       panel.appendChild(note);
     }
 
