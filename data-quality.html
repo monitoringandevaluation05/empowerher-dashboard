@@ -1,283 +1,87 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>EmpowerHer — Data Quality Dashboard</title>
-
 <style>
-:root {
-  --bg: #f5f7fb;
-  --card: #ffffff;
-  --text: #202124;
-  --muted: #5f6368;
-  --accent: #1a73e8;
-  --warn: #fbbc04;
-  --bad: #d93025;
-  --good: #188038;
-  --border: #e3e6ea;
-  color-scheme: light;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #14161a;
-    --card: #1e2127;
-    --text: #e8eaed;
-    --muted: #9aa0a6;
-    --accent: #8ab4f8;
-    --warn: #fdd663;
-    --bad: #f28b82;
-    --good: #81c995;
-    --border: #33363d;
-    color-scheme: dark;
+  :root{
+    --bg:#f5f7fb; --card:#ffffff; --text:#202124; --muted:#5f6368;
+    --accent:#1a73e8; --warn:#fbbc04; --bad:#d93025; --good:#188038;
+    --border:#e3e6ea;
+    color-scheme: light;
   }
-}
-
-:root[data-theme="dark"] {
-  --bg: #14161a;
-  --card: #1e2127;
-  --text: #e8eaed;
-  --muted: #9aa0a6;
-  --accent: #8ab4f8;
-  --warn: #fdd663;
-  --bad: #f28b82;
-  --good: #81c995;
-  --border: #33363d;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-               Roboto, Helvetica, Arial, sans-serif;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-
-header {
-  padding: 20px 24px;
-  background: var(--accent);
-  color: #fff;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  align-items: center;
-  justify-content: space-between;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 1.3rem;
-}
-
-header .meta {
-  font-size: .85rem;
-  opacity: .9;
-  margin-top: 5px;
-}
-
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-}
-
-#configUrl {
-  padding: 9px 10px;
-  border-radius: 6px;
-  border: none;
-  width: 360px;
-  max-width: 100%;
-  font-size: .85rem;
-}
-
-button {
-  background: #fff;
-  color: var(--accent);
-  border: none;
-  border-radius: 6px;
-  padding: 9px 14px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: .85rem;
-}
-
-button:hover {
-  opacity: .9;
-}
-
-main {
-  padding: 20px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.summary {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-bottom: 20px;
-}
-
-.summary .card {
-  flex: 1 1 200px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 18px;
-  text-align: center;
-}
-
-.summary .num {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--bad);
-}
-
-.summary .num.zero {
-  color: var(--good);
-}
-
-.summary .label {
-  font-size: .85rem;
-  color: var(--muted);
-  margin-top: 6px;
-}
-
-.panel {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  margin-bottom: 20px;
-  overflow: hidden;
-}
-
-.panel-header {
-  padding: 14px 18px;
-  background: var(--warn);
-  color: #202124;
-  font-weight: 700;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.panel-header .count {
-  font-weight: 700;
-  background: rgba(0,0,0,.15);
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-size: .85rem;
-}
-
-.table-wrap {
-  overflow: auto;
-  max-height: 65vh;
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-  font-size: .85rem;
-}
-
-th, td {
-  padding: 9px 11px;
-  border-bottom: 1px solid var(--border);
-  white-space: nowrap;
-  text-align: left;
-}
-
-th {
-  background: var(--accent);
-  color: #fff;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
-
-tbody tr:nth-child(even) {
-  background: rgba(128,128,128,.06);
-}
-
-tbody tr:hover {
-  background: rgba(26,115,232,.08);
-}
-
-.empty-msg {
-  padding: 18px;
-  color: var(--good);
-  font-weight: 600;
-}
-
-.loading, .error-msg, .info-msg {
-  padding: 35px 20px;
-  text-align: center;
-  color: var(--muted);
-}
-
-.error-msg {
-  color: var(--bad);
-}
-
-footer {
-  text-align: center;
-  padding: 20px;
-  color: var(--muted);
-  font-size: .8rem;
-}
-
-@media (max-width: 700px) {
-  header {
-    padding: 16px;
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#14161a; --card:#1e2127; --text:#e8eaed; --muted:#9aa0a6;
+      --accent:#8ab4f8; --warn:#fdd663; --bad:#f28b82; --good:#81c995;
+      --border:#33363d;
+      color-scheme: dark;
+    }
   }
-
-  header h1 {
-    font-size: 1.1rem;
+  :root[data-theme="dark"]{
+    --bg:#14161a; --card:#1e2127; --text:#e8eaed; --muted:#9aa0a6;
+    --accent:#8ab4f8; --warn:#fdd663; --bad:#f28b82; --good:#81c995;
+    --border:#33363d;
   }
-
-  #configUrl {
-    width: 100%;
-    max-width: 100%;
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
   }
-
-  .controls {
-    width: 100%;
+  header{
+    padding:20px 24px; background:var(--accent); color:#fff;
+    display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between;
   }
-
-  main {
-    padding: 12px;
+  header h1{margin:0; font-size:1.25rem;}
+  header .meta{font-size:0.85rem; opacity:0.9;}
+  .controls{display:flex; gap:10px; align-items:center;}
+  #configUrl{padding:8px 10px; border-radius:6px; border:none; width:280px; max-width:50vw; font-size:0.85rem;}
+  button{
+    background:#fff; color:var(--accent); border:none; border-radius:6px;
+    padding:8px 14px; font-weight:600; cursor:pointer; font-size:0.85rem;
   }
-}
+  button:hover{opacity:0.9;}
+  main{padding:20px; max-width:1200px; margin:0 auto;}
+  .summary{display:flex; flex-wrap:wrap; gap:14px; margin-bottom:20px;}
+  .summary .card{
+    flex:1 1 180px; background:var(--card); border:1px solid var(--border);
+    border-radius:10px; padding:16px; text-align:center;
+  }
+  .summary .card .num{font-size:1.8rem; font-weight:700; color:var(--bad);}
+  .summary .card .num.zero{color:var(--good);}
+  .summary .card .label{font-size:0.85rem; color:var(--muted); margin-top:4px;}
+  section.panel{
+    background:var(--card); border:1px solid var(--border); border-radius:10px;
+    margin-bottom:20px; overflow:hidden;
+  }
+  section.panel .panel-header{
+    padding:14px 18px; background:var(--warn); color:#202124;
+    font-weight:700; display:flex; justify-content:space-between; align-items:center;
+    cursor:pointer; flex-wrap:wrap; gap:8px;
+  }
+  section.panel .panel-header .count{font-weight:700; background:rgba(0,0,0,0.15); padding:2px 10px; border-radius:12px; font-size:0.85rem;}
+  .table-wrap{overflow-x:auto;}
+  table{border-collapse:collapse; width:100%; font-size:0.85rem;}
+  th, td{padding:8px 10px; border-bottom:1px solid var(--border); white-space:nowrap; text-align:left;}
+  th{background:var(--accent); color:#fff; position:sticky; top:0;}
+  tbody tr:nth-child(even){background:rgba(128,128,128,0.06);}
+  .empty-msg{padding:16px 18px; color:var(--good); font-weight:600;}
+  .loading, .error-msg{padding:40px; text-align:center; color:var(--muted);}
+  .error-msg{color:var(--bad);}
+  footer{text-align:center; padding:20px; color:var(--muted); font-size:0.8rem;}
 </style>
 </head>
-
 <body>
 
 <header>
   <div>
     <h1>EmpowerHer — Data Quality Dashboard</h1>
-    <div class="meta" id="generatedAt">Connecting...</div>
+    <div class="meta" id="generatedAt">Not loaded yet</div>
   </div>
-
   <div class="controls">
-    <input
-      id="configUrl"
-      type="text"
-      placeholder="Apps Script Web App URL"
-      aria-label="Apps Script Web App URL"
-    >
+    <input id="configUrl" type="text" placeholder="Paste your Apps Script Web App URL here">
     <button onclick="saveUrlAndLoad()">Load</button>
     <button onclick="loadData()">Refresh</button>
   </div>
@@ -290,287 +94,145 @@ footer {
 </main>
 
 <footer>
-  EmpowerHer Data Quality Monitoring · Live report
+  Reads live from the linked Google Sheet via an Apps Script Web App endpoint. No data is stored on GitHub.
 </footer>
 
 <script>
-/* =========================================================
-   CONFIGURATION
-   Existing Apps Script Web App deployment URL
-========================================================= */
-
-const DEFAULT_WEB_APP_URL =
-  "https://script.google.com/macros/s/AKfycbzYFL0NUXq-8VTzEMtqj-ugayehKAxc_WSAHdJo0eDDDvPb_2gAf_42eibFlsBfDikhtw/exec";
-
-const STORAGE_KEY = "empowerher_webapp_url";
-const JSONP_TIMEOUT_MS = 30000;
-
-
-/* =========================================================
-   URL SETTINGS
-========================================================= */
+// Paste the /exec URL you get after deploying DuplicateAndErrorReport.gs as a Web App.
+// Example: https://script.google.com/macros/s/AKfycbxxxxxxxxxxxxxxxxxxxx/exec
+const DEFAULT_WEB_APP_URL = "";
 
 function getWebAppUrl() {
   try {
-    return localStorage.getItem(STORAGE_KEY) || DEFAULT_WEB_APP_URL;
+    return localStorage.getItem("empowerher_webapp_url") || DEFAULT_WEB_APP_URL;
   } catch (e) {
     return DEFAULT_WEB_APP_URL;
   }
 }
 
 function saveUrlAndLoad() {
-  const input = document.getElementById("configUrl");
-  const value = input.value.trim();
-
-  if (value) {
-    try {
-      localStorage.setItem(STORAGE_KEY, value);
-    } catch (e) {}
+  const val = document.getElementById("configUrl").value.trim();
+  if (val) {
+    try { localStorage.setItem("empowerher_webapp_url", val); } catch (e) {}
   }
-
   loadData();
 }
 
-
-/* =========================================================
-   HELPERS
-========================================================= */
-
-function escapeHtml(value) {
-  if (value === null || value === undefined) return "";
-
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+function escapeHtml(str) {
+  if (str === null || str === undefined) return "";
+  return str.toString()
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
-function showStatus(message, className) {
-  document.getElementById("status").innerHTML =
-    '<div class="' + className + '">' + escapeHtml(message) + '</div>';
-}
+let jsonpTimeoutId = null;
+let jsonpCallCounter = 0;
 
-function clearStatus() {
-  document.getElementById("status").innerHTML = "";
-}
-
-
-/* =========================================================
-   JSONP REQUEST
-
-   Uses Apps Script JSONP parameter "prefix".
-   The Apps Script doGet() must support JSONP and return
-   JavaScript in the form:
-
-   callbackName({"sections":[...],"generatedAt":"..."});
-
-========================================================= */
-
-function requestJsonp(url, timeoutMs) {
-  return new Promise((resolve, reject) => {
-    const callbackName =
-      "empowerHerDQCallback_" + Date.now() + "_" +
-      Math.floor(Math.random() * 1000000);
-
-    let script;
-    let timeout;
-
-    function cleanup() {
-      if (script && script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
-
-      if (timeout) clearTimeout(timeout);
-
-      try {
-        delete window[callbackName];
-      } catch (e) {
-        window[callbackName] = undefined;
-      }
-    }
-
-    window[callbackName] = function(data) {
-      cleanup();
-      resolve(data);
-    };
-
-    script = document.createElement("script");
-
-    script.onerror = function() {
-      cleanup();
-      reject(new Error(
-        "The Apps Script request failed. Check deployment access and JSONP support."
-      ));
-    };
-
-    timeout = setTimeout(() => {
-      cleanup();
-      reject(new Error(
-        "Request timed out. The Apps Script endpoint did not respond."
-      ));
-    }, timeoutMs);
-
-    try {
-      const requestUrl = new URL(url);
-      requestUrl.searchParams.set("prefix", callbackName);
-      requestUrl.searchParams.set("_", Date.now());
-
-      script.src = requestUrl.toString();
-      script.async = true;
-      document.body.appendChild(script);
-    } catch (error) {
-      cleanup();
-      reject(new Error("Invalid Web App URL."));
-    }
-  });
-}
-
-
-/* =========================================================
-   LOAD DATA
-========================================================= */
-
-async function loadData() {
+function loadData() {
+  const statusEl = document.getElementById("status");
   const url = getWebAppUrl();
+  document.getElementById("configUrl").value = url || "";
 
-  document.getElementById("configUrl").value = url;
-
-  document.getElementById("summaryCards").innerHTML = "";
-  document.getElementById("sections").innerHTML = "";
-
-  showStatus("Loading latest data...", "loading");
-
-  try {
-    const data = await requestJsonp(url, JSONP_TIMEOUT_MS);
-
-    if (!data || !Array.isArray(data.sections)) {
-      throw new Error(
-        "The endpoint responded, but the expected sections data is missing."
-      );
-    }
-
-    clearStatus();
-    render(data);
-
-  } catch (error) {
-    showStatus(
-      "Could not load data: " + error.message,
-      "error-msg"
-    );
+  if (!url) {
+    statusEl.innerHTML = '<div class="error-msg">Paste your Apps Script Web App URL above and click Load.</div>';
+    return;
   }
+
+  statusEl.innerHTML = '<div class="loading">Loading latest data…</div>';
+
+  // JSONP: loads the response via a <script> tag instead of fetch(), which
+  // sidesteps the browser's CORS restriction entirely (Apps Script /exec
+  // doesn't send CORS headers for plain fetch requests). This matches the
+  // technique your already-working index.html dashboard uses.
+  jsonpCallCounter++;
+  const callbackName = "empowerHerDQCallback_" + jsonpCallCounter;
+  const scriptId = "empowerHerDQScript_" + jsonpCallCounter;
+
+  window[callbackName] = function (data) {
+    clearTimeout(jsonpTimeoutId);
+    statusEl.innerHTML = "";
+    render(data);
+    cleanupJsonp(callbackName, scriptId);
+  };
+
+  const sep = url.indexOf("?") === -1 ? "?" : "&";
+  const script = document.createElement("script");
+  script.id = scriptId;
+  script.src = url + sep + "callback=" + callbackName;
+  script.onerror = function () {
+    clearTimeout(jsonpTimeoutId);
+    statusEl.innerHTML = '<div class="error-msg">Could not load data: the request to the Apps Script Web App failed. ' +
+      'Make sure the deployment access is set to "Anyone with the link" and the URL ends in /exec.</div>';
+    cleanupJsonp(callbackName, scriptId);
+  };
+
+  jsonpTimeoutId = setTimeout(function () {
+    statusEl.innerHTML = '<div class="error-msg">Could not load data: request timed out after 20 seconds. ' +
+      'Check the Web App URL and that it is deployed with access "Anyone with the link".</div>';
+    cleanupJsonp(callbackName, scriptId);
+  }, 20000);
+
+  document.body.appendChild(script);
 }
 
-
-/* =========================================================
-   RENDER DASHBOARD
-========================================================= */
+function cleanupJsonp(callbackName, scriptId) {
+  const el = document.getElementById(scriptId);
+  if (el) el.remove();
+  delete window[callbackName];
+}
 
 function render(data) {
-  const generatedEl = document.getElementById("generatedAt");
-
-  if (data.generatedAt) {
-    const date = new Date(data.generatedAt);
-
-    generatedEl.textContent = isNaN(date.getTime())
-      ? "Last generated: " + data.generatedAt
-      : "Last generated: " + date.toLocaleString();
-  } else {
-    generatedEl.textContent = "Data Quality Report";
-  }
+  const genEl = document.getElementById("generatedAt");
+  genEl.textContent = data.generatedAt
+    ? "Last generated: " + new Date(data.generatedAt).toLocaleString()
+    : "No generation timestamp available";
 
   const summaryEl = document.getElementById("summaryCards");
   const sectionsEl = document.getElementById("sections");
-
   summaryEl.innerHTML = "";
   sectionsEl.innerHTML = "";
 
-  const sections = data.sections || [];
+  const sections = (data.sections || []);
 
-  sections.forEach((section, index) => {
-    const rows = Array.isArray(section.rows) ? section.rows : [];
-    const columns = Array.isArray(section.columns) ? section.columns : [];
-    const count = rows.length;
+  sections.forEach(sec => {
+    const count = (sec.rows || []).length;
 
-    /* Summary card */
+    // Summary card
     const card = document.createElement("div");
     card.className = "card";
-
-    card.innerHTML =
-      '<div class="num ' + (count === 0 ? "zero" : "") + '">' +
-        count +
-      '</div>' +
-      '<div class="label">' +
-        escapeHtml(section.title || ("Category " + (index + 1))) +
-      '</div>';
-
+    card.innerHTML = '<div class="num ' + (count === 0 ? "zero" : "") + '">' + count + '</div>' +
+      '<div class="label">' + escapeHtml(sec.title) + '</div>';
     summaryEl.appendChild(card);
 
-
-    /* Category panel */
+    // Panel
     const panel = document.createElement("section");
     panel.className = "panel";
 
     const header = document.createElement("div");
     header.className = "panel-header";
-
-    header.innerHTML =
-      '<span>' + escapeHtml(section.title || "Untitled category") + '</span>' +
-      '<span class="count">' + count + ' row(s)</span>';
+    header.innerHTML = '<span>' + escapeHtml(sec.title) + '</span><span class="count">' + count + ' row(s)</span>';
 
     const body = document.createElement("div");
     body.className = "table-wrap";
     body.style.display = "block";
 
     if (count === 0) {
-      body.innerHTML =
-        '<div class="empty-msg">No issues found in this category.</div>';
-    } else if (columns.length === 0) {
-      body.innerHTML =
-        '<div class="error-msg">Column headings were not provided.</div>';
+      body.innerHTML = '<div class="empty-msg">✅ No issues found in this category.</div>';
     } else {
-      const table = document.createElement("table");
-
-      /* Table header */
-      const thead = document.createElement("thead");
-      const headerRow = document.createElement("tr");
-
-      columns.forEach(column => {
-        const th = document.createElement("th");
-        th.textContent = column;
-        headerRow.appendChild(th);
+      let html = "<table><thead><tr>";
+      sec.columns.forEach(c => html += "<th>" + escapeHtml(c) + "</th>");
+      html += "</tr></thead><tbody>";
+      sec.rows.forEach(row => {
+        html += "<tr>";
+        row.forEach(cell => html += "<td>" + escapeHtml(cell) + "</td>");
+        html += "</tr>";
       });
-
-      thead.appendChild(headerRow);
-      table.appendChild(thead);
-
-      /* Table rows */
-      const tbody = document.createElement("tbody");
-
-      rows.forEach(row => {
-        const tr = document.createElement("tr");
-
-        columns.forEach((column, cellIndex) => {
-          const td = document.createElement("td");
-          td.textContent =
-            row && row[cellIndex] !== undefined && row[cellIndex] !== null
-              ? String(row[cellIndex])
-              : "";
-          tr.appendChild(td);
-        });
-
-        tbody.appendChild(tr);
-      });
-
-      table.appendChild(tbody);
-      body.appendChild(table);
+      html += "</tbody></table>";
+      body.innerHTML = html;
     }
 
-    /* Collapse / expand */
     header.addEventListener("click", () => {
-      body.style.display =
-        body.style.display === "none" ? "block" : "none";
+      body.style.display = body.style.display === "none" ? "block" : "none";
     });
 
     panel.appendChild(header);
@@ -579,19 +241,14 @@ function render(data) {
   });
 
   if (sections.length === 0) {
-    sectionsEl.innerHTML =
-      '<div class="empty-msg">No sections returned by the API.</div>';
+    sectionsEl.innerHTML = '<div class="empty-msg">No section data returned.</div>';
   }
 }
 
-
-/* =========================================================
-   INITIALIZE
-========================================================= */
-
+// Auto-load on page open if a URL is already saved
 window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("configUrl").value = getWebAppUrl();
-  loadData();
+  if (getWebAppUrl()) loadData();
 });
 </script>
 
